@@ -1,0 +1,194 @@
+@charset "utf-8";
+
+/* ============================================================================
+   Carrusel infinito de reseñas · componente compartido
+   Lo usan index.html (sección Opiniones) e historias.html. Es autónomo: define
+   sus propios tokens para no depender de qué hoja lo acompañe.
+   ========================================================================== */
+
+.reviews-marquee-block {
+  --mq-ink: #0B211E;
+  --mq-moss: #2E7D6B;
+  --mq-moss-dark: #1C5A4B;
+  --mq-amber: #E8B04B;
+  --mq-sage: #A9C6B9;
+  --mq-paper: #FFFFFF;
+
+  --mq-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --mq-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mq-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.marquee-eyebrow {
+  font-family: var(--mq-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mq-moss-dark);
+  text-align: center;
+  margin-bottom: 2.4rem;
+  padding-inline: 6vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+/* Filetes a los lados del epígrafe: detalle editorial, decorativo. */
+.marquee-eyebrow::before,
+.marquee-eyebrow::after {
+  content: "";
+  width: clamp(24px, 6vw, 70px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--mq-sage));
+}
+.marquee-eyebrow::after { background: linear-gradient(90deg, var(--mq-sage), transparent); }
+
+.reviews-marquee {
+  overflow: hidden;
+  /* Difumina los extremos para que las tarjetas no se corten en seco. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.reviews-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-ltr 46s linear infinite;
+}
+.reviews-marquee:hover .reviews-marquee__track,
+.reviews-marquee:focus-within .reviews-marquee__track { animation-play-state: paused; }
+
+.reviews-marquee__set {
+  display: flex;
+  gap: 22px;
+  padding: 12px 11px;
+  margin: 0;
+  list-style: none;
+}
+
+/* ------------------------------------------------------------- La tarjeta */
+.mini-review {
+  position: relative;
+  width: min(80vw, 372px);
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 26px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(169, 198, 185, 0.6);
+  background:
+    linear-gradient(165deg, #FFFFFF 0%, #FCFBF7 100%);
+  box-shadow:
+    0 1px 2px rgba(11, 33, 30, 0.04),
+    0 16px 34px -14px rgba(11, 33, 30, 0.18);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mini-review:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 1px 2px rgba(11, 33, 30, 0.05),
+    0 26px 46px -16px rgba(11, 33, 30, 0.26);
+}
+
+/* Comilla tipográfica de adorno. */
+.mini-review::before {
+  content: "\201C";
+  position: absolute;
+  top: 4px;
+  right: 20px;
+  font-family: var(--mq-display);
+  font-weight: 600;
+  font-size: 5.4rem;
+  line-height: 1;
+  color: var(--mq-amber);
+  opacity: 0.26;
+  pointer-events: none;
+}
+
+.mini-review__stars {
+  display: flex;
+  gap: 3px;
+  color: var(--mq-amber);
+}
+.mini-review__stars svg { width: 15px; height: 15px; fill: currentColor; }
+
+.mini-review__quote {
+  font-family: var(--mq-display);
+  font-size: 1rem;
+  line-height: 1.62;
+  letter-spacing: -0.01em;
+  color: var(--mq-ink);
+  font-variation-settings: 'SOFT' 40, 'opsz' 40;
+  flex-grow: 1;
+  margin: 0;
+}
+
+.mini-review__by {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(169, 198, 185, 0.5);
+}
+.mini-review__by img {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(11, 33, 30, 0.16);
+}
+.mini-review__name {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.mini-review__name strong {
+  font-family: var(--mq-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--mq-ink);
+  line-height: 1.2;
+}
+.mini-review__name span {
+  font-family: var(--mq-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--mq-moss-dark);
+  line-height: 1.35;
+}
+
+/* La animación mueve el track de -50% a 0%: como el segundo bloque de tarjetas
+   es idéntico al primero, el salto al reiniciar es invisible (bucle perfecto)
+   y el movimiento visual va de izquierda a derecha. */
+@keyframes marquee-ltr {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0%); }
+}
+
+/* ------------------------------------------- Sin animación: fila deslizable */
+@media (prefers-reduced-motion: reduce) {
+  .reviews-marquee__track { animation: none; }
+  .reviews-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    scroll-snap-type: x mandatory;
+  }
+  .mini-review { scroll-snap-align: center; }
+  .reviews-marquee__set[aria-hidden="true"] { display: none; }
+}
+.reduce-motion .reviews-marquee__track { animation: none; }
+.reduce-motion .reviews-marquee {
+  overflow-x: auto;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.reduce-motion .reviews-marquee__set[aria-hidden="true"] { display: none; }

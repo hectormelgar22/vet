@@ -1,0 +1,323 @@
+@charset "utf-8";
+
+/* ============================================================================
+   Equipo · tarjetas 3D con foto delante y cita detrás
+   Usa los tokens globales de styles.css (--pine, --moss, --amber, --ink...).
+
+   Tres capas anidadas, cada una con su cometido, para que las transformaciones
+   no peleen entre sí (un solo elemento no puede llevar giro e inclinación a la
+   vez sin que una pise a la otra):
+     .flip-card        → la perspectiva y el foco
+     .flip-card__tilt  → inclinación según el cursor + elevación al girar
+     .flip-card__inner → el giro de 180°
+   ========================================================================== */
+
+.team-flip__grid {
+  display: grid;
+  gap: clamp(18px, 2vw, 26px);
+  grid-template-columns: 1fr;
+  perspective: 1800px;
+}
+@media (min-width: 760px) {
+  .team-flip__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.flip-card {
+  --card-accent: var(--pine);
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-l);
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  perspective: 1500px;
+  -webkit-tap-highlight-color: transparent;
+}
+.flip-card--pine  { --card-accent: var(--pine); }
+.flip-card--moss  { --card-accent: var(--moss); }
+.flip-card--amber { --card-accent: var(--amber); }
+
+.flip-card:focus-visible {
+  outline: 3px solid var(--ember);
+  outline-offset: 5px;
+  border-radius: var(--radius-l);
+}
+
+/* Sombra proyectada: vive fuera del volumen 3D para poder crecer cuando la
+   tarjeta se levanta, sin heredar su giro. */
+.flip-card__shadow {
+  position: absolute;
+  z-index: -1;
+  inset: 6% 7% -4%;
+  border-radius: var(--radius-l);
+  background: rgba(11, 33, 30, .55);
+  filter: blur(20px);
+  opacity: .3;
+  will-change: transform, opacity;
+}
+
+.flip-card__tilt,
+.flip-card__inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  border-radius: var(--radius-l);
+}
+.flip-card__inner { will-change: transform; }
+
+/* Canto lateral: da grosor al volumen cuando la tarjeta gira. */
+.flip-card__edge {
+  position: absolute;
+  z-index: 1;
+  inset: 5px -2px;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 70%, white);
+  border-radius: calc(var(--radius-l) - 4px);
+  opacity: .25;
+  transform: translateZ(-10px) translateX(4px);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--card-accent) 32%, transparent);
+  pointer-events: none;
+}
+
+.flip-card__front,
+.flip-card__back {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--radius-l);
+  border: 1px solid rgba(255, 255, 255, .38);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(0deg) translateZ(1px);
+  box-shadow: var(--shadow-m);
+}
+
+/* ------------------------------------------------------------- Cara: foto */
+.flip-card__front {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--mist);
+}
+.flip-card__photo { position: absolute; inset: 0; z-index: 0; }
+.flip-card__photo picture { display: block; width: 100%; height: 100%; }
+.flip-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.97) contrast(1.02);
+}
+
+/* Dos velos: uno general que asienta el conjunto y otro más denso abajo, con
+   un tinte del color de la tarjeta para que cada una tenga carácter propio. */
+.flip-card__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(11, 33, 30, .34) 0%, rgba(11, 33, 30, 0) 34%),
+    linear-gradient(180deg, rgba(11, 33, 30, 0) 40%, rgba(11, 33, 30, .9) 100%),
+    linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--card-accent) 42%, transparent) 100%);
+}
+
+/* Ambas etiquetas caen sobre la zona de foto sin velo denso: cada una lleva su
+   propia píldora de cristal, así el contraste no depende de la fotografía. */
+.flip-card__topline {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 15px 0;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.flip-card__front .flip-card__topline > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(11, 33, 30, .52);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  color: var(--text-onDark);
+}
+.flip-card__front .flip-card__topline span:first-child::before {
+  content: "";
+  width: 6px; height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--card-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--card-accent) 35%, transparent);
+}
+
+.flip-card__body {
+  position: relative;
+  z-index: 2;
+  padding: 18px 20px 20px;
+  color: var(--text-onDark);
+}
+.flip-card__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1.05rem + .8vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  font-variation-settings: 'SOFT' 40, 'opsz' 60;
+}
+.flip-card__role {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.86rem;
+  color: var(--text-onDark-muted);
+}
+
+/* Pista de que la tarjeta gira: se apaga en cuanto lo hace. */
+.flip-card__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 15px;
+  padding: 5px 12px 5px 5px;
+  border-radius: 999px;
+  background: rgba(244, 246, 242, .13);
+  border: 1px solid rgba(244, 246, 242, .22);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-onDark);
+  transition: opacity 260ms var(--ease), transform 260ms var(--ease);
+}
+.flip-card__hint svg {
+  width: 22px; height: 22px;
+  flex: none;
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+}
+.flip-card.flipped .flip-card__hint { opacity: 0; transform: translateY(6px); }
+
+/* --------------------------------------------------------- Cara: la cita */
+.flip-card__back {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  padding: clamp(20px, 2.3vw, 26px);
+  background: var(--ink);
+  background-image:
+    radial-gradient(130% 100% at 100% 0%, color-mix(in srgb, var(--card-accent) 26%, transparent), transparent 62%),
+    radial-gradient(90% 70% at 0% 100%, rgba(46, 125, 107, .22), transparent 60%);
+  border-color: color-mix(in srgb, var(--card-accent) 42%, transparent);
+  color: var(--text-onDark);
+  transform: rotateY(180deg) translateZ(1px);
+}
+/* Mismo grano que en experiencia.html e historias.html: quita el plano digital. */
+.flip-card__back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../img/grain.png");
+  opacity: .18;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Detrás no hay foto: el texto va sobre tinta sólida y el color de la tarjeta
+   se expresa con el punto, nunca coloreando el texto (pino y musgo como texto
+   sobre tinta no llegan al mínimo de contraste). */
+.flip-card__back .flip-card__topline { padding: 0; color: var(--text-onDark-muted); }
+.flip-card__back .flip-card__topline span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text-onDark-muted);
+}
+.flip-card__back .flip-card__topline span:first-child::before {
+  content: "";
+  width: 6px; height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--card-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--card-accent) 35%, transparent);
+}
+
+.flip-card__quote-mark {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 3.1rem;
+  line-height: .7;
+  color: var(--card-accent);
+  opacity: .6;
+  margin-bottom: 10px;
+}
+.flip-card--pine .flip-card__quote-mark { color: var(--sage); opacity: .5; }
+
+.flip-card__quote {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(.98rem, .84rem + .55vw, 1.16rem);
+  line-height: 1.48;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  font-variation-settings: 'SOFT' 40, 'opsz' 40;
+}
+
+.flip-card__back-foot {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(244, 246, 242, .18);
+}
+.flip-card__back-foot picture { display: block; flex: none; }
+.flip-card__back-foot img {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(244, 246, 242, .55);
+}
+.flip-card__back-foot strong {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--paper);
+}
+.flip-card__back-foot > span > span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-onDark-muted);
+}
+
+/* Respaldo en CSS puro: si GSAP no llega, la clase .flipped sigue girando la
+   tarjeta. En cuanto hay JS, GSAP toma el mando y se desactiva la transición. */
+.flip-card__inner { transition: transform 760ms cubic-bezier(.77, 0, .175, 1); }
+.has-js .flip-card__inner { transition: none; }
+.flip-card.flipped .flip-card__inner { transform: rotateY(180deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card__inner { transition: none; }
+  .flip-card.flipped .flip-card__inner { transform: rotateY(180deg); }
+  .flip-card__hint { display: none; }
+}

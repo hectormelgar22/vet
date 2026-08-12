@@ -1,0 +1,364 @@
+@charset "utf-8";
+
+/* ============================================================================
+   Páginas interiores · legales y detalle de servicio
+   Se apoyan en styles.css (tokens, botones, píldora de navegación, pie, FAQ).
+   Aquí solo lo que es propio de una página de contenido.
+   ========================================================================== */
+
+/* ------------------------------------------------------------- Cabecera */
+.page-head {
+  position: relative;
+  padding-top: clamp(140px, 17vh, 190px);
+  padding-bottom: clamp(44px, 6vw, 76px);
+  background:
+    radial-gradient(120% 90% at 88% -10%, rgba(246, 210, 138, .34), transparent 55%),
+    radial-gradient(90% 80% at 0% 108%, rgba(46, 125, 107, .13), transparent 60%),
+    linear-gradient(155deg, #FBF9F3 0%, #EEF5EE 52%, #E7F1E9 100%);
+  overflow: hidden;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  /* Altura mínima de 24 px para cumplir el tamaño de objetivo (WCAG 2.5.8). */
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+.breadcrumb a:hover { color: var(--pine); }
+.breadcrumb [aria-current] { color: var(--text); }
+.breadcrumb__sep { opacity: .5; }
+
+.page-head__title {
+  font-size: var(--step-4);
+  letter-spacing: -0.02em;
+  max-width: 20ch;
+  color: var(--ink);
+}
+.page-head__title em { color: var(--moss); }
+
+.page-head__lede {
+  margin-top: 20px;
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 58ch;
+}
+
+.page-head__meta {
+  margin-top: 26px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------- Cabecera de servicio (con foto) */
+.page-head--service .page-head__grid {
+  display: grid;
+  gap: clamp(28px, 4vw, 48px);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .page-head--service .page-head__grid { grid-template-columns: 1.05fr .95fr; }
+}
+
+.page-head__figure {
+  position: relative;
+  margin: 0;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  box-shadow: var(--shadow-l);
+  aspect-ratio: 4 / 3;
+  background: var(--mist);
+}
+@media (min-width: 900px) {
+  .page-head__figure { aspect-ratio: 4 / 4.4; }
+}
+.page-head__figure img { width: 100%; height: 100%; object-fit: cover; }
+
+.page-head__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+}
+.page-head__badges li {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--pine);
+  background: rgba(255, 255, 255, .72);
+  border: 1px solid var(--mist);
+  padding: 7px 12px;
+  border-radius: 999px;
+}
+
+.page-head__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+/* ------------------------------------------------------------ Contenido */
+/* `min-width: 0` es imprescindible: por defecto un elemento de rejilla vale
+   `min-width: auto` y no puede encoger por debajo de su contenido. Sin esto,
+   la tabla de cookies (560 px) estiraba toda la columna y desbordaba la página
+   en móvil, en vez de desplazarse dentro de su propio contenedor. */
+.prose { max-width: 72ch; min-width: 0; }
+.prose > * + * { margin-top: 20px; }
+.prose h2 {
+  margin-top: clamp(40px, 5vw, 60px);
+  font-size: var(--step-3);
+  letter-spacing: -0.02em;
+}
+.prose h3 {
+  margin-top: 32px;
+  font-size: var(--step-2);
+  letter-spacing: -0.015em;
+}
+.prose p, .prose li { color: var(--text-muted); line-height: 1.68; }
+.prose strong { color: var(--text); font-weight: 600; }
+.prose a {
+  color: var(--pine);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose a:hover { color: var(--ember-ink); }
+
+.prose ul, .prose ol { display: grid; gap: 10px; padding-left: 0; }
+.prose ul li { position: relative; padding-left: 24px; }
+.prose ul li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 11px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--moss);
+}
+.prose ol { counter-reset: n; }
+.prose ol li { position: relative; padding-left: 34px; counter-increment: n; }
+.prose ol li::before {
+  content: counter(n, decimal-leading-zero);
+  position: absolute;
+  left: 0; top: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--moss);
+}
+
+.prose dl { display: grid; gap: 18px; }
+.prose dt { font-weight: 600; color: var(--text); }
+.prose dd { margin: 6px 0 0; color: var(--text-muted); line-height: 1.68; }
+
+/* Tabla de cookies */
+.table-wrap { overflow-x: auto; margin-top: 22px; }
+.data-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.data-table th, .data-table td {
+  text-align: left;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--mist);
+  vertical-align: top;
+}
+.data-table th {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--pine);
+  background: var(--mist-soft);
+}
+.data-table td { color: var(--text-muted); }
+.data-table code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  color: var(--text);
+  background: var(--mist-soft);
+  padding: 2px 6px;
+  border-radius: 5px;
+}
+
+/* Aviso de borrador de los textos legales */
+.draft-note {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 20px 22px;
+  margin-bottom: clamp(30px, 4vw, 44px);
+  border-radius: var(--radius);
+  border: 1px solid var(--amber);
+  background: #FDF6E6;
+  color: var(--text);
+}
+.draft-note svg { width: 22px; height: 22px; flex: none; color: var(--ember-ink); margin-top: 2px; }
+.draft-note p { margin: 0; font-size: 0.94rem; line-height: 1.6; }
+.draft-note strong { display: block; margin-bottom: 4px; }
+
+/* Hueco por rellenar por el cliente: visible a propósito */
+.todo {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  padding: 2px 8px;
+  border-radius: 5px;
+  background: #FDF0D6;
+  border: 1px dashed var(--amber);
+  color: var(--ember-ink);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------- Bloques de página servicio */
+.fact-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+  margin-top: clamp(30px, 4vw, 44px);
+}
+@media (min-width: 700px) { .fact-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.fact {
+  padding: 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+  box-shadow: var(--shadow-s);
+}
+.fact__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 600;
+  color: var(--pine);
+  line-height: 1;
+}
+.fact__label { display: block; margin-top: 8px; font-size: 0.92rem; color: var(--text-muted); }
+
+.step-cards { display: grid; gap: 16px; margin-top: 28px; }
+@media (min-width: 820px) { .step-cards { grid-template-columns: repeat(2, 1fr); } }
+
+.step-card {
+  padding: clamp(22px, 2.6vw, 30px);
+  border-radius: var(--radius);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+  box-shadow: var(--shadow-s);
+}
+.step-card__num {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--ember-ink);
+  margin-bottom: 12px;
+}
+.step-card h3 { font-size: var(--step-2); letter-spacing: -0.015em; margin-bottom: 8px; }
+.step-card p { color: var(--text-muted); line-height: 1.62; }
+
+/* Aviso clínico destacado */
+.clinical-note {
+  margin-top: clamp(32px, 4vw, 48px);
+  padding: clamp(22px, 3vw, 30px);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--ember);
+  background: var(--mist-soft);
+}
+.clinical-note h3 { font-size: var(--step-2); margin-bottom: 10px; }
+.clinical-note p { color: var(--text); line-height: 1.65; }
+.clinical-note p + p { margin-top: 10px; }
+
+/* Otros servicios */
+.related__grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr;
+  margin-top: 28px;
+}
+@media (min-width: 700px) { .related__grid { grid-template-columns: repeat(3, 1fr); } }
+
+.related__card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.related__card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-m);
+  border-color: var(--sage);
+}
+.related__card strong {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+.related__card span { font-size: 0.9rem; color: var(--text-muted); }
+
+/* Llamada final */
+.page-cta {
+  background: var(--pine);
+  color: var(--text-onDark);
+  border-radius: var(--radius-l);
+  padding: clamp(32px, 5vw, 56px);
+  display: grid;
+  gap: 22px;
+  align-items: center;
+}
+@media (min-width: 860px) { .page-cta { grid-template-columns: 1.4fr .6fr; } }
+.page-cta h2 { font-size: var(--step-3); color: var(--paper); letter-spacing: -0.02em; }
+.page-cta p { margin-top: 12px; color: var(--text-onDark-muted); max-width: 46ch; }
+.page-cta__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (min-width: 860px) { .page-cta__actions { justify-content: flex-end; } }
+
+/* Índice lateral de los textos legales */
+.legal-layout { display: grid; gap: clamp(30px, 4vw, 54px); align-items: start; }
+.legal-layout > * { min-width: 0; }
+@media (min-width: 960px) { .legal-layout { grid-template-columns: 240px 1fr; } }
+
+.legal-toc {
+  position: static;
+  padding: 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--mist);
+  background: var(--paper);
+}
+@media (min-width: 960px) { .legal-toc { position: sticky; top: 118px; } }
+.legal-toc h2 {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.legal-toc ol { display: grid; gap: 9px; counter-reset: toc; }
+.legal-toc a {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  min-height: 28px;   /* objetivo táctil cómodo (WCAG 2.5.8) */
+}
+.legal-toc a:hover { color: var(--pine); text-decoration: underline; text-underline-offset: 3px; }

@@ -1,0 +1,11 @@
+# Python (generador de páginas en .build/)
+__pycache__/
+*.pyc
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/

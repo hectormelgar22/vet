@@ -1,0 +1,319 @@
+@charset "utf-8";
+
+/* ============================================================================
+   Historias felices · Perspective Zoom Effect on Scroll
+   Adaptación del efecto (GSAP ScrollSmoother + SplitText) al lenguaje de
+   Vitalis: fondo claro y cálido (el mismo del hero), texto tinta, acentos
+   verdes, Fraunces/Figtree y fotos cuadradas de mascota bien visibles.
+   ========================================================================== */
+
+:root {
+  --ink: #0B211E;
+  --linen: #F4F6F2;
+  --amber: #E8B04B;
+  --ember: #E4572E;
+  --pine: #0F3D36;
+  --moss: #2E7D6B;
+  --moss-dark: #1C5A4B;   /* verde que pasa AA sobre el fondo claro */
+
+  --font-main: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  /* Mismo fondo cálido acordado para el hero de la web. */
+  background:
+    linear-gradient(155deg, #FBF9F3 0%, #EEF5EE 52%, #E7F1E9 100%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Grano sutil, coherente con la página de experiencia. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("../img/grain.png");
+  background-repeat: repeat;
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px; top: -60px;
+  z-index: 1200;
+  background: var(--ink);
+  color: var(--linen);
+  padding: 12px 20px;
+  border-radius: 0 0 10px 10px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 0; }
+:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+
+/* ------------------------------------------------------------------ UI fija */
+.exp-brand {
+  position: fixed;
+  top: 1.5rem; left: 2rem;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.exp-brand__mark {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 9px;
+  background: var(--pine);
+  color: var(--ember);
+}
+.exp-brand__mark svg { width: 20px; height: 20px; }
+.exp-brand__text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+.exp-back {
+  position: fixed;
+  top: 1.9rem; right: 2rem;
+  z-index: 1000;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  padding: 8px 14px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.exp-back:hover { color: var(--pine); background: #fff; }
+
+main { margin: 0; }
+
+/* ------------------------------------------------------- Título al fondo 3D */
+/* Sin `nowrap`: se ajusta al ancho y nunca se corta por los lados. */
+.heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 1.05rem + 2.5vw, 3rem);
+  line-height: 1.14;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  opacity: 0.12;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  width: min(660px, 46vw);
+  transform: translate3d(-50%, -50%, -2000px);
+  font-variation-settings: 'SOFT' 50, 'opsz' 130;
+  z-index: 4;
+}
+.heading em {
+  font-style: italic;
+  color: var(--moss-dark);
+}
+
+/* ------------------------------------------------------- Collage en zoom 3D */
+.zoom-container {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  perspective: 100svh;
+  width: 100vw;
+}
+
+.zoom-item {
+  position: absolute;
+  transform-origin: center center;
+}
+/* Arrancan ya visibles (sobre fondo claro) y el zoom las lleva a plena opacidad. */
+.zoom-item[data-layer="3"] { opacity: 0.75; z-index: 3; }
+.zoom-item[data-layer="2"] { opacity: 0.6;  z-index: 2; }
+.zoom-item[data-layer="1"] { opacity: 0.45; z-index: 1; }
+
+/* Fotos cuadradas, con marco blanco para que destaquen sobre el fondo claro. */
+.zoom-item img {
+  width: 100%;
+  /* `height: auto` es imprescindible: si no, el atributo height="640" del HTML
+     gana sobre aspect-ratio y las fotos salen alargadas. */
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+  border: 5px solid #fff;
+  box-shadow: 0 18px 44px rgba(11, 33, 30, 0.18);
+}
+
+/* Reparto alrededor del título: cuatro arriba, dos por lado, cuatro abajo.
+   Tamaños con clamp() para que nunca queden diminutas ni desborden. */
+.zoom-item:nth-child(2)  { top: 10%;    left: 10%;   width: clamp(118px, 13vw, 230px); }
+.zoom-item:nth-child(3)  { top: 5%;     left: 30%;   width: clamp(104px, 11vw, 190px); }
+.zoom-item:nth-child(4)  { top: 7%;     right: 30%;  width: clamp(110px, 12vw, 200px); }
+.zoom-item:nth-child(5)  { top: 11%;    right: 10%;  width: clamp(118px, 13vw, 220px); }
+.zoom-item:nth-child(6)  { top: 33%;    left: 4%;    width: clamp(100px, 10.5vw, 180px); }
+.zoom-item:nth-child(7)  { top: 35%;    right: 4%;   width: clamp(100px, 10.5vw, 180px); }
+.zoom-item:nth-child(8)  { bottom: 30%; left: 13%;   width: clamp(94px, 10vw, 170px); }
+.zoom-item:nth-child(9)  { bottom: 32%; right: 13%;  width: clamp(94px, 10vw, 170px); }
+.zoom-item:nth-child(10) { bottom: 8%;  left: 9%;    width: clamp(112px, 12vw, 210px); }
+.zoom-item:nth-child(11) { bottom: 12%; left: 29%;   width: clamp(104px, 11vw, 185px); }
+.zoom-item:nth-child(12) { bottom: 11%; right: 29%;  width: clamp(104px, 11vw, 185px); }
+.zoom-item:nth-child(13) { bottom: 7%;  right: 9%;   width: clamp(118px, 13vw, 225px); }
+
+/* ------------------------------------------------------- Frase que se revela */
+.section-stick {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6vh 6vw;
+}
+.opacity-reveal {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 1rem + 3vw, 3.6rem);
+  line-height: 1.24;
+  letter-spacing: -0.02em;
+  max-width: 22ch;
+  color: var(--ink);
+  font-variation-settings: 'SOFT' 40, 'opsz' 120;
+}
+
+/* --------------------------------------------- Carrusel de reseñas (marquee) */
+/* El componente vive en assets/css/marquee.css (compartido con index.html).
+   Aquí solo el hueco que ocupa dentro de esta página. */
+.marquee-section {
+  padding: 4vh 0 8vh;
+  overflow: hidden;
+}
+
+/* -------------------------------------------------------------- Cierre / CTA */
+.closing {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1.4rem;
+  padding: 10vh 6vw;
+}
+.closing__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--moss-dark);
+}
+.closing__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+.closing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 0.6rem;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.btn--solid { background: var(--pine); color: #fff; }
+.btn--solid:hover { transform: translateY(-2px); background: var(--ink); }
+.btn--ghost { border-color: rgba(11, 33, 30, 0.35); color: var(--ink); }
+.btn--ghost:hover { border-color: var(--ink); background: rgba(11, 33, 30, 0.06); }
+
+/* ------------------------------------------------------------- Responsive */
+@media (max-width: 900px) {
+  .heading { width: min(560px, 74vw); }
+}
+
+@media (max-width: 768px) {
+  .exp-brand { top: 1rem; left: 1.2rem; }
+  .exp-back { top: 1.1rem; right: 1.2rem; }
+  .heading { width: 80vw; }
+  /* En móvil solo caben seis fotos bien; el resto se ocultan para no amontonar. */
+  .zoom-item:nth-child(3),
+  .zoom-item:nth-child(4),
+  .zoom-item:nth-child(9),
+  .zoom-item:nth-child(11),
+  .zoom-item:nth-child(12),
+  .zoom-item:nth-child(13) { display: none; }
+
+  /* Ojo: hay que anular explícitamente el `left`/`top` del escritorio, porque
+     con la misma especificidad `left` gana sobre `right` y descoloca la foto. */
+  .zoom-item:nth-child(2)  { top: 6%;  bottom: auto; left: 5%;  right: auto; width: 38vw; }
+  .zoom-item:nth-child(5)  { top: 4%;  bottom: auto; right: 5%; left: auto;  width: 32vw; }
+  .zoom-item:nth-child(6)  { top: 33%; bottom: auto; left: 3%;  right: auto; width: 26vw; }
+  .zoom-item:nth-child(7)  { top: 35%; bottom: auto; right: 3%; left: auto;  width: 26vw; }
+  .zoom-item:nth-child(8)  { bottom: 6%; top: auto;  left: 5%;  right: auto; width: 34vw; }
+  .zoom-item:nth-child(10) { bottom: 8%; top: auto;  right: 5%; left: auto;  width: 38vw; }
+}
+
+/* --------------------------------------------- Movimiento reducido / sin JS */
+/* Sin efecto de zoom: el collage se convierte en una galería en rejilla. */
+.reduce-motion #smooth-wrapper,
+.reduce-motion #smooth-content { transform: none !important; }
+.reduce-motion .zoom-container {
+  height: auto;
+  perspective: none;
+  overflow: visible;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  padding: 7rem 1.5rem 3rem;
+  width: 100%;
+}
+.reduce-motion .heading {
+  position: static;
+  transform: none;
+  opacity: 1;
+  width: auto;
+  grid-column: 1 / -1;
+  margin-bottom: 1rem;
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.4rem);
+}
+.reduce-motion .zoom-item {
+  position: static;
+  display: block !important;
+  width: 100% !important;
+  opacity: 1 !important;
+  inset: auto !important;
+}
+.reduce-motion .opacity-reveal { opacity: 1 !important; }
+.reduce-motion .section-stick { min-height: 60vh; }

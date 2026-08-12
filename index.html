@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- ============================================================================
+     CONSENT MODE v2 — debe ejecutarse ANTES de cualquier etiqueta de medición.
+     Todo denegado por defecto (RGPD / LOPDGDD / AEPD): sin consentimiento previo
+     no se escriben cookies de analítica ni publicitarias.
+     ============================================================================ -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
+
+  /* Rehidrata la decisión guardada antes de que cargue ninguna etiqueta. */
+  (function () {
+    try {
+      var saved = JSON.parse(localStorage.getItem('vc_consent_v2') || 'null');
+      if (saved && saved.state) {
+        gtag('consent', 'update', {
+          'ad_storage': saved.state,
+          'ad_user_data': saved.state,
+          'ad_personalization': saved.state,
+          'analytics_storage': saved.state
+        });
+      }
+    } catch (e) { /* almacenamiento no disponible: se mantiene todo denegado */ }
+  })();
+</script>
+<!-- TODO CLIENTE: descomentar y sustituir G-XXXXXXXXXX por el ID real de GA4.
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX', { 'anonymize_ip': true });
+</script>
+-->
+
+<!-- Marca de JS activo: las animaciones de entrada solo ocultan contenido si
+     hay JavaScript. Sin JS (o si falla la CDN de GSAP) la página se ve entera. -->
+<script>document.documentElement.classList.add('js');</script>
+
+<title>Veterinario en Madrid · Urgencias 24 h, cirugía y hospitalización | Clínica Veterinaria Vitalis</title>
+<meta name="description" content="Clínica veterinaria en Madrid con urgencias 24 h los 365 días. Consulta general, vacunación, microchip, cirugía y hospitalización con vigilancia continua. Presupuesto cerrado antes de intervenir.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<!-- TODO CLIENTE: sustituir el dominio real en canonical y en todas las URLs absolutas. -->
+<link rel="canonical" href="https://www.vitalisveterinaria.es/">
+<meta name="theme-color" content="#0B211E">
+<meta name="format-detection" content="telephone=yes">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Clínica Veterinaria Vitalis">
+<meta property="og:title" content="Veterinario en Madrid · Urgencias 24 h, cirugía y hospitalización">
+<meta property="og:description" content="Equipo de guardia las 24 horas, los 365 días. Te explicamos qué le pasa a tu animal y qué vamos a hacer, con presupuesto cerrado antes de intervenir.">
+<meta property="og:url" content="https://www.vitalisveterinaria.es/">
+<meta property="og:image" content="https://www.vitalisveterinaria.es/assets/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Clínica Veterinaria Vitalis, clínica veterinaria en Madrid con urgencias 24 horas.">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Veterinario en Madrid · Urgencias 24 h">
+<meta name="twitter:description" content="Consulta, cirugía y hospitalización con equipo de guardia 24 h los 365 días.">
+<meta name="twitter:image" content="https://www.vitalisveterinaria.es/assets/img/og-cover.jpg">
+<meta name="twitter:image:alt" content="Clínica veterinaria en Madrid, urgencias 24 horas.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F3D36'/%3E%3Cpath d='M4 17h5l2-6 3 12 3-9 2 3h9' fill='none' stroke='%23E4572E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/img/hero-poster.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Figtree:wght@300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/marquee.css?v=1">
+<link rel="stylesheet" href="assets/css/styles.css?v=9">
+<link rel="stylesheet" href="assets/css/services.css?v=1">
+<link rel="stylesheet" href="assets/css/team-flip.css?v=4">
+
+<!-- ============================================================================
+     DATOS ESTRUCTURADOS · VeterinaryCare (subtipo específico de MedicalBusiness,
+     no el genérico LocalBusiness) + WebSite + FAQPage.
+
+     IDENTIDAD DE MUESTRA — "Clínica Veterinaria Vitalis" es un nombre, NAP
+     (nombre, dirección, teléfono), equipo, aggregateRating y reseñas
+     FICTICIOS para que la maqueta se vea y se audite como una web terminada.
+     Nada de esto corresponde a un negocio real todavía.
+
+     TODO CLIENTE (antes de publicar con un cliente real):
+       1. Sustituir nombre, dirección, teléfono, email, geo y nº de colegiado
+          por los datos reales — un NAP inventado en producción daña el Local
+          Pack y puede confundir a quien busque la clínica.
+       2. Sustituir aggregateRating y el array "review" por reseñas reales y
+          verificables, con el mismo texto visible en la página. Publicar
+          valoraciones inventadas como si fueran reales incumple las
+          políticas de Google (spam de fragmentos enriquecidos) y puede
+          acarrear una acción manual sobre el dominio real.
+     ============================================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VeterinaryCare",
+      "@id": "https://www.vitalisveterinaria.es/#clinica",
+      "name": "Clínica Veterinaria Vitalis",
+      "alternateName": "Vitalis Veterinaria Madrid",
+      "description": "Clínica veterinaria en Madrid con urgencias 24 horas los 365 días del año. Consulta general y medicina interna, vacunación y medicina preventiva, identificación por microchip, cirugía de tejidos blandos y traumatología, anestesia monitorizada y hospitalización con vigilancia continua.",
+      "url": "https://www.vitalisveterinaria.es/",
+      "telephone": "+34910305305",
+      "email": "citas@vitalisveterinaria.es",
+      "image": "https://www.vitalisveterinaria.es/assets/img/og-cover.jpg",
+      "logo": "https://www.vitalisveterinaria.es/assets/img/og-cover.jpg",
+      "priceRange": "€€",
+      "currenciesAccepted": "EUR",
+      "paymentAccepted": "Efectivo, Tarjeta, Financiación",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle de Alcalá, 415",
+        "addressLocality": "Madrid",
+        "addressRegion": "Comunidad de Madrid",
+        "postalCode": "28027",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "40.433100",
+        "longitude": "-3.639500"
+      },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=40.433100,-3.639500",
+      "areaServed": [
+        { "@type": "City", "name": "Madrid" },
+        { "@type": "AdministrativeArea", "name": "Comunidad de Madrid" }
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "00:00",
+          "closes": "23:59",
+          "description": "Urgencias veterinarias 24 horas, 365 días al año."
+        }
+      ],
+      "availableService": [
+        { "@type": "MedicalProcedure", "name": "Consulta veterinaria general y medicina interna" },
+        { "@type": "MedicalProcedure", "name": "Vacunación y medicina preventiva" },
+        { "@type": "MedicalProcedure", "name": "Identificación por microchip y pasaporte" },
+        { "@type": "MedicalProcedure", "name": "Cirugía de tejidos blandos" },
+        { "@type": "MedicalProcedure", "name": "Traumatología veterinaria" },
+        { "@type": "MedicalProcedure", "name": "Anestesia monitorizada y control del dolor" },
+        { "@type": "MedicalProcedure", "name": "Hospitalización con vigilancia 24 horas" },
+        { "@type": "MedicalProcedure", "name": "Urgencias veterinarias 24 horas" }
+      ],
+      "knowsAbout": [
+        "Medicina interna veterinaria",
+        "Medicina preventiva y vacunación",
+        "Identificación por microchip",
+        "Cirugía de tejidos blandos",
+        "Traumatología y cirugía ortopédica",
+        "Anestesia veterinaria monitorizada",
+        "Analgesia y control del dolor",
+        "Hospitalización y cuidados intensivos",
+        "Urgencias veterinarias 24 horas"
+      ],
+      "employee": [
+        {
+          "@type": "Person",
+          "name": "Elena Marín",
+          "jobTitle": "Directora clínica · Medicina interna",
+          "identifier": "Colegiada nº 28345 · Colegio Oficial de Veterinarios de Madrid"
+        },
+        {
+          "@type": "Person",
+          "name": "Rubén Castillo",
+          "jobTitle": "Cirugía y traumatología",
+          "identifier": "Colegiado nº 28812 · Colegio Oficial de Veterinarios de Madrid"
+        },
+        {
+          "@type": "Person",
+          "name": "Irene Palop",
+          "jobTitle": "Anestesia y hospitalización",
+          "identifier": "Colegiada nº 29104 · Colegio Oficial de Veterinarios de Madrid"
+        }
+      ],
+      "sameAs": [
+        "https://www.google.com/maps/search/?api=1&query=Cl%C3%ADnica+Veterinaria+Vitalis+Calle+de+Alcal%C3%A1+415+Madrid",
+        "https://www.instagram.com/vitalisveterinaria",
+        "https://www.facebook.com/vitalisveterinaria"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "bestRating": "5",
+        "worstRating": "1",
+        "reviewCount": "187"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Carmen R." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Llegamos a las tres de la mañana con la perra convulsionando. Nos atendieron en el momento y, mientras la estabilizaban, alguien salió cada veinte minutos a contarnos cómo iba. Eso no se paga."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Nacho M." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Me dieron el presupuesto de la operación por escrito antes de entrar a quirófano y la factura final fue exactamente esa. Después de dos clínicas anteriores, casi me sorprendió."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Paula S." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Mi gata es imposible en el veterinario. La sala felina y que no la forzaran cambiaron la visita entera: salió andando sola del transportín."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Sergio L." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Estuvo cinco días ingresado tras la cirugía. Llamada todos los días a la misma hora, con lo bueno y lo malo. Volví a dormir sabiendo que alguien estaba con él de madrugada."
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.vitalisveterinaria.es/#website",
+      "url": "https://www.vitalisveterinaria.es/",
+      "name": "Clínica Veterinaria Vitalis",
+      "inLanguage": "es-ES",
+      "publisher": { "@id": "https://www.vitalisveterinaria.es/#clinica" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.vitalisveterinaria.es/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Atendéis urgencias sin cita previa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Hay equipo de guardia las 24 horas los 365 días. Aun así, llama antes de salir de casa: mientras llegas preparamos la sala, el material y la medicación, y ganamos los minutos que más pesan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuesta una urgencia veterinaria?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La consulta de urgencia tiene un precio cerrado que te decimos por teléfono antes de venir. Cualquier prueba, ingreso o cirugía se presupuesta por escrito y se aprueba antes de hacerse. No iniciamos ningún procedimiento con coste sin tu autorización."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo quedarme con mi animal durante la consulta?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Siempre que su seguridad y la del equipo lo permitan, sí. En muchos casos el animal se maneja mejor contigo delante. En quirófano y en zona de hospitalización no es posible, pero te informamos por teléfono en cada cambio relevante."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué pasa si mi perro o mi gato necesita quedarse ingresado?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La hospitalización cuenta con vigilancia presencial 24 horas, control de constantes y registro de cada dosis administrada. Recibes un parte diario y puedes concertar visita en el horario acordado con el veterinario responsable del caso."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Trabajáis con seguros de salud para mascotas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Emitimos toda la documentación clínica y las facturas desglosadas que piden las aseguradoras. Dinos con cuál trabajas al pedir cita y te indicamos qué informes necesitarás para el reembolso."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo preparo a mi animal para una cirugía?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Te damos por escrito las pautas de ayuno, la medicación previa y la hora exacta de ingreso. Antes de cada anestesia se hace evaluación preanestésica y se monitoriza de forma continua durante toda la intervención y el despertar."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+<!-- Barra de progreso: constante vital de la página. Decorativa. -->
+<div class="vitals-spine" aria-hidden="true"><span class="vitals-spine__fill"></span></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="brand" href="#inicio" aria-label="Clínica Veterinaria Vitalis, inicio">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><path d="M4 21h6.5l2.6-8 3.9 16 3.9-12.5 2.6 4.5H36" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="brand__text">
+        <strong>Clínica Veterinaria Vitalis</strong>
+        <span>Veterinaria · Madrid</span>
+      </span>
+    </a>
+
+    <nav class="nav__links" id="menu" aria-label="Navegación principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#visita">Tu visita</a>
+      <a href="#instalaciones">Instalaciones</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#faq">Preguntas</a>
+    </nav>
+
+    <div class="nav__actions">
+      <!-- TODO CLIENTE: teléfono real en href y en el texto. -->
+      <a class="nav__call" href="tel:+34910305305">
+        <span class="pulse-dot pulse-dot--live" aria-hidden="true"></span>
+        <span class="nav__call-text">
+          <span class="nav__call-label">Urgencias 24 h</span>
+          <strong>910 305 305</strong>
+        </span>
+      </a>
+      <a class="btn btn--solid" href="#contacto">Pedir cita</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="contenido">
+
+  <!-- ══════════════════════════ HERO ══════════════════════════ -->
+  <!-- Dos tiempos: (1) el mensaje, que gira como un rollo de película al bajar;
+       (2) el vídeo, que crece hasta llenar la pantalla y revela el texto. -->
+  <section class="hero" id="inicio">
+
+    <div class="hero__stage">
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <div class="hero__intro">
+        <p class="eyebrow eyebrow--soft js-hero">
+          <span class="pulse-dot pulse-dot--live" aria-hidden="true"></span>
+          Clínica veterinaria en Madrid · Siempre a tu lado
+        </p>
+
+        <h1 class="hero__title js-hero">
+          Tu veterinario de <em>confianza</em> en Madrid
+        </h1>
+
+        <p class="hero__sub js-hero">
+          Cuidamos la salud de tu mejor amigo con cariño y sin prisas: consulta,
+          vacunas, cirugía y hospitalización, con un equipo que te explica cada
+          paso y te acompaña. Y si algo urge, aquí estamos las 24 horas.
+        </p>
+
+        <div class="hero__cta js-hero">
+          <a class="btn btn--solid btn--lg" href="#contacto">Pedir cita</a>
+          <a class="btn btn--outline btn--lg" href="tel:+34910305305">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z"/></svg>
+            Llamar · 910 305 305
+          </a>
+        </div>
+
+        <ul class="hero__proof js-hero">
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8.6a4.1 4.1 0 0 1 7 2A4.6 4.6 0 0 1 19 10.6c0 5-7 9.4-7 9.4z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+            Más de 30.000 familias nos confían su mascota
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 9h8M8 12.5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            Te lo explicamos todo, sin tecnicismos
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5.2l3.4 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            Urgencias 24 h, todos los días del año
+          </li>
+        </ul>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Desliza</span>
+        <span class="scroll-hint__line"></span>
+      </div>
+    </div>
+
+    <!-- El vídeo crece con el scroll hasta llenar la pantalla. -->
+    <div class="hero__scroll">
+      <div class="hero__sticky">
+        <div class="hero__video-frame">
+          <video class="hero__video" muted loop playsinline preload="none"
+                 poster="assets/img/hero-poster.jpg"
+                 data-src-lg="assets/video/hero-720.mp4"
+                 data-src-sm="assets/video/hero-360.mp4"
+                 aria-label="Un perro recibe caricias con calma durante su revisión veterinaria."></video>
+          <div class="hero__media-shade" aria-hidden="true"></div>
+
+          <div class="hero__video-overlay">
+            <p class="hero__video-caption">Así cuidamos</p>
+            <div class="hero__video-content">
+              <h2>Tiempo para cada paciente</h2>
+              <p>
+                El buen diagnóstico no tiene prisa: exploramos sin reloj, escuchamos
+                lo que nos cuentas y te explicamos cada paso hasta que todo encaje.
+              </p>
+            </div>
+          </div>
+
+          <figure class="trust-card">
+            <div class="trust-card__stars" role="img" aria-label="Valoración 4,9 de 5">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+            </div>
+            <figcaption class="trust-card__body">
+              <strong>4,9 / 5</strong>
+              <span>187 familias contentas</span>
+            </figcaption>
+            <p class="trust-card__open">
+              <span class="dot-live" aria-hidden="true"></span> Abierto ahora
+            </p>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ CIFRAS ══════════════════════════ -->
+  <section class="stats" aria-label="La clínica en cifras">
+    <div class="wrap stats__grid">
+      <!-- TODO CLIENTE: cifras reales. Las de muestra son ilustrativas. -->
+      <div class="stat js-reveal">
+        <span class="stat__num" data-count="24" data-suffix=" h">24 h</span>
+        <span class="stat__label">de guardia presencial, no teléfono de aviso</span>
+      </div>
+      <div class="stat js-reveal">
+        <span class="stat__num" data-count="18" data-suffix="">18</span>
+        <span class="stat__label">años atendiendo animales en Madrid</span>
+      </div>
+      <div class="stat js-reveal">
+        <span class="stat__num" data-count="31" data-suffix=".000">31.000</span>
+        <span class="stat__label">historias clínicas abiertas</span>
+      </div>
+      <div class="stat js-reveal">
+        <span class="stat__num">4,9<span class="stat__unit">/5</span></span>
+        <span class="stat__label">valoración media de los tutores</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TRIAJE: el elemento firma de la página ═══════════ -->
+  <section class="section triage-section" id="triaje" aria-labelledby="triage-title">
+    <div class="wrap">
+      <div class="triage js-reveal">
+        <div class="triage__intro">
+          <p class="eyebrow">Orientación en 10 segundos</p>
+          <h2 class="triage__title" id="triage-title">¿Qué le pasa?</h2>
+          <p class="triage__hint">
+            Dinos qué animal es y qué has notado. Te decimos si esto es para hoy,
+            para ahora mismo o puede esperar a una cita tranquila.
+          </p>
+        </div>
+
+        <div class="triage__panel">
+          <fieldset class="triage__step">
+            <legend><span class="triage__num">1</span> Tu animal</legend>
+            <div class="chips" data-group="especie">
+              <button class="chip is-active" type="button" data-value="perro" aria-pressed="true">Perro</button>
+              <button class="chip" type="button" data-value="gato" aria-pressed="false">Gato</button>
+              <button class="chip" type="button" data-value="otro" aria-pressed="false">Otro animal</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="triage__step">
+            <legend><span class="triage__num">2</span> Qué has notado</legend>
+            <div class="chips chips--wrap" data-group="motivo">
+              <button class="chip is-active" type="button" data-value="apetito" aria-pressed="true">No come ni bebe</button>
+              <button class="chip" type="button" data-value="digestivo" aria-pressed="false">Vómitos o diarrea</button>
+              <button class="chip" type="button" data-value="trauma" aria-pressed="false">Cojea o se ha golpeado</button>
+              <button class="chip" type="button" data-value="herida" aria-pressed="false">Bulto, herida o sangrado</button>
+              <button class="chip" type="button" data-value="respira" aria-pressed="false">Le cuesta respirar</button>
+              <button class="chip" type="button" data-value="preventiva" aria-pressed="false">Revisión, vacunas o chip</button>
+              <button class="chip" type="button" data-value="cirugia" aria-pressed="false">Cirugía o postoperatorio</button>
+            </div>
+          </fieldset>
+
+          <output class="triage__result" id="triage-result" aria-live="polite">
+            <!-- Contenido inyectado por assets/js/main.js -->
+          </output>
+
+          <p class="triage__legal">
+            Esto es orientación, no un diagnóstico. Solo una exploración presencial
+            permite valorar a tu animal. Ante la duda, llama.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ SERVICIOS ══════════════════════════ -->
+  <section class="section services" id="servicios" aria-labelledby="servicios-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Servicios</p>
+        <h2 class="section__title" id="servicios-title">
+          Lo que hacemos, dicho <em>sin eufemismos</em>
+        </h2>
+        <p class="section__lede">
+          Somos una clínica de medicina y cirugía. No prometemos todas las
+          especialidades del mundo: hacemos bien lo que ves aquí y, cuando un caso
+          exige a alguien más, te decimos a quién derivarte.
+        </p>
+      </header>
+
+      <!-- Lista + imagen sincronizadas. Todos los textos están en el HTML:
+           la sección se lee entera aunque el script no llegue a cargar. -->
+      <div class="svc">
+        <figure class="svc__media">
+          <div class="svc__layer">
+            <picture>
+              <source type="image/webp" srcset="assets/img/servicios/urgencias.webp">
+              <img src="assets/img/servicios/urgencias.jpg" width="900" height="1120"
+                   loading="lazy" decoding="async" alt="Dos veterinarios colocan una vía a un perro durante una urgencia.">
+            </picture>
+          </div>
+          <figcaption class="svc__caption">Urgencias · 24 h, 365 días</figcaption>
+        </figure>
+
+        <div class="svc__panel-col">
+          <div class="svc__list">
+            <div class="svc__rows" role="list" aria-label="Servicios de la clínica">
+            <a class="svc__row is-active" href="servicio-urgencias.html" role="listitem" id="svc-tab-0" aria-current="true"
+                    data-name="Urgencias 24 h" data-caption="Urgencias · 24 h, 365 días"
+                    data-img="assets/img/servicios/urgencias" data-alt="Dos veterinarios colocan una vía a un perro durante una urgencia.">
+              <span class="svc__row-num">01</span>
+              <span class="svc__row-label">Urgencias 24 h</span>
+            </a>
+            <a class="svc__row" href="servicio-consulta.html" role="listitem" id="svc-tab-1"
+                    data-name="Consulta y medicina interna" data-caption="Consulta · Medicina interna"
+                    data-img="assets/img/servicios/consulta" data-alt="Veterinario explora a un perro sobre la mesa de consulta.">
+              <span class="svc__row-num">02</span>
+              <span class="svc__row-label">Consulta y medicina interna</span>
+            </a>
+            <a class="svc__row" href="servicio-preventiva.html" role="listitem" id="svc-tab-2"
+                    data-name="Vacunación y preventiva" data-caption="Preventiva · Calendario propio"
+                    data-img="assets/img/servicios/vacunacion" data-alt="Veterinaria administra una vacuna a un perro pequeño.">
+              <span class="svc__row-num">03</span>
+              <span class="svc__row-label">Vacunación y preventiva</span>
+            </a>
+            <a class="svc__row" href="servicio-identificacion.html" role="listitem" id="svc-tab-3"
+                    data-name="Microchip y pasaporte" data-caption="Identificación · Registro oficial"
+                    data-img="assets/img/servicios/identificacion" data-alt="Veterinario implanta un microchip a un perro que sujeta su tutor.">
+              <span class="svc__row-num">04</span>
+              <span class="svc__row-label">Microchip y pasaporte</span>
+            </a>
+            <a class="svc__row" href="servicio-anestesia.html" role="listitem" id="svc-tab-4"
+                    data-name="Anestesia y dolor" data-caption="Anestesia · Monitorización"
+                    data-img="assets/img/servicios/anestesia" data-alt="Veterinaria realiza una ecografía de control a un perro.">
+              <span class="svc__row-num">05</span>
+              <span class="svc__row-label">Anestesia y dolor</span>
+            </a>
+            <a class="svc__row" href="servicio-cirugia.html" role="listitem" id="svc-tab-5"
+                    data-name="Cirugía y traumatología" data-caption="Quirófano · Cirugía propia"
+                    data-img="assets/img/servicios/cirugia" data-alt="Equipo quirúrgico durante una intervención.">
+              <span class="svc__row-num">06</span>
+              <span class="svc__row-label">Cirugía y traumatología</span>
+            </a>
+            <a class="svc__row" href="servicio-hospitalizacion.html" role="listitem" id="svc-tab-6"
+                    data-name="Hospitalización 24 h" data-caption="Hospitalización · Vigilancia 24 h"
+                    data-img="assets/img/servicios/hospitalizacion" data-alt="Perro descansando abrigado durante su recuperación.">
+              <span class="svc__row-num">07</span>
+              <span class="svc__row-label">Hospitalización 24 h</span>
+            </a>
+            </div>
+            <span class="svc__strip" aria-hidden="true"></span>
+          </div>
+
+          <div class="svc__foot">
+            <div class="svc__panels">
+            <article class="svc__panel" id="svc-panel-0">
+              <h3 class="svc__panel-title">Urgencias 24 h</h3>
+              <p class="svc__desc">Veterinario y auxiliar dentro de la clínica a cualquier hora. Llama antes de salir: preparamos sala, vía y medicación mientras llegas, y entras directo a la mesa de exploración.</p>
+              <ul class="svc__tags">
+                <li>Estabilización</li>
+                <li>Oxigenoterapia</li>
+                <li>Ingreso directo</li>
+              </ul>
+            </article>
+            <article class="svc__panel" id="svc-panel-1">
+              <h3 class="svc__panel-title">Consulta y medicina interna</h3>
+              <p class="svc__desc">Exploración completa sin reloj en la mano. Si algo no encaja, lo investigamos hasta tener una explicación que se sostenga.</p>
+              <ul class="svc__tags">
+                <li>Analítica propia</li>
+                <li>Ecografía</li>
+                <li>Radiología</li>
+              </ul>
+            </article>
+            <article class="svc__panel" id="svc-panel-2">
+              <h3 class="svc__panel-title">Vacunación y preventiva</h3>
+              <p class="svc__desc">Calendario adaptado a la edad, la raza y la vida real de tu animal. Te avisamos nosotros cuando toca; no tienes que acordarte.</p>
+              <ul class="svc__tags">
+                <li>Vacunas</li>
+                <li>Desparasitación</li>
+                <li>Revisiones</li>
+              </ul>
+            </article>
+            <article class="svc__panel" id="svc-panel-3">
+              <h3 class="svc__panel-title">Microchip y pasaporte</h3>
+              <p class="svc__desc">Implantación, alta en el registro autonómico y pasaporte europeo en la misma visita, con la documentación lista para viajar.</p>
+              <ul class="svc__tags">
+                <li>Microchip</li>
+                <li>Alta en registro</li>
+                <li>Pasaporte UE</li>
+              </ul>
+            </article>
+            <article class="svc__panel" id="svc-panel-4">
+              <h3 class="svc__panel-title">Anestesia y dolor</h3>
+              <p class="svc__desc">Protocolo individual por paciente y constantes vigiladas minuto a minuto. El dolor se trata antes de que aparezca, no cuando ya está.</p>
+              <ul class="svc__tags">
+                <li>Preanestésica</li>
+                <li>Constantes</li>
+                <li>Analgesia</li>
+              </ul>
+            </article>
+            <article class="svc__panel" id="svc-panel-5">
+              <h3 class="svc__panel-title">Cirugía y traumatología</h3>
+              <p class="svc__desc">Quirófano propio, instrumental esterilizado con control de cada ciclo y un cirujano responsable del caso de principio a fin.</p>
+              <ul class="svc__tags">
+                <li>Tejidos blandos</li>
+                <li>Traumatología</li>
+                <li>Presupuesto cerrado</li>
+              </ul>
+            </article>
+            <article class="svc__panel" id="svc-panel-6">
+              <h3 class="svc__panel-title">Hospitalización 24 h</h3>
+              <p class="svc__desc">Boxes separados para perros y gatos, control de constantes por turnos y parte diario para ti, sin tener que perseguirnos.</p>
+              <ul class="svc__tags">
+                <li>Boxes separados</li>
+                <li>Control por turnos</li>
+                <li>Parte diario</li>
+              </ul>
+            </article>
+            </div>
+            <a class="svc__cta" href="servicio-urgencias.html" aria-label="Ver la página de Urgencias 24 h">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 17 17 7M9 7h8v8"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ TU VISITA ══════════════════════════ -->
+  <section class="section section--dark visit" id="visita" aria-labelledby="visita-title">
+    <div class="wrap">
+      <header class="section__head section__head--onDark">
+        <p class="eyebrow eyebrow--onDark">Tu visita, paso a paso</p>
+        <h2 class="section__title" id="visita-title">
+          Lo que más asusta no es la enfermedad: <em>es no saber qué va a pasar</em>
+        </h2>
+        <p class="section__lede">
+          Así funciona una visita con nosotros, desde que descuelgas el teléfono
+          hasta que volvéis a casa. Sin sorpresas en la factura ni en el pronóstico.
+        </p>
+      </header>
+
+      <!-- Secuencia real: el orden importa, por eso va numerada. -->
+      <ol class="steps">
+        <li class="step js-reveal">
+          <span class="step__num">01</span>
+          <h3 class="step__title">Llamas y te preguntamos lo justo</h3>
+          <p class="step__text">
+            Cuatro preguntas para saber si vienes ahora o mañana. Si es urgente, te
+            damos indicaciones para el trayecto: cómo moverlo, qué no darle, qué
+            traer contigo.
+          </p>
+        </li>
+        <li class="step js-reveal">
+          <span class="step__num">02</span>
+          <h3 class="step__title">Triaje al llegar, en menos de 3 minutos</h3>
+          <p class="step__text">
+            Constantes y valoración inicial nada más entrar. El orden de atención lo
+            marca la gravedad, no la hora de llegada. Si tu caso pasa por delante,
+            te lo explicamos; si pasa otro delante, también.
+          </p>
+        </li>
+        <li class="step js-reveal">
+          <span class="step__num">03</span>
+          <h3 class="step__title">Diagnóstico y presupuesto antes de actuar</h3>
+          <p class="step__text">
+            Te contamos qué sospechamos, qué prueba lo confirma y cuánto cuesta.
+            Firmas el presupuesto y el consentimiento con la información delante.
+            Nada se hace sin tu autorización, salvo maniobras para salvar la vida.
+          </p>
+        </li>
+        <li class="step js-reveal">
+          <span class="step__num">04</span>
+          <h3 class="step__title">Alta con informe y llamada a las 48 h</h3>
+          <p class="step__text">
+            Informe escrito, medicación con horarios claros y señales de alarma por
+            las que debes volver. Y una llamada nuestra a las 48 horas para
+            comprobar cómo va.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ INSTALACIONES ══════════════════════════ -->
+  <section class="section facilities" id="instalaciones" aria-labelledby="instalaciones-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Instalaciones</p>
+        <h2 class="section__title" id="instalaciones-title">
+          Puedes verlo <em>antes</em> de dejarnos a tu animal
+        </h2>
+        <p class="section__lede">
+          Enseñamos la clínica entera a quien lo pide, sin cita y sin compromiso.
+          Ver dónde va a dormir tu perro quita más miedo que cualquier folleto.
+        </p>
+      </header>
+
+      <div class="facilities__grid">
+        <figure class="shot shot--main js-reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/img/instalacion-quirofano.webp">
+            <img src="assets/img/instalacion-quirofano.jpg" width="1320" height="880" loading="lazy" decoding="async"
+                 alt="Veterinaria realiza una ecografía a un perro sobre la mesa de exploración.">
+          </picture>
+          <figcaption>
+            <strong>Diagnóstico antes que nada</strong>
+            Ecografía, radiografía y análisis antes de decidir cualquier intervención.
+            Nada se opera ni se trata a ciegas.
+          </figcaption>
+        </figure>
+
+        <figure class="shot js-reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/img/instalacion-hospital.webp">
+            <img src="assets/img/instalacion-hospital.jpg" width="900" height="700" loading="lazy" decoding="async"
+                 alt="Veterinaria administra un tratamiento a un perro pequeño mientras su tutor lo sujeta con cuidado.">
+          </picture>
+          <figcaption>
+            <strong>Hospitalización</strong>
+            Seguimos cada tratamiento de cerca, con el mismo cuidado con el que lo
+            haríamos en casa.
+          </figcaption>
+        </figure>
+
+        <figure class="shot js-reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/img/instalacion-consulta.webp">
+            <img src="assets/img/instalacion-consulta.jpg" width="900" height="700" loading="lazy" decoding="async"
+                 alt="Veterinario con bata blanca explora con calma a un perro salchicha en la consulta.">
+          </picture>
+          <figcaption>
+            <strong>Boxes de consulta</strong>
+            Consultas sin prisa: exploramos con calma y te explicamos cada paso
+            antes de decidir nada.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ OPINIONES ══════════════════════════ -->
+  <!-- TODO CLIENTE: testimonios de MUESTRA, redactados para la maqueta.
+       Sustituir por reseñas reales con permiso del tutor. -->
+  <section class="reviews-zoom" id="opiniones" aria-labelledby="opiniones-title">
+
+    <!-- Collage que hace zoom en perspectiva y descubre el titular. -->
+    <div class="zoomwall">
+      <h2 class="zoomwall__title" id="opiniones-title">
+        Pasaron por nuestra consulta.<br>Hoy vuelven a <em>estar bien</em>
+      </h2>
+        <div class="zoomwall__item" data-layer="2"><img src="assets/img/galeria/mascota-01.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Perro recuperado tras pasar por la clínica, feliz de nuevo"></div>
+        <div class="zoomwall__item" data-layer="2"><img src="assets/img/galeria/mascota-02.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Gato de vuelta en casa después de su tratamiento"></div>
+        <div class="zoomwall__item" data-layer="1"><img src="assets/img/galeria/mascota-03.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Perro sano tras completar su recuperación"></div>
+        <div class="zoomwall__item" data-layer="2"><img src="assets/img/galeria/mascota-04.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Gato curioso y con buena salud tras su revisión"></div>
+        <div class="zoomwall__item" data-layer="3"><img src="assets/img/galeria/mascota-05.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Perro volviendo a pasear después de su operación"></div>
+        <div class="zoomwall__item" data-layer="1"><img src="assets/img/galeria/mascota-06.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Gato descansando tranquilo ya recuperado"></div>
+        <div class="zoomwall__item" data-layer="3"><img src="assets/img/galeria/mascota-07.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Perro contento de vuelta en el jardín de casa"></div>
+        <div class="zoomwall__item" data-layer="3"><img src="assets/img/galeria/mascota-08.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Gatito sano después de su primera visita"></div>
+        <div class="zoomwall__item" data-layer="1"><img src="assets/img/galeria/mascota-09.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Perro feliz tras superar su tratamiento"></div>
+        <div class="zoomwall__item" data-layer="3"><img src="assets/img/galeria/mascota-10.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Gato con la mirada serena, ya en casa y bien"></div>
+        <div class="zoomwall__item" data-layer="2"><img src="assets/img/galeria/mascota-11.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Perro juguetón de nuevo tras su recuperación"></div>
+        <div class="zoomwall__item" data-layer="1"><img src="assets/img/galeria/mascota-12.jpg" width="640" height="640" loading="lazy" decoding="async" alt="Gato cómodo y confiado después de su revisión"></div>
+    </div>
+
+      <div class="reviews-marquee-block">
+        <p class="marquee-eyebrow" id="marquee-title">Lo que cuentan las familias</p>
+        <div class="reviews-marquee">
+          <div class="reviews-marquee__track">
+            <ul class="reviews-marquee__set">
+              <li class="mini-review">
+                <div class="mini-review__stars" role="img" aria-label="5 de 5 estrellas">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                </div>
+                <p class="mini-review__quote">Llegamos a las tres de la mañana con la perra convulsionando. Nos atendieron en el momento y, mientras la estabilizaban, alguien salió cada veinte minutos a contarnos cómo iba. Eso no se paga.</p>
+                <div class="mini-review__by">
+                  <img src="assets/img/avatar-01.jpg" width="84" height="84" loading="lazy" decoding="async" alt="">
+                  <span class="mini-review__name">
+                    <strong>Carmen R.</strong>
+                    <span>Tutora de Nala, mestiza de 9 años</span>
+                  </span>
+                </div>
+              </li>
+              <li class="mini-review">
+                <div class="mini-review__stars" role="img" aria-label="5 de 5 estrellas">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                </div>
+                <p class="mini-review__quote">Me dieron el presupuesto de la operación por escrito antes de entrar a quirófano y la factura final fue exactamente esa. Después de dos clínicas anteriores, casi me sorprendió.</p>
+                <div class="mini-review__by">
+                  <img src="assets/img/avatar-02.jpg" width="84" height="84" loading="lazy" decoding="async" alt="">
+                  <span class="mini-review__name">
+                    <strong>Nacho M.</strong>
+                    <span>Tutor de Tofu, bulldog francés</span>
+                  </span>
+                </div>
+              </li>
+              <li class="mini-review">
+                <div class="mini-review__stars" role="img" aria-label="5 de 5 estrellas">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                </div>
+                <p class="mini-review__quote">Mi gata es imposible en el veterinario. La sala felina y que no la forzaran cambiaron la visita entera: salió andando sola del transportín.</p>
+                <div class="mini-review__by">
+                  <img src="assets/img/avatar-03.jpg" width="84" height="84" loading="lazy" decoding="async" alt="">
+                  <span class="mini-review__name">
+                    <strong>Paula S.</strong>
+                    <span>Tutora de Uma, gata europea</span>
+                  </span>
+                </div>
+              </li>
+              <li class="mini-review">
+                <div class="mini-review__stars" role="img" aria-label="5 de 5 estrellas">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                </div>
+                <p class="mini-review__quote">Estuvo cinco días ingresado tras la cirugía. Llamada todos los días a la misma hora, con lo bueno y lo malo. Volví a dormir sabiendo que alguien estaba con él de madrugada.</p>
+                <div class="mini-review__by">
+                  <img src="assets/img/avatar-04.jpg" width="84" height="84" loading="lazy" decoding="async" alt="">
+                  <span class="mini-review__name">
+                    <strong>Sergio L.</strong>
+                    <span>Tutor de Bruno, pastor alemán</span>
+                  </span>
+                </div>
+              </li>
+            </ul>
+            <ul class="reviews-marquee__set" aria-hidden="true">
+              <li class="mini-review">
+                <div class="mini-review__stars" role="img" aria-label="5 de 5 estrellas">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                </div>
+                <p class="mini-review__quote">Llegamos a las tres de la mañana con la perra convulsionando. Nos atendieron en el momento y, mientras la estabilizaban, alguien salió cada veinte minutos a contarnos cómo iba. Eso no se paga.</p>
+                <div class="mini-review__by">
+                  <img src="assets/img/avatar-01.jpg" width="84" height="84" loading="lazy" decoding="async" alt="">
+                  <span class="mini-review__name">
+                    <strong>Carmen R.</strong>
+                    <span>Tutora de Nala, mestiza de 9 años</span>
+                  </span>
+                </div>
+              </li>
+              <li class="mini-review">
+                <div class="mini-review__stars" role="img" aria-label="5 de 5 estrellas">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                </div>
+                <p class="mini-review__quote">Me dieron el presupuesto de la operación por escrito antes de entrar a quirófano y la factura final fue exactamente esa. Después de dos clínicas anteriores, casi me sorprendió.</p>
+                <div class="mini-review__by">
+                  <img src="assets/img/avatar-02.jpg" width="84" height="84" loading="lazy" decoding="async" alt="">
+                  <span class="mini-review__name">
+                    <strong>Nacho M.</strong>
+                    <span>Tutor de Tofu, bulldog francés</span>
+                  </span>
+                </div>
+              </li>
+              <li class="mini-review">
+                <div class="mini-review__stars" role="img" aria-label="5 de 5 estrellas">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                </div>
+                <p class="mini-review__quote">Mi gata es imposible en el veterinario. La sala felina y que no la forzaran cambiaron la visita entera: salió andando sola del transportín.</p>
+                <div class="mini-review__by">
+                  <img src="assets/img/avatar-03.jpg" width="84" height="84" loading="lazy" decoding="async" alt="">
+                  <span class="mini-review__name">
+                    <strong>Paula S.</strong>
+                    <span>Tutora de Uma, gata europea</span>
+                  </span>
+                </div>
+              </li>
+              <li class="mini-review">
+                <div class="mini-review__stars" role="img" aria-label="5 de 5 estrellas">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.2-5.4-2.9-5.4 2.9 1-6.2L3.2 9.5l6.1-.9z"/></svg>
+                </div>
+                <p class="mini-review__quote">Estuvo cinco días ingresado tras la cirugía. Llamada todos los días a la misma hora, con lo bueno y lo malo. Volví a dormir sabiendo que alguien estaba con él de madrugada.</p>
+                <div class="mini-review__by">
+                  <img src="assets/img/avatar-04.jpg" width="84" height="84" loading="lazy" decoding="async" alt="">
+                  <span class="mini-review__name">
+                    <strong>Sergio L.</strong>
+                    <span>Tutor de Bruno, pastor alemán</span>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    <p class="reviews-note">
+      Testimonios de muestra mientras recopilamos los reales de Google.
+    </p>
+  </section>
+
+  <!-- ══════════════════════════ EQUIPO ══════════════════════════ -->
+  <section class="section team" id="equipo" aria-labelledby="equipo-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Equipo</p>
+        <h2 class="section__title" id="equipo-title">Quién va a atender a tu animal</h2>
+        <p class="section__lede">
+          Un caso, un veterinario responsable. Te lo presentamos el primer día y es
+          quien firma el informe, te llama y responde tus dudas después.
+        </p>
+      </header>
+
+      <!-- TODO CLIENTE: nombres, cargos, nº de colegiado y retratos reales.
+           Tarjetas 3D: foto delante, cita detrás. Pasa el ratón, toca o
+           navega con el tabulador — se abren igual por cualquier vía. -->
+      <div class="team-flip__grid" data-flip-group>
+        <button class="flip-card flip-card--pine" type="button" data-flip aria-pressed="false"
+                aria-label="Ver la cita de Elena Marín, directora clínica">
+          <span class="flip-card__shadow" aria-hidden="true"></span>
+          <span class="flip-card__tilt">
+            <span class="flip-card__inner">
+            <span class="flip-card__edge" aria-hidden="true"></span>
+
+            <span class="flip-card__front">
+              <span class="flip-card__photo">
+                <picture>
+                  <source type="image/webp" srcset="assets/img/equipo-01.webp">
+                  <img src="assets/img/equipo-01.jpg" width="760" height="950" loading="lazy" decoding="async"
+                       alt="Retrato de Elena Marín, directora clínica.">
+                </picture>
+              </span>
+              <span class="flip-card__scrim" aria-hidden="true"></span>
+              <span class="flip-card__topline"><span>Directora clínica</span><span>01</span></span>
+              <span class="flip-card__body">
+                <span class="flip-card__name">Elena Marín</span>
+                <span class="flip-card__role">Medicina interna</span>
+                <span class="flip-card__hint">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M15 4v3h3M9 20v-3H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Da la vuelta a la tarjeta
+                </span>
+              </span>
+            </span>
+
+            <span class="flip-card__back">
+              <span class="flip-card__topline"><span>Colegiada nº 28345</span><span>Col. Vet. Madrid</span></span>
+              <span>
+                <span class="flip-card__quote-mark" aria-hidden="true">&ldquo;</span>
+                <span class="flip-card__quote">Prefiero explicar dos veces que dar por hecho que se ha entendido. Un tutor que entiende el tratamiento lo cumple.</span>
+              </span>
+              <span class="flip-card__back-foot">
+                <picture>
+                  <source type="image/webp" srcset="assets/img/equipo-01.webp">
+                  <img src="assets/img/equipo-01.jpg" width="68" height="68" loading="lazy" decoding="async" alt="">
+                </picture>
+                <span><strong>Elena Marín</strong><span>Directora clínica</span></span>
+              </span>
+              </span>
+            </span>
+          </span>
+        </button>
+
+        <button class="flip-card flip-card--moss" type="button" data-flip aria-pressed="false"
+                aria-label="Ver la cita de Rubén Castillo, cirugía y traumatología">
+          <span class="flip-card__shadow" aria-hidden="true"></span>
+          <span class="flip-card__tilt">
+            <span class="flip-card__inner">
+            <span class="flip-card__edge" aria-hidden="true"></span>
+
+            <span class="flip-card__front">
+              <span class="flip-card__photo">
+                <picture>
+                  <source type="image/webp" srcset="assets/img/equipo-02.webp">
+                  <img src="assets/img/equipo-02.jpg" width="760" height="950" loading="lazy" decoding="async"
+                       alt="Retrato de Rubén Castillo, responsable de cirugía.">
+                </picture>
+              </span>
+              <span class="flip-card__scrim" aria-hidden="true"></span>
+              <span class="flip-card__topline"><span>Cirugía</span><span>02</span></span>
+              <span class="flip-card__body">
+                <span class="flip-card__name">Rubén Castillo</span>
+                <span class="flip-card__role">Cirugía y traumatología</span>
+                <span class="flip-card__hint">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M15 4v3h3M9 20v-3H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Da la vuelta a la tarjeta
+                </span>
+              </span>
+            </span>
+
+            <span class="flip-card__back">
+              <span class="flip-card__topline"><span>Colegiado nº 28812</span><span>Col. Vet. Madrid</span></span>
+              <span>
+                <span class="flip-card__quote-mark" aria-hidden="true">&ldquo;</span>
+                <span class="flip-card__quote">La mejor cirugía es la que se ha planificado entera antes de la primera incisión, incluida la vuelta a casa.</span>
+              </span>
+              <span class="flip-card__back-foot">
+                <picture>
+                  <source type="image/webp" srcset="assets/img/equipo-02.webp">
+                  <img src="assets/img/equipo-02.jpg" width="68" height="68" loading="lazy" decoding="async" alt="">
+                </picture>
+                <span><strong>Rubén Castillo</strong><span>Cirugía y traumatología</span></span>
+              </span>
+              </span>
+            </span>
+          </span>
+        </button>
+
+        <button class="flip-card flip-card--amber" type="button" data-flip aria-pressed="false"
+                aria-label="Ver la cita de Irene Palop, anestesia y hospitalización">
+          <span class="flip-card__shadow" aria-hidden="true"></span>
+          <span class="flip-card__tilt">
+            <span class="flip-card__inner">
+            <span class="flip-card__edge" aria-hidden="true"></span>
+
+            <span class="flip-card__front">
+              <span class="flip-card__photo">
+                <picture>
+                  <source type="image/webp" srcset="assets/img/equipo-03.webp">
+                  <img src="assets/img/equipo-03.jpg" width="760" height="950" loading="lazy" decoding="async"
+                       alt="Retrato de Irene Palop, responsable de anestesia y hospitalización.">
+                </picture>
+              </span>
+              <span class="flip-card__scrim" aria-hidden="true"></span>
+              <span class="flip-card__topline"><span>Anestesia</span><span>03</span></span>
+              <span class="flip-card__body">
+                <span class="flip-card__name">Irene Palop</span>
+                <span class="flip-card__role">Anestesia y hospitalización</span>
+                <span class="flip-card__hint">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M15 4v3h3M9 20v-3H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Da la vuelta a la tarjeta
+                </span>
+              </span>
+            </span>
+
+            <span class="flip-card__back">
+              <span class="flip-card__topline"><span>Colegiada nº 29104</span><span>Col. Vet. Madrid</span></span>
+              <span>
+                <span class="flip-card__quote-mark" aria-hidden="true">&ldquo;</span>
+                <span class="flip-card__quote">Mi trabajo es que el animal no sienta dolor y que sus constantes no den un solo susto mientras duerme.</span>
+              </span>
+              <span class="flip-card__back-foot">
+                <picture>
+                  <source type="image/webp" srcset="assets/img/equipo-03.webp">
+                  <img src="assets/img/equipo-03.jpg" width="68" height="68" loading="lazy" decoding="async" alt="">
+                </picture>
+                <span><strong>Irene Palop</strong><span>Anestesia y hospitalización</span></span>
+              </span>
+              </span>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ BANDA URGENCIAS ══════════════════════════ -->
+  <section class="urgent" id="urgencias" aria-labelledby="urgent-title">
+    <div class="wrap urgent__inner">
+      <div>
+        <p class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> Ahora mismo hay alguien de guardia</p>
+        <h2 class="urgent__title" id="urgent-title">Si tu animal está mal esta noche, no esperes a mañana.</h2>
+        <p class="urgent__text">
+          Dificultad para respirar, vientre hinchado y duro, convulsiones, sangrado
+          que no para, un golpe fuerte o un atropello: son urgencias reales.
+          Llama y sal hacia aquí.
+        </p>
+      </div>
+      <div class="urgent__actions">
+        <a class="btn btn--ember btn--lg" href="tel:+34910305305">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z"/></svg>
+          910 305 305
+        </a>
+        <p class="urgent__addr">
+          <!-- TODO CLIENTE: dirección real. -->
+          Calle de Alcalá, 415, Madrid · Aparcamiento en la puerta
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ FAQ ══════════════════════════ -->
+  <section class="section faq" id="faq" aria-labelledby="faq-title">
+    <div class="wrap faq__grid">
+      <header class="section__head faq__head">
+        <p class="eyebrow">Preguntas frecuentes</p>
+        <h2 class="section__title" id="faq-title">Las dudas que llegan por teléfono</h2>
+        <p class="section__lede">
+          Si la tuya no está aquí, escríbenos: contestamos aunque no vengas.
+        </p>
+      </header>
+
+      <div class="faq__list">
+        <details class="qa js-reveal" open>
+          <summary>
+            <span>¿Atendéis urgencias sin cita previa?</span>
+            <span class="qa__sign" aria-hidden="true"></span>
+          </summary>
+          <div class="qa__body">
+            <p>
+              Sí. Hay equipo de guardia las 24 horas los 365 días. Aun así, llama
+              antes de salir de casa: mientras llegas preparamos la sala, el material
+              y la medicación, y ganamos los minutos que más pesan.
+            </p>
+          </div>
+        </details>
+
+        <details class="qa js-reveal">
+          <summary>
+            <span>¿Cuánto cuesta una urgencia veterinaria?</span>
+            <span class="qa__sign" aria-hidden="true"></span>
+          </summary>
+          <div class="qa__body">
+            <p>
+              La consulta de urgencia tiene un precio cerrado que te decimos por
+              teléfono antes de venir. Cualquier prueba, ingreso o cirugía se
+              presupuesta por escrito y se aprueba antes de hacerse. No iniciamos
+              ningún procedimiento con coste sin tu autorización.
+            </p>
+          </div>
+        </details>
+
+        <details class="qa js-reveal">
+          <summary>
+            <span>¿Puedo quedarme con mi animal durante la consulta?</span>
+            <span class="qa__sign" aria-hidden="true"></span>
+          </summary>
+          <div class="qa__body">
+            <p>
+              Siempre que su seguridad y la del equipo lo permitan, sí. En muchos
+              casos el animal se maneja mejor contigo delante. En quirófano y en zona
+              de hospitalización no es posible, pero te informamos por teléfono en
+              cada cambio relevante.
+            </p>
+          </div>
+        </details>
+
+        <details class="qa js-reveal">
+          <summary>
+            <span>¿Qué pasa si necesita quedarse ingresado?</span>
+            <span class="qa__sign" aria-hidden="true"></span>
+          </summary>
+          <div class="qa__body">
+            <p>
+              La hospitalización cuenta con vigilancia presencial 24 horas, control de
+              constantes y registro de cada dosis administrada. Recibes un parte
+              diario y puedes concertar visita en el horario acordado con el
+              veterinario responsable del caso.
+            </p>
+          </div>
+        </details>
+
+        <details class="qa js-reveal">
+          <summary>
+            <span>¿Trabajáis con seguros de salud para mascotas?</span>
+            <span class="qa__sign" aria-hidden="true"></span>
+          </summary>
+          <div class="qa__body">
+            <p>
+              Emitimos toda la documentación clínica y las facturas desglosadas que
+              piden las aseguradoras. Dinos con cuál trabajas al pedir cita y te
+              indicamos qué informes necesitarás para el reembolso.
+            </p>
+          </div>
+        </details>
+
+        <details class="qa js-reveal">
+          <summary>
+            <span>¿Cómo preparo a mi animal para una cirugía?</span>
+            <span class="qa__sign" aria-hidden="true"></span>
+          </summary>
+          <div class="qa__body">
+            <p>
+              Te damos por escrito las pautas de ayuno, la medicación previa y la hora
+              exacta de ingreso. Antes de cada anestesia se hace evaluación
+              preanestésica y se monitoriza de forma continua durante toda la
+              intervención y el despertar.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ CONTACTO ══════════════════════════ -->
+  <section class="section contact" id="contacto" aria-labelledby="contacto-title">
+    <div class="wrap contact__grid">
+
+      <div class="contact__info">
+        <p class="eyebrow">Contacto</p>
+        <h2 class="section__title" id="contacto-title">Pide cita o cuéntanos qué pasa</h2>
+        <p class="section__lede">
+          Si es urgente, llama: el formulario lo leemos en horario de consulta.
+          Para lo demás, escríbenos con calma y te respondemos el mismo día.
+        </p>
+
+        <ul class="contact__data">
+          <li>
+            <span class="contact__k">Teléfono y urgencias</span>
+            <!-- TODO CLIENTE: teléfono real. -->
+            <a class="contact__v contact__v--big" href="tel:+34910305305">910 305 305</a>
+          </li>
+          <li>
+            <span class="contact__k">Dirección</span>
+            <!-- TODO CLIENTE: dirección real y enlace a la ficha de Google. -->
+            <a class="contact__v" href="https://www.google.com/maps" target="_blank" rel="noopener">
+              Calle de Alcalá, 415, 28027 Madrid
+            </a>
+          </li>
+          <li>
+            <span class="contact__k">Correo</span>
+            <a class="contact__v" href="mailto:citas@vitalisveterinaria.es">citas@vitalisveterinaria.es</a>
+          </li>
+          <li>
+            <span class="contact__k">Horario</span>
+            <span class="contact__v">
+              Consulta: L-V 9:00–21:00 · S 10:00–14:00<br>
+              <strong>Urgencias: 24 h, todos los días del año</strong>
+            </span>
+          </li>
+        </ul>
+
+        <figure class="map js-reveal">
+          <!-- TODO CLIENTE: sustituir por el iframe de Google Maps SOLO tras
+               aceptar cookies (carga diferida), o por un mapa estático propio.
+               Insertar el iframe directamente escribe cookies de terceros
+               antes del consentimiento. -->
+          <div class="map__placeholder">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            <p>Mapa desactivado hasta aceptar cookies</p>
+            <button class="btn btn--outline js-open-cookies" type="button">Gestionar cookies</button>
+          </div>
+        </figure>
+      </div>
+
+      <!-- FORMULARIO -->
+      <div class="form-card js-reveal">
+        <form class="form" id="form-contacto" method="post" action="#" novalidate>
+
+          <!-- Honeypot antispam: oculto para personas, visible para bots.
+               Si viene relleno, el envío se descarta en cliente y en servidor. -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="hp-website">No rellenes este campo</label>
+            <input type="text" id="hp-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="form_ts" id="form_ts" value="">
+
+          <div class="form__row">
+            <div class="field">
+              <label for="nombre">Tu nombre <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="nombre" name="nombre" autocomplete="name" required
+                     aria-describedby="err-nombre">
+              <p class="field__err" id="err-nombre" hidden>Escribe tu nombre para saber cómo dirigirnos a ti.</p>
+            </div>
+            <div class="field">
+              <label for="telefono">Teléfono <span class="req" aria-hidden="true">*</span></label>
+              <input type="tel" id="telefono" name="telefono" autocomplete="tel" inputmode="tel" required
+                     aria-describedby="hint-telefono err-telefono" placeholder="6XX XXX XXX">
+              <p class="field__hint" id="hint-telefono">Es la vía más rápida si el caso corre prisa.</p>
+              <p class="field__err" id="err-telefono" hidden>Necesitamos un teléfono de 9 dígitos.</p>
+            </div>
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" autocomplete="email" aria-describedby="err-email">
+              <p class="field__err" id="err-email" hidden>Revisa el correo: parece que falta algo.</p>
+            </div>
+            <div class="field">
+              <label for="animal">Tu animal</label>
+              <input type="text" id="animal" name="animal" placeholder="Nombre, especie y edad">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="motivo">Motivo de la consulta</label>
+            <select id="motivo" name="motivo">
+              <option value="cita">Pedir cita de consulta</option>
+              <option value="vacunas">Vacunas, chip o revisión</option>
+              <option value="cirugia">Valoración para cirugía</option>
+              <option value="segunda">Segunda opinión de un diagnóstico</option>
+              <option value="ingreso">Dudas sobre una hospitalización</option>
+              <option value="otro">Otra cosa</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="mensaje">Cuéntanos qué le pasa <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="mensaje" name="mensaje" rows="4" required aria-describedby="hint-mensaje err-mensaje"
+                      placeholder="Desde cuándo, qué has notado, si toma alguna medicación…"></textarea>
+            <p class="field__hint" id="hint-mensaje">Cuanto más concreto, mejor preparamos la visita.</p>
+            <p class="field__err" id="err-mensaje" hidden>Escribe al menos una frase sobre lo que le ocurre.</p>
+          </div>
+
+          <!-- Consentimiento explícito, desmarcado por defecto (art. 7 RGPD). -->
+          <div class="consent">
+            <div class="checkbox">
+              <input type="checkbox" id="privacidad" name="privacidad" required aria-describedby="err-privacidad">
+              <label for="privacidad">
+                He leído y acepto la <a href="privacidad.html">Política de Privacidad</a>
+                y el tratamiento de mis datos para gestionar esta solicitud.
+                <span class="req" aria-hidden="true">*</span>
+              </label>
+            </div>
+            <p class="field__err" id="err-privacidad" hidden>Sin este consentimiento no podemos tratar tu solicitud.</p>
+
+            <div class="checkbox">
+              <input type="checkbox" id="comercial" name="comercial">
+              <label for="comercial">
+                Quiero recibir avisos de vacunas y desparasitaciones de mi animal.
+                <span class="checkbox__note">Opcional. Puedes darte de baja en cualquier momento.</span>
+              </label>
+            </div>
+
+            <!-- Adenda de confidencialidad para datos de salud del animal
+                 y datos personales del tutor. -->
+            <p class="secrecy">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V7.5a6 6 0 1 1 12 0V10" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="4" y="10" width="16" height="10.5" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+              <span>
+                <strong>Confidencialidad clínica.</strong> Lo que nos cuentes aquí queda
+                amparado por el secreto profesional veterinario y solo lo consulta el
+                equipo médico que atienda el caso. No cedemos tus datos a terceros ni
+                los usamos para publicidad. Responsable: Clínica Veterinaria Vitalis.
+                Puedes ejercer tus derechos de acceso, rectificación y supresión en
+                <a href="mailto:privacidad@vitalisveterinaria.es">privacidad@vitalisveterinaria.es</a>.
+              </span>
+            </p>
+          </div>
+
+          <button class="btn btn--solid btn--lg btn--block" type="submit">Enviar solicitud</button>
+
+          <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+          <p class="form__note">
+            ¿Es ahora? No esperes respuesta por correo:
+            <a href="tel:+34910305305">llama al 910 305 305</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><path d="M4 21h6.5l2.6-8 3.9 16 3.9-12.5 2.6 4.5H36" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <p class="footer__claim">
+        Clínica Veterinaria Vitalis. Medicina, cirugía y hospitalización veterinaria en Madrid,
+        con guardia presencial las 24 horas.
+      </p>
+      <p class="footer__reg">
+        Centro veterinario inscrito en el Registro de Centros Veterinarios de la
+        Comunidad de Madrid nº RCV-2871. Dirección técnica: Elena Marín, colegiada nº 28345
+        del Colegio Oficial de Veterinarios de Madrid.
+      </p>
+    </div>
+
+    <nav class="footer__col" aria-label="Servicios">
+      <h3>Servicios</h3>
+      <a href="servicio-urgencias.html">Urgencias 24 h</a>
+      <a href="servicio-consulta.html">Consulta y medicina interna</a>
+      <a href="servicio-preventiva.html">Vacunación y preventiva</a>
+      <a href="servicio-identificacion.html">Microchip y pasaporte</a>
+      <a href="servicio-anestesia.html">Anestesia y dolor</a>
+      <a href="servicio-cirugia.html">Cirugía y traumatología</a>
+      <a href="servicio-hospitalizacion.html">Hospitalización 24 h</a>
+    </nav>
+
+    <nav class="footer__col" aria-label="Clínica">
+      <h3>Clínica</h3>
+      <a href="#visita">Tu visita</a>
+      <a href="#instalaciones">Instalaciones</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#faq">Preguntas frecuentes</a>
+    </nav>
+
+    <div class="footer__col">
+      <h3>Contacto</h3>
+      <a href="tel:+34910305305">910 305 305</a>
+      <a href="mailto:citas@vitalisveterinaria.es">citas@vitalisveterinaria.es</a>
+      <p class="footer__addr">Calle de Alcalá, 415<br>28027 Madrid</p>
+    </div>
+  </div>
+
+  <div class="wrap footer__bottom">
+    <p>© <span id="year">2026</span> Clínica Veterinaria Vitalis. Todos los derechos reservados.</p>
+    <nav class="footer__legal" aria-label="Información legal">
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="privacidad.html">Política de privacidad</a>
+      <a href="cookies.html">Política de cookies</a>
+      <button class="footer__cookies js-open-cookies" type="button">Preferencias de cookies</button>
+    </nav>
+  </div>
+</footer>
+
+<!-- Barra fija móvil: la acción principal siempre a un pulgar de distancia. -->
+<div class="dock" aria-label="Acciones rápidas">
+  <a class="dock__call" href="tel:+34910305305">
+    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z"/></svg>
+    Urgencias 24 h
+  </a>
+  <a class="dock__cita" href="#contacto">Pedir cita</a>
+</div>
+
+<!-- ══════════════════════════ COOKIES ══════════════════════════ -->
+<div class="cookie" id="cookie-banner" role="dialog" aria-modal="false"
+     aria-labelledby="cookie-title" aria-describedby="cookie-desc" hidden>
+  <div class="cookie__inner">
+    <div class="cookie__copy">
+      <h2 class="cookie__title" id="cookie-title">Cookies</h2>
+      <p class="cookie__desc" id="cookie-desc">
+        Usamos cookies propias necesarias para que la web funcione y, si lo aceptas,
+        cookies de analítica y publicidad para entender qué contenidos ayudan más.
+        Puedes rechazarlas todas sin perder ninguna funcionalidad.
+        <a href="cookies.html">Política de cookies</a>.
+      </p>
+    </div>
+    <div class="cookie__actions">
+      <button class="btn btn--cookie" type="button" id="cookie-reject">Rechazar todo</button>
+      <button class="btn btn--cookie" type="button" id="cookie-accept">Aceptar todo</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer integrity="sha384-xb96EMJeax+NLXMC88ZBa1xAeAW+kn+horHh/zFlbMLG2UPWhMJJSlv7fi57hS+Q" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="assets/js/cookies.js?v=3" defer></script>
+<script src="assets/js/main.js?v=9" defer></script>
+<script src="assets/js/services.js?v=4" defer></script>
+<script src="assets/js/team-flip.js?v=2" defer></script>
+</body>
+</html>
