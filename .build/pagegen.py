@@ -75,7 +75,7 @@ def head(title, desc, canonical, extra_css=""):
 {FAVICON}
 
 {FONTS}
-<link rel="stylesheet" href="assets/css/styles.css?v=8">
+<link rel="stylesheet" href="assets/css/styles.css?v=12">
 <link rel="stylesheet" href="assets/css/page.css?v=1">{extra_css}
 </head>
 """
@@ -97,6 +97,7 @@ NAV = f"""<a class="skip-link" href="#contenido">Saltar al contenido principal</
 
     <nav class="nav__links" id="menu" aria-label="Navegación principal">
       <a href="index.html#servicios">Servicios</a>
+      <a href="index.html#peluqueria">Peluquería</a>
       <a href="index.html#visita">Tu visita</a>
       <a href="index.html#instalaciones">Instalaciones</a>
       <a href="index.html#opiniones">Opiniones</a>
@@ -157,10 +158,12 @@ def footer(services):
     <nav class="footer__col" aria-label="Clínica">
       <h3>Clínica</h3>
       <a href="index.html#visita">Tu visita</a>
+      <a href="index.html#peluqueria">Peluquería</a>
       <a href="index.html#instalaciones">Instalaciones</a>
       <a href="index.html#opiniones">Opiniones</a>
       <a href="index.html#equipo">Equipo</a>
       <a href="index.html#faq">Preguntas frecuentes</a>
+      <a href="guia-veterinaria-madrid.html">Guía: elegir veterinaria</a>
     </nav>
 
     <div class="footer__col">

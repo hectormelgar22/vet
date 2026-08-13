@@ -20,6 +20,7 @@ aviso-legal.html           Aviso legal (LSSI-CE)
 privacidad.html            Política de privacidad (RGPD / LOPDGDD)
 cookies.html               Política de cookies (guía AEPD)
 servicio-*.html            7 páginas de detalle, una por servicio
+guia-veterinaria-madrid.html  Guía SEO: cómo elegir veterinaria en Madrid (blog)
 calendario-mascota.html    Herramienta: calendario de vacunas y revisiones
 consultor-toxicos.html     Herramienta: ¿puede comer esto?
 calculadora-nutricion.html Herramienta: ración diaria y peso ideal
@@ -136,6 +137,23 @@ sesión se revisan piel, oídos y uñas. La barra de navegación incluye su
 enlace; con ocho secciones, los enlaces en línea aparecen a partir de 1200 px
 (por debajo, menú desplegable) y el botón de urgencias solo a partir de
 1440 px, para que nunca se apretujen ni se parta ninguno en dos líneas.
+
+### Guía SEO (`guia-veterinaria-madrid.html`)
+
+Artículo de contenido (tipo blog) generado por `.build/build.py` con la misma
+cabecera, pie y layout que las páginas legales (TOC lateral + `.prose`). El
+texto es divulgativo, no clínico, así que no necesita firma colegiada. Lo que
+le da valor SEO no es el texto en sí (genérico) sino: `<title>` y
+`meta description` propios, **datos estructurados** `Article` + `FAQPage` +
+`BreadcrumbList` (candidato a resultados enriquecidos), y **enlazado interno**
+a las siete páginas de servicio y a las tres herramientas. Se enlaza desde el
+pie de todas las páginas (columna «Clínica»).
+
+Aviso: la cifra del censo («más de 300.000 perros») está marcada en
+`.build/guias.py` como pendiente de verificar contra la fuente municipal antes
+de publicarla como dato. Un artículo por sí solo no posiciona: el SEO local
+depende sobre todo de la ficha de Google Business, reseñas reales y un NAP
+coherente.
 
 ### Sección de herramientas en la home
 

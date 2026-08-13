@@ -10,6 +10,7 @@ from pagegen import (head, NAV, footer, COOKIE_BANNER, breadcrumb, page_cta,
                      BRAND, SITE, TEL_HREF, TEL_TXT, MAIL)
 from legal import LEGALES, DRAFT
 from servicios import SERVICIOS
+from guias import GUIAS
 
 SVC_BY_SLUG = {s["slug"]: s for s in SERVICIOS}
 
@@ -76,6 +77,28 @@ def service_jsonld(s):
                 "addressCountry": "ES",
             },
         },
+    }
+    return ('<script type="application/ld+json">\n'
+            + json.dumps(data, ensure_ascii=False, indent=2) + "\n</script>")
+
+
+def article_jsonld(g):
+    data = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": g["h1"],
+        "description": g["meta"],
+        "inLanguage": "es",
+        "datePublished": g["updated"],
+        "dateModified": g["updated"],
+        "image": f"{SITE}/assets/img/og-cover.jpg",
+        "author": {"@type": "Organization", "name": BRAND, "url": f"{SITE}/"},
+        "publisher": {
+            "@type": "Organization",
+            "name": BRAND,
+            "logo": {"@type": "ImageObject", "url": f"{SITE}/assets/img/og-cover.jpg"},
+        },
+        "mainEntityOfPage": {"@type": "WebPage", "@id": f"{SITE}/{g['slug']}.html"},
     }
     return ('<script type="application/ld+json">\n'
             + json.dumps(data, ensure_ascii=False, indent=2) + "\n</script>")
@@ -256,9 +279,68 @@ def build_service(s):
     return write(f'{s["slug"]}.html', html)
 
 
+# ----------------------------------------------------------------- GUÍAS
+def build_guia(g):
+    toc = "\n".join(f'          <li><a href="#{i}">{t}</a></li>' for i, t in g["toc"])
+    cta_t, cta_x = g["cta"]
+    html = head(g["title"], g["meta"], f'{g["slug"]}.html')
+    html += f"""<body>
+{NAV}
+<main id="contenido">
+
+  <section class="page-head">
+    <div class="wrap">
+{breadcrumb(g["h1"])}
+      <h1 class="page-head__title">{g["h1"]}</h1>
+      <p class="page-head__lede">{g["lede"]}</p>
+      <p class="page-head__meta">Guía informativa · actualizada el <time datetime="{g["updated"]}">{g["updated_txt"]}</time></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="legal-layout">
+        <aside class="legal-toc" aria-label="Contenido de la página">
+          <h2>En esta página</h2>
+          <ol>
+{toc}
+          </ol>
+        </aside>
+
+        <div class="prose">
+{g["body"].strip()}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" id="preguntas">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Preguntas</p>
+        <h2 class="section__title">Preguntas frecuentes sobre veterinarias en Madrid</h2>
+      </header>
+      <div class="faq__list">
+{qa(g["faqs"])}
+      </div>
+    </div>
+  </section>
+
+{page_cta(cta_t, cta_x)}
+</main>
+
+{footer(SERVICIOS)}
+{article_jsonld(g)}
+{faq_jsonld(g["faqs"])}
+{breadcrumb_jsonld(g["h1"], g["slug"])}
+{COOKIE_BANNER}"""
+    return write(f'{g["slug"]}.html', html)
+
+
 if __name__ == "__main__":
     done = [build_legal(p) for p in LEGALES]
     done += [build_service(s) for s in SERVICIOS]
+    done += [build_guia(g) for g in GUIAS]
     for d in done:
         print("  OK", d)
     print(f"\n{len(done)} páginas generadas.")
