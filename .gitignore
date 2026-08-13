@@ -10,7 +10,9 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Propuesta comercial: contiene tarifas: fuera del repo público.
-# Se conserva solo en local.
+# Documentos comerciales: contienen tarifas: fuera del repo público.
+# Se conservan solo en local.
 PROPUESTA-ECONOMICA.md
 PROPUESTA-ECONOMICA.pdf
+OFERTA-COMERCIAL.md
+OFERTA-COMERCIAL.pdf
