@@ -9,3 +9,8 @@ Thumbs.db
 # Editores
 .vscode/
 .idea/
+
+# Propuesta comercial: contiene tarifas: fuera del repo público.
+# Se conserva solo en local.
+PROPUESTA-ECONOMICA.md
+PROPUESTA-ECONOMICA.pdf
