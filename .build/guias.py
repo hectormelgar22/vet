@@ -6,12 +6,18 @@ Cada guía es un dict con la misma forma que los servicios/legales, para que
 es divulgativo (orientado al dueño de la mascota), no clínico: no da pautas ni
 dosis, así que no necesita firma colegiada como las herramientas. Enlaza a las
 páginas de servicio y a las herramientas para reforzar el enlazado interno.
+
+El cuerpo está redactado en el tono cercano del resto del sitio (segunda
+persona, frases de longitud variable) y evita los tics de redacción de IA:
+sin guiones largos, sin negrita mecánica, sin cierres grandilocuentes. Las
+palabras clave, los títulos y los enlaces internos se mantienen intactos para
+no perder posicionamiento.
 """
 
 # NOTA CLIENTE: verificar la cifra del censo antes de publicarla como dato con
 # fuente. El Ayuntamiento de Madrid publica el censo de animales de compañía;
 # la cifra exacta cambia cada año. Si no se puede citar con seguridad, cambiar
-# "más de 300.000 perros censados" por "cientos de miles de perros".
+# "más de 300.000 perros" por "cientos de miles de perros".
 
 GUIA_VETERINARIA = dict(
     slug="guia-veterinaria-madrid",
@@ -19,8 +25,8 @@ GUIA_VETERINARIA = dict(
     meta=("Guía para elegir veterinaria en Madrid: servicios esenciales, urgencias 24 h, "
           "medicina preventiva, diagnóstico avanzado y preguntas frecuentes sobre el cuidado animal."),
     h1="Tu veterinaria de confianza en Madrid para el cuidado animal",
-    lede=("Qué distingue a una buena clínica veterinaria, qué servicios debe ofrecerte y "
-          "cómo actuar cuando tu mascota más lo necesita."),
+    lede=("Qué distingue a una buena clínica veterinaria, qué debería ofrecerte y cómo "
+          "reaccionar el día que tu mascota te necesite de verdad."),
     updated="2026-08-13",
     updated_txt="13 de agosto de 2026",
     toc=[
@@ -35,175 +41,163 @@ GUIA_VETERINARIA = dict(
     ],
     body="""
 <p>
-  Madrid es una ciudad de animales. Según el censo municipal de animales de compañía,
-  más de 300.000 perros están registrados en la capital, y la cifra de gatos, conejos y
-  otras mascotas sigue creciendo cada año. Con ese volumen de animales conviviendo en
-  hogares madrileños, encontrar una veterinaria de confianza no es un detalle menor: es
-  una de las decisiones más importantes que toma un dueño responsable. Esta guía está
-  pensada para ayudarte a entender qué distingue a una buena clínica veterinaria, qué
-  servicios debe ofrecerte y cómo actuar cuando tu mascota más lo necesita.
+  Madrid es una ciudad de animales. En la capital hay más de 300.000 perros registrados en
+  el censo municipal, y cada año se suman más gatos, conejos y otras mascotas. Con tantos
+  animales en casa, elegir una veterinaria de confianza no es un trámite: es una de las
+  decisiones que más pesan cuando cuidas de uno. Esta guía te ayuda a entender qué
+  distingue a una buena clínica veterinaria, qué debería ofrecerte y cómo reaccionar el
+  día que tu mascota te necesite de verdad.
 </p>
 
 <h2 id="que-es">¿Qué es una veterinaria de confianza?</h2>
 <p>
-  Una clínica veterinaria de confianza no se define únicamente por su equipamiento o por
-  su ubicación. Se define, sobre todo, por la relación que construye con el animal y con
-  su dueño a lo largo del tiempo. Un centro de referencia cuenta con profesionales
-  colegiados y con experiencia contrastada, ofrece información clara sobre diagnósticos y
-  tratamientos, y trata a cada paciente —sea un golden retriever de doce años o un hámster
-  recién llegado a casa— con el mismo rigor y la misma atención.
+  Una clínica veterinaria de confianza no se mide solo por su equipamiento o por lo cerca
+  que la tengas. Se mide, sobre todo, por la relación que construye con el animal y con su
+  familia a lo largo del tiempo. Un buen centro tiene profesionales colegiados con
+  experiencia, te explica los diagnósticos y los tratamientos sin tecnicismos, y trata
+  igual de bien a un golden retriever de doce años que a un hámster que acabas de llevar a
+  casa.
 </p>
 <p>
-  Otros indicadores de confianza son la transparencia en los presupuestos, la
-  disponibilidad para resolver dudas fuera de consulta y la capacidad de derivar a
-  especialistas cuando el caso lo requiere. En una ciudad como Madrid, donde la oferta es
-  amplia, los propietarios de mascotas valoran cada vez más estos factores junto a la
-  cercanía geográfica.
+  Hay otras señales que ayudan a fiarte: presupuestos claros por escrito, disposición a
+  resolver dudas fuera de la consulta y la honestidad de derivarte a un especialista cuando
+  el caso lo pide. En Madrid, con la oferta que hay, todo esto pesa cada vez más, y no solo
+  tener la clínica a la vuelta de la esquina.
 </p>
 
 <h2 id="servicios">Servicios veterinarios esenciales en Madrid</h2>
 <p>
-  Una clínica veterinaria completa debe cubrir, como mínimo, un núcleo de servicios
-  básicos que garanticen el bienestar del animal en todas las etapas de su vida.
+  Una clínica completa debería cubrir, como mínimo, lo que un animal necesita en cada etapa
+  de su vida.
 </p>
 <p>
-  Las <a href="servicio-consulta.html"><strong>consultas de medicina general</strong></a>
-  son la puerta de entrada: revisiones anuales, diagnóstico de enfermedades comunes y
-  seguimiento de patologías crónicas como la diabetes o la artritis. A estas se suman los
-  programas de <a href="servicio-preventiva.html"><strong>vacunación</strong></a>,
-  imprescindibles para proteger tanto al animal como al entorno humano frente a
-  enfermedades como el moquillo, la rabia o la leucemia felina.
+  Las <a href="servicio-consulta.html">consultas de medicina general</a> son la puerta de
+  entrada: la revisión anual, el diagnóstico de lo más común y el seguimiento de
+  enfermedades crónicas como la diabetes o la artritis. Junto a ellas van los programas de
+  <a href="servicio-preventiva.html">vacunación</a>, que protegen tanto al animal como a
+  las personas de su alrededor frente al moquillo, la rabia o la leucemia felina.
 </p>
 <p>
-  La <a href="servicio-cirugia.html"><strong>cirugía veterinaria</strong></a> —desde
-  esterilizaciones y extracciones dentales hasta intervenciones de mayor complejidad—
-  requiere instalaciones adecuadas y personal especializado en
-  <a href="servicio-anestesia.html">anestesiología animal</a>. Por último, el
-  <a href="servicio-urgencias.html"><strong>servicio de urgencias</strong></a> es el que
-  marca la diferencia en los momentos críticos: intoxicaciones, traumatismos o
-  dificultades respiratorias no esperan al horario de apertura habitual.
+  La <a href="servicio-cirugia.html">cirugía veterinaria</a> va desde una esterilización o
+  una limpieza dental hasta intervenciones bastante más complejas, y para todas hacen falta
+  un quirófano en condiciones y alguien que controle la
+  <a href="servicio-anestesia.html">anestesia</a> de cerca. Y luego está el
+  <a href="servicio-urgencias.html">servicio de urgencias</a>, que es el que de verdad se
+  nota cuando algo va mal: una intoxicación, un atropello o una dificultad para respirar no
+  esperan a que abra la clínica.
 </p>
 
 <h2 id="elegir">Cómo elegir la mejor veterinaria en Madrid</h2>
 <p>
-  Con centenares de clínicas repartidas por los distritos de la capital, la elección puede
-  resultar abrumadora. Hay cuatro criterios que conviene valorar con detenimiento.
+  Con cientos de clínicas repartidas por los distritos de la capital, la elección abruma.
+  Merece la pena fijarse en cuatro cosas.
 </p>
 <p>
-  La <strong>ubicación y la accesibilidad</strong> importan más de lo que parece: llegar en
-  diez minutos en caso de emergencia puede ser determinante. Los <strong>horarios
-  amplios</strong>, incluidas mañanas de fin de semana, facilitan la conciliación y evitan
-  que una consulta de rutina se convierta en un problema logístico.
+  La cercanía importa más de lo que parece: en una urgencia, llegar en diez minutos puede
+  cambiarlo todo. Un horario amplio, con sábados por la mañana incluidos, evita que una
+  revisión de rutina se convierta en un lío de agenda.
 </p>
 <p>
-  Las <strong>especialidades disponibles</strong> marcan la diferencia conforme el animal
-  envejece o presenta problemas concretos: dermatología, oftalmología, oncología o
-  traumatología veterinaria son servicios que no todas las clínicas ofrecen. Finalmente,
-  las <strong>valoraciones de otros propietarios</strong> —en Google, en foros
-  especializados o en grupos vecinales— aportan una perspectiva real sobre el trato, los
-  tiempos de espera y la calidad de la comunicación con el equipo clínico.
+  Las especialidades disponibles ganan peso según el animal envejece o aparecen problemas
+  concretos: dermatología, oftalmología, oncología o traumatología no están en todas
+  partes. Y las opiniones de otros dueños, ya sea en Google, en foros o en el grupo del
+  barrio, te cuentan lo que ninguna clínica dice de sí misma: cómo tratan, cuánto se espera
+  y si de verdad te explican las cosas.
 </p>
 
 <h2 id="urgencias">Atención veterinaria de urgencias en Madrid</h2>
 <p>
-  Ningún dueño de mascota está exento de vivir una emergencia. Una pelea con otro perro, la
-  ingestión de un alimento tóxico o una caída desde altura son situaciones que pueden
-  presentarse en cualquier momento, incluidas las madrugadas de un domingo festivo.
+  A ningún dueño le gusta pensarlo, pero una emergencia le puede tocar a cualquiera. Una
+  pelea con otro perro, un bocado a algo tóxico o una caída pueden pasar en cualquier
+  momento, también a las tres de la madrugada de un domingo festivo.
 </p>
 <p>
-  Contar con una veterinaria que disponga de
-  <a href="servicio-urgencias.html"><strong>atención de urgencias 24 horas</strong></a> no
-  es un lujo: es una red de seguridad real. Ante una emergencia, lo primero es mantener la
-  calma para poder evaluar el estado del animal. Evita moverlo bruscamente si sospechas una
-  lesión musculoesquelética, controla posibles hemorragias con presión directa y llama a la
-  clínica antes de salir para que el equipo pueda prepararse. Tener guardado el número de
-  urgencias de tu veterinaria habitual —o de un centro de emergencias de referencia— es tan
-  importante como tener el teléfono del médico de cabecera.
+  Por eso tranquiliza tanto tener cerca una veterinaria con
+  <a href="servicio-urgencias.html">atención de urgencias 24 horas</a>. Si te toca vivir
+  una, lo primero es no perder la calma para poder valorar cómo está el animal. No lo
+  muevas de golpe si sospechas que se ha hecho daño en huesos o articulaciones, corta
+  cualquier hemorragia con presión directa y llama a la clínica antes de salir, para que te
+  esperen preparados. Tener a mano el número de urgencias de tu veterinaria vale tanto como
+  tener el del médico de cabecera.
 </p>
 <p>
-  Y si la duda es si algo que tu mascota ha comido puede hacerle daño, nuestra herramienta
-  gratuita <a href="consultor-toxicos.html">«¿Puede comer esto?»</a> te orienta al momento
-  sobre alimentos y plantas peligrosas. Orienta, no sustituye a una llamada: ante la duda,
+  Y si la duda es si eso que se ha comido le puede hacer daño, nuestra herramienta gratuita
+  <a href="consultor-toxicos.html">«¿Puede comer esto?»</a> te da una primera orientación
+  sobre alimentos y plantas peligrosas. Orienta, no sustituye a la llamada: ante la duda,
   telefonea siempre.
 </p>
 
 <h2 id="preventiva">Medicina preventiva y salud animal</h2>
 <p>
-  La medicina preventiva es la inversión más rentable que puede hacer un propietario de
-  mascota. Un animal que recibe chequeos periódicos, que sigue su calendario vacunal y que
-  está correctamente desparasitado tiene muchas más probabilidades de vivir más años y con
-  mejor calidad de vida.
+  Si algo sale a cuenta de verdad, es la medicina preventiva. Un animal con las revisiones
+  al día, el calendario de vacunas en regla y bien desparasitado vive más años y con mejor
+  salud.
 </p>
 <p>
-  El <strong>chequeo anual</strong> permite detectar de forma temprana alteraciones en
-  órganos vitales, cambios de peso significativos o el inicio de enfermedades silenciosas
-  como la insuficiencia renal crónica. El <strong>calendario de vacunas</strong> varía
-  según la especie, la edad y el estilo de vida del animal, por lo que el veterinario debe
-  adaptarlo a cada caso: puedes hacerte una idea con nuestro
+  En la revisión anual se pillan a tiempo cosas que por fuera no se ven: un riñón que
+  empieza a fallar, un cambio de peso que se ha ido de las manos, una enfermedad silenciosa
+  como la insuficiencia renal. El calendario de vacunas no es igual para todos; depende de
+  la especie, la edad y la vida que lleve el animal, así que lo ajusta el veterinario. Para
+  hacerte una idea, puedes usar nuestro
   <a href="calendario-mascota.html">calendario orientativo de la mascota</a>. La
-  <strong>desparasitación interna y externa</strong> —frente a pulgas, garrapatas, gusano
-  del corazón o parásitos intestinales— protege al animal y reduce el riesgo de zoonosis,
-  es decir, de enfermedades transmisibles a las personas.
+  desparasitación, por dentro y por fuera, lo protege de pulgas, garrapatas, gusano del
+  corazón o lombrices, y de paso reduce el riesgo de zoonosis, esas enfermedades que
+  también pueden pasar a las personas.
 </p>
 <p>
   A la prevención pertenece también la
   <a href="servicio-identificacion.html">identificación por microchip</a>, obligatoria para
-  perros en la Comunidad de Madrid, y el control del peso, que puedes estimar con nuestra
+  perros en la Comunidad de Madrid, y vigilar el peso, que puedes estimar con nuestra
   <a href="calculadora-nutricion.html">calculadora de ración</a>.
 </p>
 
 <h2 id="tecnologia">Tecnología y diagnóstico veterinario avanzado</h2>
 <p>
-  El diagnóstico preciso es la base de cualquier tratamiento eficaz, y la tecnología
-  disponible en las clínicas veterinarias modernas ha avanzado considerablemente en la
-  última década.
+  Un buen diagnóstico es la base de cualquier tratamiento, y en la última década la
+  tecnología de las clínicas ha dado un salto grande.
 </p>
 <p>
-  La <strong>ecografía</strong> permite explorar órganos abdominales en tiempo real sin
-  necesidad de sedación, lo que reduce el estrés del animal. La <strong>radiografía
-  digital</strong> ofrece imágenes de alta resolución de manera inmediata, con una
-  exposición a la radiación inferior a la de los sistemas analógicos tradicionales. Los
-  <strong>analizadores de laboratorio internos</strong> hacen posible obtener resultados de
-  hemogramas, bioquímicas y urianálisis en minutos, agilizando la toma de decisiones en
-  situaciones urgentes y en la <a href="servicio-hospitalizacion.html">hospitalización</a>.
+  La ecografía deja ver los órganos del abdomen en tiempo real y casi siempre sin sedar,
+  con lo que el animal pasa menos estrés. La radiografía digital da imágenes nítidas al
+  momento y con menos radiación que la placa de toda la vida. Y con un laboratorio propio
+  se sacan hemogramas, bioquímicas o análisis de orina en minutos, que es justo lo que hace
+  falta en una urgencia o durante la
+  <a href="servicio-hospitalizacion.html">hospitalización</a>.
 </p>
 <p>
-  Algunas clínicas madrileñas de referencia incorporan también
-  <strong>electrocardiografía</strong>, <strong>endoscopia</strong> y acceso a
-  <strong>resonancia magnética</strong> mediante derivación, lo que amplía notablemente el
-  abanico diagnóstico sin necesidad de trasladar al animal a centros externos.
+  Las clínicas mejor equipadas de Madrid añaden electrocardiografía, endoscopia o, por
+  derivación, resonancia magnética, y así resuelven mucho sin tener que mandar al animal a
+  otro centro.
 </p>
 
 <h2 id="conclusion">En resumen</h2>
 <p>
-  Encontrar tu veterinaria de confianza en Madrid es un proceso que merece tiempo y
-  atención. No se trata solo de buscar el centro más cercano o el más económico, sino de
-  elegir un equipo que combine rigor clínico, tecnología adecuada, disponibilidad en
-  urgencias y, sobre todo, un trato humano hacia el animal y hacia quien lo cuida. Una buena
-  veterinaria acompaña a tu mascota durante toda su vida: desde las primeras vacunas hasta
-  los controles de la edad adulta. Esa relación, construida con confianza y continuidad, es
-  la mejor garantía de salud que puedes ofrecerle.
+  Elegir veterinaria en Madrid lleva su tiempo, y merece la pena dárselo. No va de quedarte
+  con la más barata ni con la más cercana, sino con un equipo que junte buen criterio
+  clínico, medios suficientes, urgencias cuando hagan falta y trato de verdad, tanto para
+  el animal como para ti. Una buena clínica te acompaña durante toda la vida de tu mascota,
+  desde la primera vacuna hasta las revisiones de mayor. Esa continuidad, más que ninguna
+  otra cosa, es lo que cuida su salud.
 </p>
 """,
     faqs=[
         ("¿Cuánto cuesta una consulta veterinaria en Madrid?",
-         "El precio de una consulta general oscila habitualmente entre 30 y 60 euros, aunque "
-         "varía según el tipo de clínica y la especialidad. Las urgencias nocturnas o festivas "
-         "suelen tener un recargo."),
+         "Una consulta general suele costar entre 30 y 60 euros, según la clínica y la "
+         "especialidad. Las urgencias de noche o en festivo llevan un recargo aparte."),
         ("¿Existen seguros de salud para mascotas?",
          "Sí. Varias aseguradoras ofrecen pólizas que cubren consultas, cirugías y "
-         "hospitalización. Conviene comparar coberturas, franquicias y exclusiones antes de "
-         "contratar."),
+         "hospitalización. Antes de contratar, compara bien las coberturas, las franquicias "
+         "y lo que queda excluido."),
         ("¿Qué debo llevar en la primera visita?",
-         "Si el animal ya tiene historial veterinario, aporta la cartilla sanitaria o el "
-         "documento de vacunación. Si es una primera consulta en un cachorro, el veterinario "
-         "te orientará sobre los primeros pasos."),
+         "Si tu mascota ya tiene historial, lleva la cartilla sanitaria o el documento de "
+         "vacunación. Si es un cachorro que estrena veterinario, no necesitas nada: allí te "
+         "orientan sobre los primeros pasos."),
         ("¿Es obligatorio el microchip en Madrid?",
-         "En la Comunidad de Madrid, el microchip es obligatorio para perros. Su implantación "
-         "suele realizarse en la propia clínica y el coste es reducido. También es el requisito "
-         "previo para inscribir al animal en el censo municipal."),
+         "En la Comunidad de Madrid, el microchip es obligatorio para los perros. Se implanta "
+         "en la propia clínica, cuesta poco y es el paso previo para inscribir al animal en "
+         "el censo municipal."),
         ("¿Puedo cambiar de veterinario sin perder el historial de mi mascota?",
-         "Sí. Tienes derecho a solicitar el historial clínico de tu mascota y trasladarlo a "
+         "Sí. Tienes derecho a pedir el historial clínico de tu mascota y llevarlo a "
          "cualquier otro centro."),
     ],
     cta=("¿Buscas veterinaria en Madrid?",
