@@ -88,7 +88,7 @@
 <link rel="preload" as="image" href="assets/img/hero-poster.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Figtree:wght@300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/marquee.css?v=1">
-<link rel="stylesheet" href="assets/css/styles.css?v=11">
+<link rel="stylesheet" href="assets/css/styles.css?v=12">
 <link rel="stylesheet" href="assets/css/services.css?v=1">
 <link rel="stylesheet" href="assets/css/team-flip.css?v=4">
 
@@ -164,7 +164,8 @@
         { "@type": "MedicalProcedure", "name": "Traumatología veterinaria" },
         { "@type": "MedicalProcedure", "name": "Anestesia monitorizada y control del dolor" },
         { "@type": "MedicalProcedure", "name": "Hospitalización con vigilancia 24 horas" },
-        { "@type": "MedicalProcedure", "name": "Urgencias veterinarias 24 horas" }
+        { "@type": "MedicalProcedure", "name": "Urgencias veterinarias 24 horas" },
+        { "@type": "Service", "name": "Peluquería canina y felina" }
       ],
       "knowsAbout": [
         "Medicina interna veterinaria",
@@ -323,6 +324,7 @@
 
     <nav class="nav__links" id="menu" aria-label="Navegación principal">
       <a href="#servicios">Servicios</a>
+      <a href="#peluqueria">Peluquería</a>
       <a href="#visita">Tu visita</a>
       <a href="#instalaciones">Instalaciones</a>
       <a href="#opiniones">Opiniones</a>
@@ -675,6 +677,72 @@
     </div>
   </section>
 
+  <!-- ══════════════════════════ PELUQUERÍA ══════════════════════════ -->
+  <!-- TODO CLIENTE: fotos de MUESTRA (banco de imágenes con licencia).
+       Sustituir por fotos reales de vuestra peluquería y vuestros pacientes. -->
+  <section class="section facilities grooming" id="peluqueria" aria-labelledby="peluqueria-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Peluquería canina y felina</p>
+        <h2 class="section__title" id="peluqueria-title">
+          Salir guapo <em>también es salud</em>
+        </h2>
+        <p class="section__lede">
+          Baño, corte y cepillado para perros y gatos, con manos veterinarias.
+          No es solo estética: en cada sesión revisamos piel, oídos y uñas, y
+          detectamos a tiempo bultos, parásitos o irritaciones que de otro modo
+          pasarían desapercibidos.
+        </p>
+      </header>
+
+      <div class="facilities__grid">
+        <figure class="shot shot--main js-reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/img/peluqueria-perro.webp">
+            <img src="assets/img/peluqueria-perro.jpg" width="1320" height="880" loading="lazy" decoding="async"
+                 alt="Peluquera cepilla con cuidado a un perro pequeño sobre una mesa de peluquería.">
+          </picture>
+          <figcaption>
+            <strong>Baño, corte y cepillado</strong>
+            Adaptado a cada raza y tipo de pelo, con productos suaves y sin prisas.
+            Trabajamos el ritmo del animal, no el del reloj.
+          </figcaption>
+        </figure>
+
+        <figure class="shot js-reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/img/peluqueria-gato.webp">
+            <img src="assets/img/peluqueria-gato.jpg" width="900" height="600" loading="lazy" decoding="async"
+                 alt="Un gato blanco de pelo largo es cepillado con delicadeza durante su sesión de peluquería.">
+          </picture>
+          <figcaption>
+            <strong>También gatos</strong>
+            Cepillado, control de nudos y baño felino con manejo tranquilo, para
+            que la sesión asuste lo menos posible.
+          </figcaption>
+        </figure>
+
+        <figure class="shot js-reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/img/peluqueria-secado.webp">
+            <img src="assets/img/peluqueria-secado.jpg" width="900" height="600" loading="lazy" decoding="async"
+                 alt="Peluquera seca a un perro pequeño con secador tras el baño.">
+          </picture>
+          <figcaption>
+            <strong>Uñas, oídos y zona higiénica</strong>
+            Corte de uñas, limpieza de oídos y arreglo higiénico. Salen listos
+            para casa y con la revisión hecha de paso.
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="grooming__note">
+        ¿Toca revisión y baño el mismo día? <a href="#contacto">Pídelos juntos</a>
+        y así viene una sola vez.
+      </p>
+    </div>
+  </section>
+
   <!-- ══════════════════════════ TU VISITA ══════════════════════════ -->
   <section class="section section--dark visit" id="visita" aria-labelledby="visita-title">
     <div class="wrap">
@@ -737,51 +805,54 @@
       <header class="section__head">
         <p class="eyebrow">Instalaciones</p>
         <h2 class="section__title" id="instalaciones-title">
-          Puedes verlo <em>antes</em> de dejarnos a tu animal
+          Así es la clínica <em>por dentro</em>
         </h2>
         <p class="section__lede">
-          Enseñamos la clínica entera a quien lo pide, sin cita y sin compromiso.
-          Ver dónde va a dormir tu perro quita más miedo que cualquier folleto.
+          Puedes venir a conocerla sin cita: te enseñamos dónde se espera, dónde
+          exploramos y dónde se quedan los que ingresan. Ver el sitio con tus
+          propios ojos tranquiliza más que cualquier folleto.
         </p>
       </header>
 
+      <!-- TODO CLIENTE: fotos de MUESTRA (banco de imágenes con licencia).
+           Sustituir por fotografías reales de vuestras instalaciones. -->
       <div class="facilities__grid">
         <figure class="shot shot--main js-reveal">
           <picture>
-            <source type="image/webp" srcset="assets/img/instalacion-quirofano.webp">
-            <img src="assets/img/instalacion-quirofano.jpg" width="1320" height="880" loading="lazy" decoding="async"
-                 alt="Veterinaria realiza una ecografía a un perro sobre la mesa de exploración.">
+            <source type="image/webp" srcset="assets/img/instalacion-recepcion.webp">
+            <img src="assets/img/instalacion-recepcion.jpg" width="1320" height="880" loading="lazy" decoding="async"
+                 alt="Sala de consulta amplia y luminosa con dos profesionales atendiendo a una mascota.">
           </picture>
           <figcaption>
-            <strong>Diagnóstico antes que nada</strong>
-            Ecografía, radiografía y análisis antes de decidir cualquier intervención.
-            Nada se opera ni se trata a ciegas.
+            <strong>Consultas amplias y sin prisas</strong>
+            Salas luminosas donde exploramos con calma. Cabéis tú, tu animal y
+            todas las preguntas que traigas.
           </figcaption>
         </figure>
 
         <figure class="shot js-reveal">
           <picture>
-            <source type="image/webp" srcset="assets/img/instalacion-hospital.webp">
-            <img src="assets/img/instalacion-hospital.jpg" width="900" height="700" loading="lazy" decoding="async"
-                 alt="Veterinaria administra un tratamiento a un perro pequeño mientras su tutor lo sujeta con cuidado.">
+            <source type="image/webp" srcset="assets/img/instalacion-sala.webp">
+            <img src="assets/img/instalacion-sala.jpg" width="900" height="600" loading="lazy" decoding="async"
+                 alt="Sala de consulta con puesto de trabajo, ecógrafo y equipo veterinario.">
           </picture>
           <figcaption>
-            <strong>Hospitalización</strong>
-            Seguimos cada tratamiento de cerca, con el mismo cuidado con el que lo
-            haríamos en casa.
+            <strong>Equipada de puertas adentro</strong>
+            Ecografía, laboratorio y quirófano en la propia clínica: la mayoría de
+            los casos se resuelven aquí mismo, sin derivaros a otro centro.
           </figcaption>
         </figure>
 
         <figure class="shot js-reveal">
           <picture>
-            <source type="image/webp" srcset="assets/img/instalacion-consulta.webp">
-            <img src="assets/img/instalacion-consulta.jpg" width="900" height="700" loading="lazy" decoding="async"
-                 alt="Veterinario con bata blanca explora con calma a un perro salchicha en la consulta.">
+            <source type="image/webp" srcset="assets/img/instalacion-espera.webp">
+            <img src="assets/img/instalacion-espera.jpg" width="900" height="600" loading="lazy" decoding="async"
+                 alt="Consulta tranquila donde un tutor sostiene a su mascota mientras el veterinario prepara la revisión.">
           </picture>
           <figcaption>
-            <strong>Boxes de consulta</strong>
-            Consultas sin prisa: exploramos con calma y te explicamos cada paso
-            antes de decidir nada.
+            <strong>Un ambiente que calma</strong>
+            Espacios tranquilos y manejo suave para que la visita asuste lo menos
+            posible, sobre todo a los más nerviosos.
           </figcaption>
         </figure>
       </div>

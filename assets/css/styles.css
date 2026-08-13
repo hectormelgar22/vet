@@ -364,21 +364,25 @@ button { font: inherit; color: inherit; }
   color: var(--text-muted);
 }
 
-.nav__links { display: none; gap: 2px; }
+.nav__links { display: none; gap: 2px; align-items: center; }
 
 .nav__links a {
   position: relative;
-  padding: 10px 13px;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 12px;
   border-radius: var(--radius-s);
   font-size: 0.92rem;
   font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;          /* nunca partir "Tu visita" en dos líneas */
   color: var(--text-muted);
   transition: color var(--dur) var(--ease);
 }
 .nav__links a::after {
   content: "";
   position: absolute;
-  left: 13px; right: 13px; bottom: 6px;
+  left: 12px; right: 12px; bottom: 6px;
   height: 1.5px;
   background: var(--ember);
   transform: scaleX(0);
@@ -470,8 +474,11 @@ button { font: inherit; color: inherit; }
   .brand__text { display: none; }   /* queda el logotipo, que ya lleva a inicio */
 }
 
-/* En pantallas anchas los enlaces van dentro de la píldora, sin hamburguesa. */
-@media (min-width: 1040px) {
+/* En pantallas anchas los enlaces van dentro de la píldora, sin hamburguesa.
+   Con 8 secciones necesitan sitio: por debajo de 1200 px seguimos con el menú
+   desplegable para que no se apretujen ni se parta ningún enlace en dos líneas. */
+@media (min-width: 1200px) {
+  .nav__inner { max-width: min(1240px, 100%); }
   .nav__links {
     display: flex;
     position: static;
@@ -484,9 +491,11 @@ button { font: inherit; color: inherit; }
   .nav__toggle { display: none; }
 }
 
-@media (min-width: 1200px) {
+/* El botón de urgencias solo aparece cuando sobra ancho de verdad, para no
+   forzar el ajuste de los ocho enlaces. */
+@media (min-width: 1440px) {
   .nav__call { display: inline-flex; }
-  .nav__inner { max-width: min(1200px, 100%); }
+  .nav__inner { max-width: min(1340px, 100%); }
 }
 
 /* --------------------------------------------------------------- 7. HERO */
@@ -1048,6 +1057,22 @@ html:not(.js) .hero__video-frame {
   .shot--main { grid-column: span 2; }
   .shot--main img { aspect-ratio: 21 / 9; }
 }
+
+/* Nota bajo la peluquería: enlaza baño + revisión en una sola visita. */
+.grooming__note {
+  margin: 22px 0 0;
+  text-align: center;
+  font-size: 0.98rem;
+  color: var(--text-muted);
+}
+.grooming__note a {
+  color: var(--moss);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.grooming__note a:hover { color: var(--pine); }
 
 /* --------------------------------------------------------- 14. TESTIMONIOS */
 /* El collage hace un zoom en perspectiva al bajar y descubre el titular.

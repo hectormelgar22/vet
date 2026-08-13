@@ -126,6 +126,17 @@ sin comprimir), del que usan poco más de la mitad. Separar el sistema de diseñ
 del CSS de la home ahorraría algunos KB, pero es un refactor con riesgo de
 regresión y comprimido son ~12 KB.
 
+### Sección de peluquería en la home
+
+Entre **servicios** y **tu visita** hay una sección (`#peluqueria`) de
+peluquería canina y felina. Reutiliza la rejilla de fotos de Instalaciones
+(`.facilities__grid` / `.shot`), con una foto grande de perro y dos pequeñas
+(gato y secado). El texto la plantea como salud, no solo estética: en cada
+sesión se revisan piel, oídos y uñas. La barra de navegación incluye su
+enlace; con ocho secciones, los enlaces en línea aparecen a partir de 1200 px
+(por debajo, menú desplegable) y el botón de urgencias solo a partir de
+1440 px, para que nunca se apretujen ni se parta ninguno en dos líneas.
+
 ### Sección de herramientas en la home
 
 Entre **equipo** y la banda de urgencias hay una sección (`#herramientas`) con
@@ -448,7 +459,8 @@ el aviso completo.
 | Pie | Nº de registro de centro veterinario y dirección técnica |
 | Enlaces legales | Aviso legal, privacidad y cookies (ahora apuntan a `#`) |
 | `assets/img/` | Retratos del equipo y avatares son ilustraciones generadas; sustituir por fotos reales en WebP |
-| `assets/img/instalacion-*` | Fotos de stock de Unsplash (no son la clínica real); ver nota abajo |
+| `assets/img/instalacion-*` | Fotos de stock (no son la clínica real); ver nota abajo |
+| `assets/img/peluqueria-*` | Fotos de stock de la peluquería (no son las reales); ver nota abajo |
 | `assets/video/` | Vídeo de stock de Mixkit; sustituir por uno propio de la clínica (mismo nombre) |
 | `main.js` | Constante `TEL` |
 
@@ -458,20 +470,21 @@ El mapa de Google no está incrustado. Un `iframe` de Maps escribe cookies de
 terceros antes del consentimiento. En su lugar hay un bloque que abre el
 panel de cookies; cuando lo conectes, cárgalo solo tras aceptar.
 
-### Fotos de Instalaciones: son de stock, no de esta clínica
+### Fotos de Instalaciones y Peluquería: son de stock, no de esta clínica
 
-Las tres fotos de la sección Instalaciones (`instalacion-quirofano.jpg`,
-`instalacion-hospital.jpg`, `instalacion-consulta.jpg`) son fotos reales de
-Unsplash (licencia libre, uso comercial), de la misma sesión fotográfica para
-que combinen entre sí. **No son la clínica del cliente.** Unsplash no tiene
-buen fondo de fotos de instalaciones veterinarias vacías (quirófano, boxes de
-hospitalización); lo que sí hay son buenas fotos de procedimientos en marcha,
-así que los tres textos se redactaron para describir honestamente lo que se
-ve (una ecografía, un tratamiento, una consulta) en vez de forzar el texto
-original, que prometía cosas que la foto no muestra (autoclave, sala felina,
-boxes individuales). Sustituir por fotos reales de la clínica en cuanto se
-pueda — es lo primero que un cliente real debería cambiar, junto con el
-equipo.
+Las tres fotos de **Instalaciones** (`instalacion-recepcion`,
+`instalacion-sala`, `instalacion-espera`) y las tres de **Peluquería**
+(`peluqueria-perro`, `peluqueria-gato`, `peluqueria-secado`) son fotos de
+banco (Pexels, licencia libre y uso comercial), cada trío de la misma sesión
+para que combinen entre sí. **No son la clínica del cliente.**
+
+Las de Instalaciones se eligieron a propósito para que muestren el **espacio**
+(salas de consulta amplias, equipo, ambiente) y no primeros planos de un
+procedimiento: la sección responde a «cómo es la clínica por dentro», no a
+«qué hacemos». Las anteriores (`instalacion-quirofano/hospital/consulta`) eran
+macros de una ecografía y una inyección, que no daban esa idea de sitio; se
+sustituyeron. Sustituir todas por fotos reales de la clínica en cuanto se
+pueda — es lo primero que un cliente real debería cambiar, junto con el equipo.
 
 ---
 
