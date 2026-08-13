@@ -147,6 +147,13 @@ def footer(services):
 {svc_links}
     </nav>
 
+    <nav class="footer__col" aria-label="Herramientas">
+      <h3>Herramientas</h3>
+      <a href="calendario-mascota.html">Calendario de vacunas</a>
+      <a href="consultor-toxicos.html">¿Puede comer esto?</a>
+      <a href="calculadora-nutricion.html">Calculadora de ración</a>
+    </nav>
+
     <nav class="footer__col" aria-label="Clínica">
       <h3>Clínica</h3>
       <a href="index.html#visita">Tu visita</a>

@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendario de tu mascota · Clínica Veterinaria Vitalis</title>
+<meta name="description" content="Genera un calendario orientativo de vacunas, desparasitaciones y revisiones adaptado a la especie, la fecha de nacimiento y el tamaño de tu mascota.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#FBF9F3">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F3D36'/%3E%3Cpath d='M4 17h5l2-6 3 12 3-9 2 3h9' fill='none' stroke='%23E4572E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Figtree:wght@300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================================
+   Calendario de mascota · hoja de estilos
+   Tokens heredados del sistema de diseño de la web (styles.css) para que la
+   herramienta se vea nativa dentro del sitio sin depender de él.
+   ========================================================================== */
+:root {
+  --ink: #0B211E;
+  --pine: #0F3D36;
+  --pine-700: #14524B;
+  --moss: #2E7D6B;
+  --sage: #A9C6B9;
+  --mist: #D9E5DE;
+  --mist-soft: #E6EDE8;
+  --linen: #F4F6F2;
+  --paper: #FFFFFF;
+  --ember: #E4572E;
+  --ember-ink: #B23A16;
+  --amber: #E8B04B;
+  --amber-bg: #FDF6E6;
+  --amber-ink: #7A4A0B;
+
+  --text: #10312C;
+  --text-muted: #3F5C56;
+  --text-onDark: #F4F6F2;
+  --text-onDark-muted: #A9C6B9;
+
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+
+  --radius-s: 10px;
+  --radius: 18px;
+  --radius-l: 28px;
+
+  --shadow-s: 0 1px 2px rgba(11,33,30,.05), 0 4px 14px -6px rgba(11,33,30,.10);
+  --shadow-m: 0 2px 4px rgba(11,33,30,.05), 0 18px 40px -20px rgba(11,33,30,.22);
+
+  --ease: cubic-bezier(.22,.68,.32,1);
+  --dur: 220ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(120% 60% at 90% -5%, rgba(246,210,138,.30), transparent 55%),
+    radial-gradient(80% 50% at 0% 100%, rgba(46,125,107,.10), transparent 60%),
+    var(--linen);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; }
+
+:focus-visible { outline: 3px solid var(--ember); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { width: 100%; max-width: 860px; margin-inline: auto; padding-inline: clamp(18px, 5vw, 32px); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ------------------------------------------------------------- Cabecera */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(244,246,242,.88);
+  backdrop-filter: saturate(1.6) blur(12px);
+  -webkit-backdrop-filter: saturate(1.6) blur(12px);
+  border-bottom: 1px solid var(--mist);
+}
+.topbar__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; min-height: 62px;
+}
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+.brand__mark {
+  width: 36px; height: 36px; flex: none;
+  display: grid; place-items: center;
+  border-radius: 10px; background: var(--pine); color: var(--ember);
+}
+.brand__mark svg { width: 22px; height: 22px; }
+.brand__text { font-family: var(--font-display); font-weight: 600; font-size: .98rem; white-space: nowrap; }
+.topbar__call {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 42px; padding: 8px 15px;
+  border: 1.5px solid var(--pine); border-radius: 999px;
+  font-family: var(--font-mono); font-size: .82rem; font-weight: 500;
+  color: var(--pine); text-decoration: none; white-space: nowrap;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.topbar__call:hover { background: var(--pine); color: var(--paper); }
+.topbar__call svg { width: 15px; height: 15px; fill: currentColor; }
+@media (max-width: 460px) { .brand__text { display: none; } }
+
+/* ----------------------------------------------------------- Intro */
+.intro { padding: clamp(30px, 6vw, 54px) 0 clamp(20px, 4vw, 30px); }
+.eyebrow {
+  font-family: var(--font-mono); font-size: .72rem; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ember-ink);
+  margin-bottom: 14px;
+}
+.intro h1 { font-size: clamp(1.9rem, 1.4rem + 2.4vw, 3rem); }
+.intro h1 em { font-style: italic; color: var(--moss); }
+.intro__lede { margin-top: 16px; color: var(--text-muted); font-size: clamp(1rem, .96rem + .2vw, 1.14rem); max-width: 58ch; }
+
+/* ------------------------------------------------------ Barra de progreso */
+.progreso { margin-bottom: 26px; }
+.progreso__pista { height: 5px; border-radius: 999px; background: var(--mist); overflow: hidden; }
+.progreso__valor {
+  display: block; height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--moss), var(--pine));
+  transition: width 420ms var(--ease);
+}
+.progreso__pasos { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.progreso__paso {
+  font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-muted);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.progreso__paso[aria-current="step"] { color: var(--pine); font-weight: 500; }
+.progreso__paso::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--mist); flex: none;
+}
+.progreso__paso[aria-current="step"]::before { background: var(--ember); }
+.progreso__paso.is-hecho::before { background: var(--moss); }
+
+/* --------------------------------------------------------------- Pasos */
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-m);
+  padding: clamp(22px, 4vw, 38px);
+}
+.paso[hidden] { display: none; }
+.paso legend, .paso__titulo {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(1.25rem, 1.1rem + .7vw, 1.6rem);
+  letter-spacing: -0.02em; padding: 0;
+}
+.paso__ayuda { margin-top: 10px; color: var(--text-muted); font-size: .96rem; }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+
+/* Tarjetas de opción grandes (especie, tamaño, actividad) */
+.opciones { display: grid; gap: 12px; margin-top: 22px; }
+.opciones--2 { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 620px) { .opciones--3 { grid-template-columns: repeat(3, 1fr); } }
+
+.opcion { position: relative; }
+.opcion input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opcion__cara {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: clamp(18px, 3vw, 26px) 14px;
+  border: 2px solid var(--mist); border-radius: var(--radius);
+  background: var(--paper); cursor: pointer; text-align: center;
+  min-height: 100%;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease),
+              transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.opcion__cara:hover { border-color: var(--sage); transform: translateY(-2px); box-shadow: var(--shadow-s); }
+.opcion input:checked + .opcion__cara {
+  border-color: var(--pine); background: var(--mist-soft); box-shadow: var(--shadow-s);
+}
+.opcion input:focus-visible + .opcion__cara { outline: 3px solid var(--ember); outline-offset: 3px; }
+.opcion__cara svg { width: 46px; height: 46px; color: var(--pine); }
+.opcion__nombre { font-family: var(--font-display); font-weight: 600; font-size: 1.08rem; }
+.opcion__desc { font-size: .84rem; color: var(--text-muted); line-height: 1.45; }
+
+/* Campos */
+.campo { margin-top: 22px; }
+.campo > label, .campo__label {
+  display: block; font-weight: 600; font-size: .95rem; margin-bottom: 8px;
+}
+.campo__pista { display: block; font-weight: 400; color: var(--text-muted); font-size: .86rem; margin-top: 3px; }
+input[type="date"], input[type="text"] {
+  width: 100%; min-height: 50px; padding: 12px 14px;
+  border: 1.5px solid var(--mist); border-radius: var(--radius-s);
+  background: var(--paper); color: var(--text);
+  font: inherit; font-size: 1rem;
+}
+input[type="date"]:focus-visible, input[type="text"]:focus-visible { border-color: var(--pine); }
+
+/* Checkboxes */
+.checks { display: grid; gap: 10px; margin-top: 18px; }
+.check {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 16px; border: 1.5px solid var(--mist); border-radius: var(--radius-s);
+  background: var(--paper); cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+.check:hover { border-color: var(--sage); }
+.check input { width: 22px; height: 22px; margin: 1px 0 0; accent-color: var(--pine); flex: none; cursor: pointer; }
+.check:has(input:checked) { border-color: var(--pine); background: var(--mist-soft); }
+.check__txt strong { display: block; font-size: .97rem; font-weight: 600; }
+.check__txt span { display: block; font-size: .84rem; color: var(--text-muted); line-height: 1.45; }
+
+/* Botones */
+.acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 50px; padding: 13px 26px;
+  border: 1.5px solid transparent; border-radius: 999px;
+  font: inherit; font-weight: 600; font-size: 1rem;
+  cursor: pointer; text-decoration: none; text-align: center;
+  transition: transform var(--dur) var(--ease), background-color var(--dur) var(--ease),
+              color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.btn--principal { background: var(--pine); color: var(--paper); border-color: var(--pine); box-shadow: var(--shadow-s); }
+.btn--principal:hover:not(:disabled) { background: var(--pine-700); border-color: var(--pine-700); }
+.btn--fantasma { color: var(--text); border-color: var(--mist); background: transparent; }
+.btn--fantasma:hover { background: var(--mist-soft); }
+.btn--ember { background: var(--ember); color: var(--ink); border-color: var(--ember); }
+.btn--ember:hover { background: #FF6A40; border-color: #FF6A40; }
+.btn svg { width: 17px; height: 17px; fill: currentColor; flex: none; }
+
+.error {
+  margin-top: 14px; padding: 12px 16px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--ember); background: #FDECE6;
+  color: var(--ember-ink); font-size: .92rem;
+}
+.error[hidden] { display: none; }
+
+/* ------------------------------------------------------------ Resultado */
+.resultado { padding-bottom: clamp(40px, 8vw, 80px); }
+.resultado[hidden] { display: none; }
+
+.resumen {
+  background: var(--pine); color: var(--text-onDark);
+  border-radius: var(--radius-l); padding: clamp(24px, 4vw, 36px);
+  box-shadow: var(--shadow-m);
+}
+.resumen__nombre-fila { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.resumen__label { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-onDark-muted); }
+#nombre-mascota {
+  flex: 1; min-width: 180px;
+  background: rgba(244,246,242,.10); color: var(--paper);
+  border: 1.5px solid rgba(244,246,242,.28); border-radius: var(--radius-s);
+  padding: 10px 14px; min-height: 46px;
+  font-family: var(--font-display); font-size: 1.35rem; font-weight: 600;
+}
+#nombre-mascota::placeholder { color: rgba(244,246,242,.5); font-weight: 400; }
+#nombre-mascota:focus-visible { border-color: var(--amber); }
+
+.resumen__datos { display: grid; gap: 16px; margin-top: 22px; }
+@media (min-width: 620px) { .resumen__datos { grid-template-columns: repeat(3, 1fr); } }
+.dato__k { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-onDark-muted); }
+.dato__v { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--paper); margin-top: 4px; line-height: 1.25; }
+.dato__v small { display: block; font-family: var(--font-body); font-size: .8rem; font-weight: 400; color: var(--text-onDark-muted); margin-top: 2px; }
+
+/* Línea temporal */
+.linea { margin-top: clamp(30px, 5vw, 46px); position: relative; }
+.linea::before {
+  content: ""; position: absolute; left: 21px; top: 8px; bottom: 8px;
+  width: 2px; background: var(--mist); border-radius: 2px;
+}
+@media (min-width: 640px) { .linea::before { left: 25px; } }
+
+.grupo-anio {
+  position: relative; margin: 26px 0 12px; padding-left: 58px;
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+@media (min-width: 640px) { .grupo-anio { padding-left: 66px; } }
+.grupo-anio:first-child { margin-top: 0; }
+
+.hito { position: relative; padding-left: 58px; margin-bottom: 12px; }
+@media (min-width: 640px) { .hito { padding-left: 66px; } }
+
+.hito__icono {
+  position: absolute; left: 0; top: 6px;
+  width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--paper); border: 2px solid var(--mist);
+  color: var(--text-muted); z-index: 1;
+}
+.hito__icono svg { width: 21px; height: 21px; }
+
+.hito__caja {
+  border: 1px solid var(--mist); border-radius: var(--radius);
+  background: var(--paper); padding: 16px 18px;
+  box-shadow: var(--shadow-s);
+}
+.hito__cab { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
+.hito__nombre { font-family: var(--font-display); font-size: 1.08rem; font-weight: 600; letter-spacing: -0.015em; }
+.hito__fecha { font-family: var(--font-mono); font-size: .78rem; color: var(--text-muted); }
+.hito__edad { font-size: .82rem; color: var(--text-muted); }
+.hito__por-que { margin-top: 8px; font-size: .92rem; color: var(--text-muted); line-height: 1.55; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: .64rem; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 999px; white-space: nowrap;
+}
+.badge--ahora { background: var(--ember); color: var(--ink); }
+.badge--atrasado { background: var(--amber); color: var(--amber-ink); }
+.badge--hecho { background: var(--mist); color: var(--text-muted); }
+
+.hito__cta { margin-top: 14px; display: inline-flex; }
+
+/* Estados */
+.hito--completado .hito__caja { background: var(--mist-soft); border-color: var(--mist); }
+.hito--completado .hito__nombre { color: var(--text-muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+.hito--completado .hito__icono { background: var(--mist-soft); border-color: var(--sage); color: var(--moss); }
+
+.hito--ahora .hito__caja { border-color: var(--ember); border-width: 2px; box-shadow: 0 10px 30px -14px rgba(228,87,46,.55); }
+.hito--ahora .hito__icono { background: var(--ember); border-color: var(--ember); color: var(--ink); }
+
+.hito--atrasado .hito__caja { border-color: var(--amber); border-width: 2px; background: var(--amber-bg); }
+.hito--atrasado .hito__icono { background: var(--amber); border-color: var(--amber); color: var(--amber-ink); }
+
+.hito--futuro .hito__caja { background: var(--paper); }
+
+/* Recurrente: cuidado en marcha. Ni alarma ámbar ni gris de "hecho": tono
+   propio, con la cadencia destacada porque es el dato que importa. */
+.hito--recurrente .hito__caja {
+  border-color: var(--sage);
+  background: linear-gradient(180deg, var(--mist-soft) 0%, var(--paper) 60%);
+}
+.hito--recurrente .hito__icono { background: var(--mist-soft); border-color: var(--moss); color: var(--pine); }
+
+.badge--cada { background: var(--pine); color: var(--paper); }
+.badge--cada svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.4; }
+
+.hito__proxima {
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px dashed var(--mist);
+  font-size: .88rem; color: var(--text-muted);
+}
+.hito__proxima strong { color: var(--text); font-weight: 600; }
+
+/* Entrada animada */
+.hito, .grupo-anio { opacity: 1; }
+.js .hito.anim, .js .grupo-anio.anim { opacity: 0; transform: translateY(18px); }
+.js .hito.anim.visible, .js .grupo-anio.anim.visible {
+  opacity: 1; transform: none;
+  transition: opacity 520ms var(--ease), transform 520ms var(--ease);
+}
+
+/* Aviso */
+.aviso {
+  margin-top: clamp(28px, 5vw, 44px);
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 18px 20px; border-radius: var(--radius);
+  border: 1px solid var(--amber); background: var(--amber-bg);
+}
+.aviso svg { width: 21px; height: 21px; flex: none; color: var(--ember-ink); margin-top: 2px; }
+.aviso p { font-size: .92rem; line-height: 1.6; }
+.aviso strong { display: block; margin-bottom: 3px; }
+
+/* Pie */
+.pie {
+  margin-top: clamp(30px, 6vw, 56px);
+  padding: clamp(24px, 4vw, 34px) 0;
+  border-top: 1px solid var(--mist);
+  color: var(--text-muted); font-size: .88rem;
+}
+.pie__datos { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; }
+.pie a { color: var(--pine); }
+.pie__legal { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+
+/* Solo se ve al imprimir */
+.solo-print { display: none; }
+
+/* ------------------------------------------------------------- Impresión */
+@media print {
+  @page { margin: 14mm; }
+  body {
+    background: #fff !important;
+    color: #000;
+    font-size: 11pt;
+  }
+  .topbar, .intro, .progreso, .panel, .acciones, .aviso-interactivo,
+  .no-print, .hito__cta, #btn-imprimir, #btn-reiniciar { display: none !important; }
+  .solo-print { display: block; }
+  .wrap { max-width: none; padding: 0; }
+
+  .print-cab {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 20px; padding-bottom: 12px; margin-bottom: 18px;
+    border-bottom: 2px solid #0F3D36;
+  }
+  .print-cab h2 { font-size: 15pt; }
+  .print-cab p { font-size: 9pt; color: #333; }
+
+  .resumen {
+    background: #fff !important; color: #000 !important;
+    border: 1.5px solid #0F3D36; box-shadow: none; padding: 12px 14px;
+    border-radius: 6px;
+  }
+  .resumen__label, .dato__k { color: #555 !important; }
+  .dato__v, #nombre-mascota { color: #000 !important; }
+  #nombre-mascota { background: none !important; border: 0 !important; padding: 0 !important; font-size: 15pt; }
+  .resumen__datos { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+  .linea::before { background: #ccc; }
+  .hito { page-break-inside: avoid; break-inside: avoid; margin-bottom: 8px; }
+  .hito__caja { box-shadow: none !important; border: 1px solid #bbb !important; background: #fff !important; padding: 8px 10px; }
+  .hito--atrasado .hito__caja { border: 1.5px solid #B8860B !important; }
+  .hito--ahora .hito__caja { border: 1.5px solid #B23A16 !important; }
+  .hito__icono { background: #fff !important; border-color: #bbb !important; color: #444 !important; }
+  .badge { border: 1px solid #999; background: #fff !important; color: #000 !important; }
+  .aviso { border: 1px solid #B8860B; background: #fff !important; page-break-inside: avoid; }
+  .pie { border-top: 1px solid #ccc; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .js .hito.anim, .js .grupo-anio.anim { opacity: 1; transform: none; }
+}
+</style>
+</head>
+
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<header class="topbar no-print">
+  <div class="wrap topbar__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><path d="M4 21h6.5l2.6-8 3.9 16 3.9-12.5 2.6 4.5H36" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="brand__text">Clínica Veterinaria Vitalis</span>
+    </a>
+    <a class="topbar__call" href="tel:+34910305305">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z"/></svg>
+      910 305 305
+    </a>
+  </div>
+</header>
+
+<main>
+  <!-- ══════════════════════════ INTRO ══════════════════════════ -->
+  <section class="wrap intro no-print">
+    <p class="eyebrow">Herramienta gratuita</p>
+    <h1>El calendario de <em>tu mascota</em></h1>
+    <p class="intro__lede">
+      Responde tres preguntas y te generamos una línea temporal con las vacunas,
+      desparasitaciones y revisiones orientativas desde cachorro hasta los 15 años.
+      Puedes descargarla o imprimirla para tenerla a mano.
+    </p>
+  </section>
+
+  <!-- ══════════════════════════ FORMULARIO ══════════════════════════ -->
+  <section class="wrap no-print" id="zona-form">
+    <div class="progreso" aria-hidden="true">
+      <div class="progreso__pista"><span class="progreso__valor" id="barra" style="width:33.33%"></span></div>
+      <ol class="progreso__pasos">
+        <li class="progreso__paso" id="marca-1" aria-current="step">Especie</li>
+        <li class="progreso__paso" id="marca-2">Datos</li>
+        <li class="progreso__paso" id="marca-3">Historial</li>
+      </ol>
+    </div>
+    <p class="sr-only" id="estado-paso" aria-live="polite"></p>
+
+    <form class="panel" id="form" novalidate>
+
+      <!-- ---------- Paso 1: especie ---------- -->
+      <fieldset class="paso" id="paso-1">
+        <legend tabindex="-1" id="titulo-1">¿Qué animal es?</legend>
+        <p class="paso__ayuda">El calendario cambia bastante entre una especie y otra.</p>
+
+        <div class="opciones opciones--2">
+          <label class="opcion">
+            <input type="radio" name="especie" value="perro" required>
+            <span class="opcion__cara">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 14 8 7l7 2.5"/><path d="M36 14l4-7-7 2.5"/>
+                <path d="M15 10c-2.6 3-4 6.8-4 11 0 8.4 5.8 14 13 14s13-5.6 13-14c0-4.2-1.4-8-4-11"/>
+                <circle cx="19" cy="21" r="1.6" fill="currentColor" stroke="none"/>
+                <circle cx="29" cy="21" r="1.6" fill="currentColor" stroke="none"/>
+                <path d="M24 26v3"/><path d="M20.5 30.5c1 1.2 2.2 1.8 3.5 1.8s2.5-.6 3.5-1.8"/>
+                <path d="M22 26h4"/>
+              </svg>
+              <span class="opcion__nombre">Perro</span>
+              <span class="opcion__desc">También te preguntaremos el tamaño</span>
+            </span>
+          </label>
+
+          <label class="opcion">
+            <input type="radio" name="especie" value="gato" required>
+            <span class="opcion__cara">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M13 17 11 7l8 5.5"/><path d="M35 17l2-10-8 5.5"/>
+                <path d="M19 12.5a20 20 0 0 1 10 0"/>
+                <path d="M13 17c-1.6 2.6-2.5 5.6-2.5 8.8C10.5 33 16.6 38 24 38s13.5-5 13.5-12.2c0-3.2-.9-6.2-2.5-8.8"/>
+                <circle cx="19" cy="24" r="1.6" fill="currentColor" stroke="none"/>
+                <circle cx="29" cy="24" r="1.6" fill="currentColor" stroke="none"/>
+                <path d="M24 28.5v1.8"/>
+                <path d="M21.5 32c.8.8 1.6 1.2 2.5 1.2s1.7-.4 2.5-1.2"/>
+                <path d="M8 26h6M34 26h6M8.6 30l5.6-1.6M33.8 28.4l5.6 1.6"/>
+              </svg>
+              <span class="opcion__nombre">Gato</span>
+              <span class="opcion__desc">Calendario específico felino</span>
+            </span>
+          </label>
+        </div>
+
+        <p class="error" id="error-1" hidden role="alert"></p>
+
+        <div class="acciones">
+          <button type="button" class="btn btn--principal" data-ir="2">
+            Siguiente
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 5.4 20 12l-6.8 6.6-1.4-1.4 4.2-4.2H4v-2h12l-4.2-4.2z"/></svg>
+          </button>
+        </div>
+      </fieldset>
+
+      <!-- ---------- Paso 2: nacimiento y tamaño ---------- -->
+      <fieldset class="paso" id="paso-2" hidden>
+        <legend tabindex="-1" id="titulo-2">¿Cuándo nació?</legend>
+        <p class="paso__ayuda">
+          Si no sabes el día exacto, pon una fecha aproximada: el calendario sigue
+          siendo útil como guía.
+        </p>
+
+        <div class="campo">
+          <label for="nacimiento">Fecha de nacimiento
+            <span class="campo__pista">No se puede elegir una fecha futura.</span>
+          </label>
+          <input type="date" id="nacimiento" name="nacimiento" required>
+        </div>
+
+        <div class="campo" id="campo-tamano" hidden>
+          <span class="campo__label" id="lbl-tamano">Tamaño adulto estimado</span>
+          <div class="opciones opciones--3" role="radiogroup" aria-labelledby="lbl-tamano">
+            <label class="opcion">
+              <input type="radio" name="tamano" value="pequeno">
+              <span class="opcion__cara">
+                <span class="opcion__nombre">Pequeño</span>
+                <span class="opcion__desc">Menos de 10 kg</span>
+              </span>
+            </label>
+            <label class="opcion">
+              <input type="radio" name="tamano" value="mediano">
+              <span class="opcion__cara">
+                <span class="opcion__nombre">Mediano</span>
+                <span class="opcion__desc">Entre 10 y 25 kg</span>
+              </span>
+            </label>
+            <label class="opcion">
+              <input type="radio" name="tamano" value="grande">
+              <span class="opcion__cara">
+                <span class="opcion__nombre">Grande</span>
+                <span class="opcion__desc">Más de 25 kg</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <p class="error" id="error-2" hidden role="alert"></p>
+
+        <div class="acciones">
+          <button type="button" class="btn btn--fantasma" data-ir="1">Atrás</button>
+          <button type="button" class="btn btn--principal" data-ir="3">
+            Siguiente
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 5.4 20 12l-6.8 6.6-1.4-1.4 4.2-4.2H4v-2h12l-4.2-4.2z"/></svg>
+          </button>
+        </div>
+      </fieldset>
+
+      <!-- ---------- Paso 3: historial ---------- -->
+      <fieldset class="paso" id="paso-3" hidden>
+        <legend tabindex="-1" id="titulo-3">¿Qué tiene ya puesto?</legend>
+        <p class="paso__ayuda">
+          Marca lo que ya le hayan hecho. Si no estás seguro de algo, déjalo sin marcar:
+          aparecerá en el calendario y lo comprobamos en la consulta.
+        </p>
+
+        <div class="checks" id="lista-hechos"></div>
+
+        <div class="checks" style="margin-top:18px">
+          <label class="check">
+            <input type="checkbox" id="esterilizado">
+            <span class="check__txt">
+              <strong>Está esterilizado o castrado</strong>
+              <span>Si lo marcas, quitaremos ese hito del calendario.</span>
+            </span>
+          </label>
+        </div>
+
+        <div class="acciones">
+          <button type="button" class="btn btn--fantasma" data-ir="2">Atrás</button>
+          <button type="submit" class="btn btn--principal">
+            Ver mi calendario
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 5.4 20 12l-6.8 6.6-1.4-1.4 4.2-4.2H4v-2h12l-4.2-4.2z"/></svg>
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </section>
+
+  <!-- ══════════════════════════ RESULTADO ══════════════════════════ -->
+  <section class="wrap resultado" id="resultado" hidden aria-live="polite">
+
+    <!-- Cabecera que solo aparece en la hoja impresa -->
+    <div class="print-cab solo-print">
+      <div>
+        <h2>Calendario orientativo de salud</h2>
+        <p id="print-sub"></p>
+      </div>
+      <div style="text-align:right">
+        <p><strong>Clínica Veterinaria Vitalis</strong></p>
+        <p>Calle de Alcalá, 415 · 28027 Madrid</p>
+        <p>910 305 305 · citas@vitalisveterinaria.es</p>
+      </div>
+    </div>
+
+    <div class="resumen">
+      <div class="resumen__nombre-fila">
+        <label class="resumen__label" for="nombre-mascota">Nombre</label>
+        <input type="text" id="nombre-mascota" placeholder="Escribe su nombre" maxlength="28"
+               autocomplete="off" aria-describedby="nombre-ayuda">
+      </div>
+      <p class="sr-only" id="nombre-ayuda">Solo se usa para personalizar este calendario en pantalla.</p>
+
+      <div class="resumen__datos">
+        <div class="dato">
+          <span class="dato__k">Edad actual</span>
+          <span class="dato__v" id="dato-edad">—</span>
+        </div>
+        <div class="dato">
+          <span class="dato__k">Próxima cita recomendada</span>
+          <span class="dato__v" id="dato-proxima">—</span>
+        </div>
+        <div class="dato">
+          <span class="dato__k">En los próximos 12 meses</span>
+          <span class="dato__v" id="dato-pendientes">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="linea" id="linea"></div>
+
+    <div class="aviso">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p>
+        <strong>Esto es una orientación, no un plan médico.</strong>
+        El calendario se genera con protocolos generales. El plan concreto de tu animal
+        lo establece su veterinario según su especie, su raza, dónde vive, si sale al campo
+        o viaja, y su historial clínico. Ante cualquier duda, llámanos.
+      </p>
+    </div>
+
+    <div class="acciones no-print">
+      <button type="button" class="btn btn--principal" id="btn-imprimir">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v4H7zM5 9h14a2 2 0 0 1 2 2v6h-4v4H7v-4H3v-6a2 2 0 0 1 2-2m4 8h6v4H9z"/></svg>
+        Descargar mi calendario
+      </button>
+      <a class="btn btn--ember" href="index.html#contacto">Pedir cita</a>
+      <button type="button" class="btn btn--fantasma" id="btn-reiniciar">Empezar de nuevo</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ PIE ══════════════════════════ -->
+  <footer class="wrap pie">
+    <div class="pie__datos">
+      <strong>Clínica Veterinaria Vitalis</strong>
+      <span>Calle de Alcalá, 415 · 28027 Madrid</span>
+      <a href="tel:+34910305305">910 305 305</a>
+      <a href="mailto:citas@vitalisveterinaria.es">citas@vitalisveterinaria.es</a>
+    </div>
+    <nav class="pie__legal no-print" aria-label="Información legal">
+      <a href="index.html">Inicio</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="privacidad.html">Política de privacidad</a>
+      <a href="cookies.html">Política de cookies</a>
+    </nav>
+  </footer>
+</main>
+
+<script>
+/* ============================================================================
+   ┌──────────────────────────────────────────────────────────────────────────┐
+   │  ATENCIÓN — LEER ANTES DE PUBLICAR                                       │
+   │                                                                          │
+   │  El array PROTOCOLO que hay debajo contiene hitos de EJEMPLO. Los datos  │
+   │  clínicos (a qué edad toca cada vacuna, cada cuánto se repite, qué       │
+   │  desparasitación corresponde) NO están validados: son un andamiaje para  │
+   │  que la herramienta funcione y se pueda ver el resultado.                │
+   │                                                                          │
+   │  Un veterinario colegiado debe revisar, corregir y completar TODAS las   │
+   │  entradas antes de que esta página se publique. Los protocolos vacunales │
+   │  varían según el país, la comunidad autónoma, el laboratorio del         │
+   │  producto, el entorno del animal y su historial.                         │
+   │                                                                          │
+   │  Cada entrada por revisar está marcada con  // VERIFICAR CON LA CLÍNICA  │
+   └──────────────────────────────────────────────────────────────────────────┘
+
+   FORMA DE CADA HITO
+   ------------------
+   id                 identificador único (se usa en las casillas del paso 3)
+   especie            'perro' | 'gato' | 'ambos'
+   tipo               'vacuna' | 'desparasitacion' | 'revision' | 'hito'
+   nombre             lo que ve el usuario
+   edadMeses          edad de la primera vez (admite decimales: 1.5 = 6 semanas)
+   repetirCadaMeses   cada cuánto se repite, o null si es una sola vez
+   soloTamano         ['pequeno','mediano','grande'] para acotar, o null
+   explicacion        una línea en lenguaje llano: por qué importa
+   ========================================================================== */
+
+var PROTOCOLO = [
+
+  /* ---------------------------------------------------------------- PERRO */
+  { id: 'p-desp-1', especie: 'perro', tipo: 'desparasitacion',
+    nombre: 'Primera desparasitación interna',
+    edadMeses: 1.5, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'Los cachorros pueden nacer ya con parásitos intestinales transmitidos por la madre.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'p-vac-1', especie: 'perro', tipo: 'vacuna',
+    nombre: 'Primovacunación (primera dosis)',
+    edadMeses: 2, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'La protección que hereda de la madre va bajando, y hay que relevarla con vacunas propias.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'p-vac-2', especie: 'perro', tipo: 'vacuna',
+    nombre: 'Segunda dosis de la primovacunación',
+    edadMeses: 3, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'Una sola dosis no basta: el refuerzo es lo que consolida la defensa.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'p-vac-3', especie: 'perro', tipo: 'vacuna',
+    nombre: 'Tercera dosis de la primovacunación',
+    edadMeses: 4, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'Cierra la pauta inicial. Hasta completarla conviene limitar el contacto con perros desconocidos.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'p-rabia', especie: 'perro', tipo: 'vacuna',
+    nombre: 'Vacuna antirrábica',
+    edadMeses: 4, repetirCadaMeses: 12, soloTamano: null,
+    explicacion: 'Obligatoria en la Comunidad de Madrid e imprescindible para viajar por la Unión Europea.' },
+    // VERIFICAR CON LA CLÍNICA (edad de inicio y periodicidad varían según normativa autonómica)
+
+  { id: 'p-chip', especie: 'perro', tipo: 'hito',
+    nombre: 'Microchip y alta en el registro',
+    edadMeses: 3, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'Es lo único que permite que alguien te lo devuelva si se pierde. Sin registrar, no sirve.' },
+    // VERIFICAR CON LA CLÍNICA (plazo legal de implantación)
+
+  { id: 'p-ester', especie: 'perro', tipo: 'hito',
+    nombre: 'Valoración de esterilización',
+    edadMeses: 8, repetirCadaMeses: null, soloTamano: ['pequeno', 'mediano'],
+    explicacion: 'Momento de hablarlo: hay ventajas e inconvenientes y la decisión se toma caso por caso.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'p-ester-g', especie: 'perro', tipo: 'hito',
+    nombre: 'Valoración de esterilización',
+    edadMeses: 14, repetirCadaMeses: null, soloTamano: ['grande'],
+    explicacion: 'En razas grandes suele convenir esperar a que el esqueleto termine de formarse.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'p-desp-int', especie: 'perro', tipo: 'desparasitacion',
+    nombre: 'Desparasitación interna periódica',
+    edadMeses: 6, repetirCadaMeses: 3, soloTamano: null,
+    explicacion: 'La frecuencia depende de si sale al campo, come del suelo o convive con niños pequeños.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'p-desp-ext', especie: 'perro', tipo: 'desparasitacion',
+    nombre: 'Antiparasitario externo',
+    edadMeses: 3, repetirCadaMeses: 1, soloTamano: null,
+    explicacion: 'Pulgas y garrapatas, y en Madrid también el mosquito que transmite la leishmaniosis.' },
+    // VERIFICAR CON LA CLÍNICA (producto y periodicidad dependen del formato elegido)
+
+  { id: 'p-refuerzo', especie: 'perro', tipo: 'vacuna',
+    nombre: 'Refuerzo anual de vacunas',
+    edadMeses: 15, repetirCadaMeses: 12, soloTamano: null,
+    explicacion: 'Se revisa qué toca cada año: no todas las vacunas se repiten con la misma frecuencia.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'p-revision', especie: 'perro', tipo: 'revision',
+    nombre: 'Revisión general anual',
+    edadMeses: 12, repetirCadaMeses: 12, soloTamano: null,
+    explicacion: 'Peso, dientes, corazón y bultos. Media hora al año que detecta cosas a tiempo.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'p-senior', especie: 'perro', tipo: 'revision',
+    nombre: 'Revisión sénior (dos veces al año)',
+    edadMeses: 84, repetirCadaMeses: 6, soloTamano: null,
+    explicacion: 'A partir de cierta edad conviene duplicar los controles y añadir analítica.' },
+    // VERIFICAR CON LA CLÍNICA (la edad de inicio suele ser antes en razas grandes)
+
+  /* ----------------------------------------------------------------- GATO */
+  { id: 'g-desp-1', especie: 'gato', tipo: 'desparasitacion',
+    nombre: 'Primera desparasitación interna',
+    edadMeses: 1.5, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'Los gatitos suelen tener parásitos intestinales desde muy pequeños.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'g-vac-1', especie: 'gato', tipo: 'vacuna',
+    nombre: 'Primovacunación (primera dosis)',
+    edadMeses: 2, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'Protege frente a las enfermedades respiratorias y digestivas más frecuentes en gatos.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'g-vac-2', especie: 'gato', tipo: 'vacuna',
+    nombre: 'Segunda dosis de la primovacunación',
+    edadMeses: 3, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'El refuerzo consolida la protección. Sin él, la primera dosis se queda a medias.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'g-test', especie: 'gato', tipo: 'hito',
+    nombre: 'Test de leucemia e inmunodeficiencia felina',
+    edadMeses: 2.5, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'Se hace antes de vacunar de leucemia y al incorporar un gato nuevo a casa.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'g-chip', especie: 'gato', tipo: 'hito',
+    nombre: 'Microchip y alta en el registro',
+    edadMeses: 3, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'Un gato que se escapa sin chip es prácticamente irrecuperable.' },
+    // VERIFICAR CON LA CLÍNICA (plazo legal de implantación)
+
+  { id: 'g-ester', especie: 'gato', tipo: 'hito',
+    nombre: 'Valoración de esterilización',
+    edadMeses: 6, repetirCadaMeses: null, soloTamano: null,
+    explicacion: 'Momento de hablarlo, sobre todo si tiene acceso al exterior.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'g-desp-int', especie: 'gato', tipo: 'desparasitacion',
+    nombre: 'Desparasitación interna periódica',
+    edadMeses: 6, repetirCadaMeses: 3, soloTamano: null,
+    explicacion: 'Si sale al exterior o caza, la frecuencia suele ser mayor que si vive solo en casa.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'g-desp-ext', especie: 'gato', tipo: 'desparasitacion',
+    nombre: 'Antiparasitario externo',
+    edadMeses: 3, repetirCadaMeses: 1, soloTamano: null,
+    explicacion: 'Importante: nunca uses en gatos un producto pensado para perros.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'g-refuerzo', especie: 'gato', tipo: 'vacuna',
+    nombre: 'Refuerzo anual de vacunas',
+    edadMeses: 15, repetirCadaMeses: 12, soloTamano: null,
+    explicacion: 'Se ajusta según su forma de vida: no necesita lo mismo un gato de interior que uno que sale.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'g-revision', especie: 'gato', tipo: 'revision',
+    nombre: 'Revisión general anual',
+    edadMeses: 12, repetirCadaMeses: 12, soloTamano: null,
+    explicacion: 'Los gatos disimulan muy bien el dolor: la revisión detecta lo que en casa no se ve.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'g-senior', especie: 'gato', tipo: 'revision',
+    nombre: 'Revisión sénior con analítica',
+    edadMeses: 84, repetirCadaMeses: 6, soloTamano: null,
+    explicacion: 'La enfermedad renal y el hipertiroidismo son frecuentes y dan la cara tarde.' }
+    // VERIFICAR CON LA CLÍNICA
+];
+
+/* ==========================================================================
+   Estado de la sesión. En memoria a propósito: la herramienta no guarda nada
+   en el navegador (ni localStorage ni sessionStorage) ni envía datos a ningún
+   sitio. Al recargar la página se empieza de cero.
+   ========================================================================== */
+var estado = {
+  paso: 1,
+  especie: null,
+  nacimiento: null,
+  tamano: null,
+  hechos: [],
+  esterilizado: false,
+  nombre: ''
+};
+
+var HORIZONTE_MESES = 180;          /* 15 años */
+var DIA = 86400000;
+var VENTANA_ATRASO = 30;            /* días de margen antes de marcar "atrasado" */
+var VENTANA_PROXIMA = 60;           /* días por delante que cuentan como "toca ahora" */
+var VENTANA_PASADO = 6;             /* meses hacia atrás que se muestran los hitos de una vez */
+
+var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
+var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
+
+/* -------------------------------------------------------------- Fechas */
+
+/* Suma meses (admite decimales) respetando el fin de mes: 31 de enero + 1 mes
+   debe dar 28/29 de febrero, no el 2 o 3 de marzo como haría setMonth a secas. */
+function sumarMeses(base, meses) {
+  var enteros = Math.floor(meses);
+  var diasExtra = Math.round((meses - enteros) * 30.44);
+  var d = new Date(base.getFullYear(), base.getMonth() + enteros, 1);
+  var ultimoDia = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  d.setDate(Math.min(base.getDate(), ultimoDia));
+  if (diasExtra) d.setDate(d.getDate() + diasExtra);
+  return d;
+}
+
+function edadEntre(nacimiento, hoy) {
+  var anios = hoy.getFullYear() - nacimiento.getFullYear();
+  var meses = hoy.getMonth() - nacimiento.getMonth();
+  if (hoy.getDate() < nacimiento.getDate()) meses--;
+  if (meses < 0) { anios--; meses += 12; }
+  return { anios: anios, meses: meses };
+}
+
+function textoEdad(e) {
+  if (e.anios <= 0 && e.meses <= 0) return 'Recién nacido';
+  var partes = [];
+  if (e.anios > 0) partes.push(e.anios + (e.anios === 1 ? ' año' : ' años'));
+  if (e.meses > 0) partes.push(e.meses + (e.meses === 1 ? ' mes' : ' meses'));
+  return partes.join(' y ');
+}
+
+function textoEdadHito(meses) {
+  if (meses < 12) {
+    var m = Math.round(meses * 10) / 10;
+    if (m < 3) return 'A las ' + Math.round(m * 4.35) + ' semanas';
+    return 'A los ' + m + (m === 1 ? ' mes' : ' meses');
+  }
+  var a = Math.floor(meses / 12);
+  var resto = Math.round(meses % 12);
+  var txt = (a === 1) ? 'Al año' : 'A los ' + a + ' años';
+  if (resto) txt += ' y ' + resto + (resto === 1 ? ' mes' : ' meses');
+  return txt;
+}
+
+function textoCadencia(meses) {
+  if (meses === 1) return 'Cada mes';
+  if (meses === 12) return 'Cada año';
+  if (meses % 12 === 0) return 'Cada ' + (meses / 12) + ' años';
+  return 'Cada ' + meses + ' meses';
+}
+
+function textoPeriodicidad(meses) {
+  if (meses === 1) return 'cada mes';
+  if (meses === 12) return 'una vez al año';
+  if (meses % 12 === 0) return 'cada ' + (meses / 12) + ' años';
+  return 'cada ' + meses + ' meses';
+}
+
+var MESES_ES = ['enero','febrero','marzo','abril','mayo','junio','julio',
+                'agosto','septiembre','octubre','noviembre','diciembre'];
+
+function fechaLarga(d) {
+  return d.getDate() + ' de ' + MESES_ES[d.getMonth()] + ' de ' + d.getFullYear();
+}
+function fechaCorta(d) {
+  return String(d.getDate()).padStart(2, '0') + '/' +
+         String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
+}
+function hoyLimpio() {
+  var h = new Date();
+  return new Date(h.getFullYear(), h.getMonth(), h.getDate());
+}
+
+/* ------------------------------------------------- Generación de hitos */
+
+function protocoloDe(especie) {
+  return PROTOCOLO.filter(function (p) {
+    return p.especie === especie || p.especie === 'ambos';
+  });
+}
+
+function generarHitos() {
+  var hitos = [];
+  var nacimiento = estado.nacimiento;
+  var hoy = hoyLimpio();
+
+  /* La línea es un PLAN, no un historial: los hitos de una sola vez ya pasados
+     hace tiempo no se muestran (salvo los muy recientes, por si hay un olvido). */
+  var limitePasado = sumarMeses(hoy, -VENTANA_PASADO);
+
+  protocoloDe(estado.especie).forEach(function (p) {
+    /* Filtro por tamaño (solo aplica a perros) */
+    if (p.soloTamano && estado.especie === 'perro') {
+      if (!estado.tamano || p.soloTamano.indexOf(estado.tamano) === -1) return;
+    }
+    /* Si ya está esterilizado, el hito de esterilización sobra */
+    if (estado.esterilizado && p.id.indexOf('ester') !== -1) return;
+
+    if (p.repetirCadaMeses) {
+      /* Lo que se repite se muestra UNA sola vez: su PRÓXIMA fecha y cada
+         cuánto toca. Antes se listaban las decenas de repeticiones de 15 años
+         y era un muro ilegible; una tarjeta con "Cada mes" lo deja igual de
+         claro y mucho más legible. */
+      var siguiente = null;
+      if (estado.hechos.indexOf(p.id) !== -1) {
+        /* Lo acaba de poner: la próxima se cuenta desde hoy, no desde la pauta
+           teórica calculada sobre la fecha de nacimiento. */
+        siguiente = { edad: null, fecha: sumarMeses(hoy, p.repetirCadaMeses), recienHecho: true };
+      } else {
+        for (var m = p.edadMeses; m <= HORIZONTE_MESES; m += p.repetirCadaMeses) {
+          var f = sumarMeses(nacimiento, m);
+          if (f >= hoy) { siguiente = { edad: m, fecha: f }; break; }
+        }
+      }
+      if (!siguiente) return;   /* ya no le quedan repeticiones (animal muy mayor) */
+      hitos.push({
+        id: p.id, tipo: p.tipo, nombre: p.nombre, explicacion: p.explicacion,
+        edadMeses: siguiente.edad, fecha: siguiente.fecha,
+        recurrente: true, cadaMeses: p.repetirCadaMeses,
+        recienHecho: !!siguiente.recienHecho
+      });
+    } else {
+      var fecha = sumarMeses(nacimiento, p.edadMeses);
+      if (fecha < limitePasado) return;
+      hitos.push({
+        id: p.id, tipo: p.tipo, nombre: p.nombre, explicacion: p.explicacion,
+        edadMeses: p.edadMeses, fecha: fecha, recurrente: false, cadaMeses: null
+      });
+    }
+  });
+
+    hitos.sort(function (a, b) { return a.fecha - b.fecha; });
+  return hitos;
+}
+
+/* Estado visual de cada hito.
+   Marcar una casilla en el paso 3 significa "esto ya está puesto", así que se
+   dan por hechas las ocurrencias pasadas de ese hito, no las futuras. */
+function estadoDe(h, hoy) {
+  /* Lo que se repite nunca es "hecho" ni "atrasado": es cuidado en marcha, y
+     mostramos su próxima fecha. Estado propio, sin la alarma del ámbar. */
+  if (h.recurrente) return 'recurrente';
+  var diffDias = (h.fecha - hoy) / DIA;
+  if (estado.hechos.indexOf(h.id) !== -1 && diffDias <= 0) return 'completado';
+  if (diffDias < -VENTANA_ATRASO) return 'atrasado';
+  if (diffDias <= VENTANA_PROXIMA) return 'ahora';
+  return 'futuro';
+}
+
+/* ------------------------------------------------------------- Iconos */
+
+var ICONOS = {
+  vacuna: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4M20.5 3.5 15 9M9.5 20.5 3 22l1.5-6.5L15 5l4 4z"/><path d="m11 9 4 4M8.5 11.5l4 4"/></svg>',
+  desparasitacion: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.4 3.3 8.4 8 9.5 4.7-1.1 8-5.1 8-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+  revision: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M4 3h3M13 3h3"/><path d="M10 13v2a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="10.5" r="2.5"/></svg>',
+  hito: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 14.6 9l6 .9-4.3 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.4 9.9 9.4 9z"/></svg>',
+  repetirMini: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>',
+  repetir: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>'
+};
+
+/* ------------------------------------------------------ Navegación de pasos */
+
+function irAPaso(n) {
+  estado.paso = n;
+  [1, 2, 3].forEach(function (i) {
+    $('#paso-' + i).hidden = (i !== n);
+    var marca = $('#marca-' + i);
+    if (i === n) marca.setAttribute('aria-current', 'step');
+    else marca.removeAttribute('aria-current');
+    marca.classList.toggle('is-hecho', i < n);
+  });
+  $('#barra').style.width = (n / 3 * 100) + '%';
+  $('#estado-paso').textContent = 'Paso ' + n + ' de 3';
+  /* El foco va al título del paso para que quien navega con teclado o lector
+     de pantalla sepa dónde ha aterrizado. */
+  $('#titulo-' + n).focus();
+}
+
+function mostrarError(paso, mensaje) {
+  var e = $('#error-' + paso);
+  e.textContent = mensaje;
+  e.hidden = false;
+}
+function limpiarError(paso) {
+  var e = $('#error-' + paso);
+  if (e) { e.hidden = true; e.textContent = ''; }
+}
+
+function validarPaso(n) {
+  limpiarError(n);
+  if (n === 1) {
+    var esp = $('input[name="especie"]:checked');
+    if (!esp) { mostrarError(1, 'Elige si es perro o gato para continuar.'); return false; }
+    estado.especie = esp.value;
+    return true;
+  }
+  if (n === 2) {
+    var val = $('#nacimiento').value;
+    if (!val) { mostrarError(2, 'Necesitamos la fecha de nacimiento, aunque sea aproximada.'); return false; }
+    var partes = val.split('-');
+    var f = new Date(+partes[0], +partes[1] - 1, +partes[2]);
+    if (isNaN(f.getTime())) { mostrarError(2, 'Esa fecha no es válida.'); return false; }
+    if (f > hoyLimpio()) { mostrarError(2, 'La fecha no puede ser futura.'); return false; }
+    var limite = new Date(); limite.setFullYear(limite.getFullYear() - 30);
+    if (f < limite) { mostrarError(2, 'Revisa el año: esa fecha queda muy atrás.'); return false; }
+    estado.nacimiento = f;
+
+    if (estado.especie === 'perro') {
+      var t = $('input[name="tamano"]:checked');
+      if (!t) { mostrarError(2, 'Elige el tamaño adulto estimado.'); return false; }
+      estado.tamano = t.value;
+    } else {
+      estado.tamano = null;
+    }
+    return true;
+  }
+  return true;
+}
+
+/* Las casillas del paso 3 se construyen con el protocolo de la especie
+   elegida: no tiene sentido preguntar por vacunas felinas si es un perro. */
+function pintarChecklist() {
+  var cont = $('#lista-hechos');
+  cont.innerHTML = '';
+  var lista = protocoloDe(estado.especie).filter(function (p) {
+    if (p.tipo !== 'vacuna' && p.tipo !== 'desparasitacion') return false;
+    if (p.soloTamano && (!estado.tamano || p.soloTamano.indexOf(estado.tamano) === -1)) return false;
+    return true;
+  });
+
+  lista.forEach(function (p) {
+    var lab = document.createElement('label');
+    lab.className = 'check';
+    lab.innerHTML =
+      '<input type="checkbox" value="' + p.id + '">' +
+      '<span class="check__txt"><strong></strong><span></span></span>';
+    lab.querySelector('strong').textContent = p.nombre;
+    lab.querySelector('.check__txt span').textContent =
+      p.repetirCadaMeses
+        ? 'Márcalo si se lo has puesto hace poco: contaremos la próxima desde hoy.'
+        : p.explicacion;
+    cont.appendChild(lab);
+  });
+}
+
+/* ------------------------------------------------------- Pintar resultado */
+
+function pintarResultado() {
+  var hoy = hoyLimpio();
+  var hitos = generarHitos();
+  var linea = $('#linea');
+  linea.innerHTML = '';
+
+  var proximos12 = 0;
+  var proxima = null;
+  var anioActual = null;
+  var limite12 = sumarMeses(hoy, 12);
+
+  hitos.forEach(function (h) {
+    var est = estadoDe(h, hoy);
+    if (est === 'recurrente') {
+      /* Cuenta cuántas veces toca en los próximos 12 meses, aunque en la línea
+         aparezca una sola tarjeta: la cifra debe reflejar las visitas reales. */
+      var n = Math.floor(12 / h.cadaMeses);
+      proximos12 += Math.max(1, n);
+    } else if (est !== 'completado' && h.fecha >= hoy && h.fecha <= limite12) {
+      proximos12++;
+    }
+    /* 'recurrente' también cuenta: si no, un animal adulto cuyos hitos son todos
+       periódicos mostraba "Sin hitos pendientes" teniendo cinco por delante. */
+    if (!proxima && est !== 'completado') proxima = h;
+
+    /* Separador por año, para que 15 años de hitos se puedan recorrer */
+    var anio = h.fecha.getFullYear();
+    if (anio !== anioActual) {
+      anioActual = anio;
+      var sep = document.createElement('p');
+      sep.className = 'grupo-anio anim';
+      sep.textContent = anio;
+      linea.appendChild(sep);
+    }
+
+    var art = document.createElement('article');
+    art.className = 'hito hito--' + est + ' anim';
+
+    var badge = '';
+    if (est === 'recurrente') {
+      badge = '<span class="badge badge--cada">' +
+                ICONOS.repetirMini + textoCadencia(h.cadaMeses) +
+              '</span>';
+    }
+    else if (est === 'ahora') badge = '<span class="badge badge--ahora">Toca ahora</span>';
+    else if (est === 'atrasado') badge = '<span class="badge badge--atrasado">Revísalo con nosotros</span>';
+    else if (est === 'completado') badge = '<span class="badge badge--hecho">Hecho</span>';
+
+    var cta = '';
+    if (est === 'ahora' || est === 'atrasado') {
+      cta = '<a class="btn btn--ember hito__cta" href="index.html#contacto">Pedir cita</a>';
+    }
+
+    art.innerHTML =
+      '<span class="hito__icono" aria-hidden="true">' +
+        (est === 'completado' ? ICONOS.check
+          : est === 'recurrente' ? ICONOS.repetir
+          : (ICONOS[h.tipo] || ICONOS.hito)) +
+      '</span>' +
+      '<div class="hito__caja">' +
+        '<div class="hito__cab">' +
+          '<h3 class="hito__nombre"></h3>' + badge +
+        '</div>' +
+        '<p class="hito__edad"><span class="hito__fecha"></span> · <span class="hito__edad-txt"></span></p>' +
+        '<p class="hito__por-que"></p>' +
+        cta +
+      '</div>';
+
+    art.querySelector('.hito__nombre').textContent = h.nombre;
+    art.querySelector('.hito__por-que').textContent = h.explicacion;
+
+    if (est === 'recurrente') {
+      /* En un recurrente la fecha de "la primera vez" no aporta nada: lo útil
+         es cada cuánto toca y cuándo es la próxima. */
+      art.querySelector('.hito__edad').innerHTML =
+        'Se repite <strong>' + textoPeriodicidad(h.cadaMeses) + '</strong>, de por vida.';
+      var pr = document.createElement('p');
+      pr.className = 'hito__proxima';
+      pr.innerHTML = 'Próxima: <strong>' + fechaCorta(h.fecha) + '</strong>' +
+        (h.recienHecho ? ' <span style="opacity:.75">(contando desde hoy)</span>' : '');
+      art.querySelector('.hito__caja').insertBefore(pr, art.querySelector('.hito__cta') || null);
+    } else {
+      art.querySelector('.hito__fecha').textContent = fechaCorta(h.fecha);
+      art.querySelector('.hito__edad-txt').textContent = textoEdadHito(h.edadMeses);
+    }
+
+    linea.appendChild(art);
+  });
+
+  /* Aviso de que lo frecuente no se lista hasta el infinito */
+  var nota = document.createElement('p');
+  nota.className = 'grupo-anio';
+  nota.style.paddingTop = '10px';
+  nota.textContent = 'Los tratamientos periódicos aparecen una sola vez, con su cadencia ' +
+                     'y su próxima fecha: se mantienen de por vida.';
+  linea.appendChild(nota);
+
+  var edad = edadEntre(estado.nacimiento, hoy);
+  $('#dato-edad').textContent = textoEdad(edad);
+  $('#dato-pendientes').textContent = proximos12;
+  $('#dato-proxima').innerHTML = proxima
+    ? fechaLarga(proxima.fecha) + '<small>' + proxima.nombre + '</small>'
+    : 'Sin hitos pendientes';
+
+  $('#print-sub').textContent =
+    (estado.especie === 'perro' ? 'Perro' : 'Gato') +
+    ' · nacido el ' + fechaCorta(estado.nacimiento) +
+    ' · generado el ' + fechaCorta(hoy);
+
+  animarEntrada();
+}
+
+/* Entrada escalonada al hacer scroll. Con "reducir movimiento" no se aplica
+   ninguna clase, así que todo se ve directamente. */
+function animarEntrada() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      !('IntersectionObserver' in window)) {
+    $$('.anim').forEach(function (el) { el.classList.remove('anim'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (en, i) {
+      if (!en.isIntersecting) return;
+      var el = en.target;
+      window.setTimeout(function () { el.classList.add('visible'); }, i * 45);
+      io.unobserve(el);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  $$('.anim').forEach(function (el) { io.observe(el); });
+}
+
+/* ---------------------------------------------------------------- Eventos */
+
+/* Tope de fecha: hoy. Se fija en JS para que siempre sea correcto. */
+(function () {
+  var h = hoyLimpio();
+  $('#nacimiento').max = h.getFullYear() + '-' +
+    String(h.getMonth() + 1).padStart(2, '0') + '-' +
+    String(h.getDate()).padStart(2, '0');
+})();
+
+/* El tamaño solo se pregunta si es perro */
+$$('input[name="especie"]').forEach(function (r) {
+  r.addEventListener('change', function () {
+    limpiarError(1);
+    $('#campo-tamano').hidden = (r.value !== 'perro');
+  });
+});
+
+$$('[data-ir]').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var destino = +btn.getAttribute('data-ir');
+    /* Hacia atrás no se valida; hacia delante sí */
+    if (destino > estado.paso && !validarPaso(estado.paso)) return;
+    if (destino === 3) pintarChecklist();
+    irAPaso(destino);
+  });
+});
+
+$('#form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (!validarPaso(3)) return;
+
+  estado.hechos = $$('#lista-hechos input:checked').map(function (c) { return c.value; });
+  estado.esterilizado = $('#esterilizado').checked;
+
+  pintarResultado();
+  $('#zona-form').hidden = true;
+  $('#resultado').hidden = false;
+  $('#resultado').scrollIntoView({ behavior: 'auto', block: 'start' });
+  $('#nombre-mascota').focus({ preventScroll: true });
+});
+
+/* El nombre solo vive en pantalla: personaliza los títulos, nada más. */
+$('#nombre-mascota').addEventListener('input', function () {
+  estado.nombre = this.value.trim();
+  var base = 'Calendario orientativo de salud';
+  var t = estado.nombre ? 'El calendario de ' + estado.nombre : base;
+  $('.print-cab h2').textContent = t;
+  document.title = (estado.nombre ? estado.nombre + ' · ' : '') +
+                   'Calendario de tu mascota · Clínica Veterinaria Vitalis';
+});
+
+$('#btn-imprimir').addEventListener('click', function () { window.print(); });
+
+$('#btn-reiniciar').addEventListener('click', function () {
+  estado = { paso: 1, especie: null, nacimiento: null, tamano: null,
+             hechos: [], esterilizado: false, nombre: '' };
+  $('#form').reset();
+  $('#campo-tamano').hidden = true;
+  $('#nombre-mascota').value = '';
+  $('#resultado').hidden = true;
+  $('#zona-form').hidden = false;
+  [1, 2, 3].forEach(limpiarError);
+  irAPaso(1);
+  $('#zona-form').scrollIntoView({ behavior: 'auto', block: 'start' });
+});
+
+irAPaso(1);
+</script>
+</body>
+</html>

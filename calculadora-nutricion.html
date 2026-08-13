@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calculadora de ración y peso ideal · Clínica Veterinaria Vitalis</title>
+<meta name="description" content="Calcula la ración diaria orientativa de tu perro o gato y comprueba si su peso está dentro del rango ideal de su raza.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#FBF9F3">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F3D36'/%3E%3Cpath d='M4 17h5l2-6 3 12 3-9 2 3h9' fill='none' stroke='%23E4572E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Figtree:wght@300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================================
+   Calculadora de ración y peso ideal
+   Mismos tokens que el resto del sitio para que se vea nativa.
+   ========================================================================== */
+:root {
+  --ink: #0B211E;
+  --pine: #0F3D36;
+  --pine-700: #14524B;
+  --moss: #2E7D6B;
+  --sage: #A9C6B9;
+  --mist: #D9E5DE;
+  --mist-soft: #E6EDE8;
+  --linen: #F4F6F2;
+  --paper: #FFFFFF;
+  --ember: #E4572E;
+  --ember-ink: #B23A16;
+  --amber: #E8B04B;
+  --amber-bg: #FDF6E6;
+  --amber-ink: #7A4A0B;
+
+  --bajo: #4A90C4;
+  --ideal: #1E7A4D;
+  --sobre: #D9A521;
+  --obeso: #C1272D;
+
+  --text: #10312C;
+  --text-muted: #3F5C56;
+  --text-onDark: #F4F6F2;
+  --text-onDark-muted: #A9C6B9;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+
+  --radius-s: 10px;
+  --radius: 18px;
+  --radius-l: 28px;
+  --shadow-s: 0 1px 2px rgba(11,33,30,.05), 0 4px 14px -6px rgba(11,33,30,.10);
+  --shadow-m: 0 2px 4px rgba(11,33,30,.05), 0 18px 40px -20px rgba(11,33,30,.22);
+  --ease: cubic-bezier(.22,.68,.32,1);
+  --dur: 200ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(120% 55% at 88% -5%, rgba(246,210,138,.28), transparent 55%),
+    radial-gradient(80% 50% at 0% 100%, rgba(46,125,107,.10), transparent 60%),
+    var(--linen);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.12; letter-spacing: -.02em; margin: 0; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ember); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { width: 100%; max-width: 820px; margin-inline: auto; padding-inline: clamp(16px, 5vw, 30px); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ------------------------------------------------------------- Cabecera */
+.topbar { background: rgba(244,246,242,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--mist); position: sticky; top: 0; z-index: 20; }
+.topbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+.brand__mark { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border-radius: 10px; background: var(--pine); color: var(--ember); }
+.brand__mark svg { width: 21px; height: 21px; }
+.brand__text { font-family: var(--font-display); font-weight: 600; font-size: .95rem; white-space: nowrap; }
+@media (max-width: 430px) { .brand__text { display: none; } }
+.topbar__volver { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; }
+
+/* ---------------------------------------------------------------- Intro */
+.intro { padding: clamp(28px, 6vw, 50px) 0 clamp(18px, 3vw, 28px); }
+.eyebrow { font-family: var(--font-mono); font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ember-ink); margin-bottom: 14px; }
+.intro h1 { font-size: clamp(1.85rem, 1.4rem + 2.3vw, 2.9rem); }
+.intro h1 em { font-style: italic; color: var(--moss); }
+.intro__lede { margin-top: 15px; color: var(--text-muted); max-width: 56ch; font-size: clamp(1rem, .96rem + .2vw, 1.12rem); }
+
+/* -------------------------------------------------------------- Formulario */
+.panel { background: var(--paper); border: 1px solid var(--mist); border-radius: var(--radius-l); box-shadow: var(--shadow-m); padding: clamp(20px, 4vw, 36px); }
+fieldset { border: 0; padding: 0; margin: 0 0 26px; min-width: 0; }
+fieldset:last-of-type { margin-bottom: 0; }
+legend, .campo__label { font-weight: 600; font-size: 1rem; padding: 0; margin-bottom: 10px; display: block; }
+.pista { display: block; font-weight: 400; color: var(--text-muted); font-size: .86rem; margin-top: 2px; line-height: 1.45; }
+
+.opciones { display: grid; gap: 10px; }
+.opciones--2 { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 600px) { .opciones--3 { grid-template-columns: repeat(3, 1fr); } }
+
+.opcion { position: relative; }
+.opcion input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opcion__cara {
+  display: flex; flex-direction: column; gap: 5px; height: 100%;
+  padding: 15px 16px; border: 2px solid var(--mist); border-radius: var(--radius-s);
+  background: var(--paper); cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+.opcion__cara:hover { border-color: var(--sage); }
+.opcion input:checked + .opcion__cara { border-color: var(--pine); background: var(--mist-soft); }
+.opcion input:focus-visible + .opcion__cara { outline: 3px solid var(--ember); outline-offset: 3px; }
+.opcion__nombre { font-weight: 600; font-size: .98rem; }
+.opcion__desc { font-size: .83rem; color: var(--text-muted); line-height: 1.4; }
+.opciones--2 .opcion__cara { flex-direction: row; align-items: center; gap: 10px; justify-content: center; }
+.opciones--2 .opcion__cara svg { width: 26px; height: 26px; color: var(--pine); }
+
+input[type="text"], input[type="number"], select {
+  width: 100%; min-height: 50px; padding: 12px 14px;
+  border: 1.5px solid var(--mist); border-radius: var(--radius-s);
+  background: var(--paper); color: var(--text); font: inherit; font-size: 1rem;
+}
+input[type="text"]:focus-visible, input[type="number"]:focus-visible { border-color: var(--pine); }
+
+/* Peso: deslizador + número sincronizados */
+.peso-fila { display: flex; gap: 12px; align-items: center; }
+.peso-fila input[type="number"] { width: 108px; flex: none; text-align: center; font-family: var(--font-mono); font-weight: 500; }
+.peso-unidad { font-family: var(--font-mono); font-size: .9rem; color: var(--text-muted); }
+input[type="range"] { flex: 1; min-width: 0; height: 42px; accent-color: var(--pine); cursor: pointer; }
+
+/* Botones */
+.acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 14px 28px;
+  border: 1.5px solid transparent; border-radius: 999px;
+  font: inherit; font-weight: 600; font-size: 1rem; cursor: pointer; text-decoration: none;
+  transition: transform var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--principal { background: var(--pine); color: var(--paper); border-color: var(--pine); box-shadow: var(--shadow-s); }
+.btn--principal:hover { background: var(--pine-700); }
+.btn--fantasma { border-color: var(--mist); color: var(--text); }
+.btn--fantasma:hover { background: var(--mist-soft); }
+.btn--ember { background: var(--ember); color: var(--ink); border-color: var(--ember); }
+.btn svg { width: 17px; height: 17px; fill: currentColor; flex: none; }
+
+.error { margin-top: 14px; padding: 12px 16px; border-radius: var(--radius-s); border: 1px solid var(--ember); background: #FDECE6; color: var(--ember-ink); font-size: .92rem; }
+.error[hidden] { display: none; }
+
+/* -------------------------------------------------------------- Resultado */
+.resultado { margin-top: clamp(26px, 5vw, 40px); }
+.resultado[hidden] { display: none; }
+
+.tarjeta { background: var(--paper); border: 1px solid var(--mist); border-radius: var(--radius-l); box-shadow: var(--shadow-m); padding: clamp(20px, 4vw, 32px); margin-bottom: 18px; }
+.tarjeta__titulo { font-size: 1.3rem; margin-bottom: 6px; }
+.tarjeta__sub { color: var(--text-muted); font-size: .94rem; margin-bottom: 20px; }
+
+/* Barra de zonas de peso */
+.barra-peso { margin-top: 20px; }
+.barra-peso__pista { position: relative; height: 46px; border-radius: 12px; overflow: hidden; display: flex; }
+.zona { height: 100%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .6rem; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.95); }
+.zona--bajo { background: var(--bajo); }
+.zona--ideal { background: var(--ideal); }
+.zona--sobre { background: var(--sobre); }
+.zona--obeso { background: var(--obeso); }
+.marcador {
+  position: absolute; top: -8px; bottom: -8px; width: 4px;
+  background: var(--ink); border-radius: 3px;
+  box-shadow: 0 0 0 3px var(--paper);
+  transition: left 520ms var(--ease);
+}
+.marcador__etiqueta {
+  position: absolute; top: -34px; left: 50%; transform: translateX(-50%);
+  background: var(--ink); color: var(--paper);
+  font-family: var(--font-mono); font-size: .72rem; font-weight: 500;
+  padding: 4px 9px; border-radius: 6px; white-space: nowrap;
+}
+.barra-peso__leyenda { display: flex; justify-content: space-between; margin-top: 26px; font-family: var(--font-mono); font-size: .72rem; color: var(--text-muted); }
+
+.veredicto-peso { margin-top: 22px; padding: 16px 18px; border-radius: var(--radius-s); font-size: .98rem; line-height: 1.55; }
+.veredicto-peso strong { display: block; font-size: 1.06rem; margin-bottom: 4px; }
+.veredicto-peso--bajo { background: #EAF3FA; border-left: 4px solid var(--bajo); }
+.veredicto-peso--ideal { background: #E8F5EE; border-left: 4px solid var(--ideal); }
+.veredicto-peso--sobre { background: var(--amber-bg); border-left: 4px solid var(--sobre); }
+.veredicto-peso--obeso { background: #FDECEC; border-left: 4px solid var(--obeso); }
+
+/* Escala de condición corporal */
+.bcs__escala { display: flex; gap: 4px; margin: 20px 0 24px; }
+.bcs__punto {
+  flex: 1; height: 42px; border-radius: 7px;
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: .82rem; font-weight: 500;
+  background: var(--mist-soft); color: var(--text-muted);
+  border: 2px solid transparent;
+}
+.bcs__punto.activo { background: var(--pine); color: var(--paper); border-color: var(--pine); transform: scale(1.08); }
+.bcs__siluetas { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; align-items: center; }
+.silueta { background: var(--mist-soft); border-radius: var(--radius); padding: 14px; text-align: center; }
+.silueta svg { width: 100%; height: auto; max-height: 130px; }
+.silueta__pie { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-top: 8px; }
+.bcs__lectura { margin-top: 18px; font-size: .96rem; color: var(--text-muted); line-height: 1.6; }
+.bcs__lectura strong { color: var(--text); }
+
+/* Ración */
+.racion { display: grid; gap: 16px; }
+@media (min-width: 620px) { .racion { grid-template-columns: 1.2fr .8fr; } }
+.racion__cifra { text-align: center; padding: 26px 20px; background: var(--pine); color: var(--paper); border-radius: var(--radius); }
+.racion__num { font-family: var(--font-display); font-size: clamp(2.4rem, 2rem + 2.4vw, 3.4rem); font-weight: 600; line-height: 1; }
+.racion__unidad { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-onDark-muted); margin-top: 8px; display: block; }
+.racion__detalle { display: grid; gap: 12px; align-content: center; }
+.dato-linea { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--mist); font-size: .94rem; }
+.dato-linea:last-child { border-bottom: 0; }
+.dato-linea span:first-child { color: var(--text-muted); }
+.dato-linea span:last-child { font-weight: 600; text-align: right; }
+
+/* Plan de reducción */
+.plan { border: 2px solid var(--amber); background: var(--amber-bg); }
+.plan h3 { font-size: 1.2rem; margin-bottom: 10px; }
+.plan p { color: var(--amber-ink); line-height: 1.6; }
+.plan p + p { margin-top: 10px; }
+.plan .btn { margin-top: 18px; }
+
+/* Aviso */
+.aviso { margin-top: 22px; display: flex; gap: 13px; align-items: flex-start; padding: 17px 19px; border-radius: var(--radius); border: 1px solid var(--amber); background: var(--amber-bg); }
+.aviso svg { width: 20px; height: 20px; flex: none; color: var(--ember-ink); margin-top: 2px; }
+.aviso p { font-size: .91rem; line-height: 1.6; }
+.aviso strong { display: block; margin-bottom: 3px; }
+
+/* Pie */
+.pie { margin-top: clamp(30px, 6vw, 54px); padding: 26px 0 34px; border-top: 1px solid var(--mist); color: var(--text-muted); font-size: .87rem; }
+.pie__datos { display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: center; }
+.pie a { color: var(--pine); }
+.pie__legal { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><path d="M4 21h6.5l2.6-8 3.9 16 3.9-12.5 2.6 4.5H36" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="brand__text">Clínica Veterinaria Vitalis</span>
+    </a>
+    <a class="topbar__volver" href="index.html">← Volver</a>
+  </div>
+</header>
+
+<main>
+  <section class="wrap intro">
+    <p class="eyebrow">Herramienta gratuita</p>
+    <h1>¿Cuánto debe <em>comer</em>?</h1>
+    <p class="intro__lede">
+      Calcula la ración diaria orientativa y comprueba si su peso está donde debería.
+      Usamos las fórmulas energéticas estándar; el ajuste fino lo hacemos en consulta.
+    </p>
+  </section>
+
+  <section class="wrap">
+    <form class="panel" id="form" novalidate>
+
+      <fieldset>
+        <legend>Especie</legend>
+        <div class="opciones opciones--2">
+          <label class="opcion">
+            <input type="radio" name="especie" value="perro" checked>
+            <span class="opcion__cara">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 14 8 7l7 2.5"/><path d="M36 14l4-7-7 2.5"/>
+                <path d="M15 10c-2.6 3-4 6.8-4 11 0 8.4 5.8 14 13 14s13-5.6 13-14c0-4.2-1.4-8-4-11"/>
+                <circle cx="19" cy="21" r="1.8" fill="currentColor" stroke="none"/><circle cx="29" cy="21" r="1.8" fill="currentColor" stroke="none"/>
+              </svg>
+              <span class="opcion__nombre">Perro</span>
+            </span>
+          </label>
+          <label class="opcion">
+            <input type="radio" name="especie" value="gato">
+            <span class="opcion__cara">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M13 17 11 7l8 5.5"/><path d="M35 17l2-10-8 5.5"/>
+                <path d="M13 17c-1.6 2.6-2.5 5.6-2.5 8.8C10.5 33 16.6 38 24 38s13.5-5 13.5-12.2c0-3.2-.9-6.2-2.5-8.8"/>
+                <circle cx="19" cy="24" r="1.8" fill="currentColor" stroke="none"/><circle cx="29" cy="24" r="1.8" fill="currentColor" stroke="none"/>
+              </svg>
+              <span class="opcion__nombre">Gato</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <label class="campo__label" for="raza">Raza
+          <span class="pista">Empieza a escribir y elige de la lista. Si no está o es mestizo, escribe «Mestizo».</span>
+        </label>
+        <input type="text" id="raza" list="lista-razas" autocomplete="off" placeholder="Mestizo">
+        <datalist id="lista-razas"></datalist>
+      </fieldset>
+
+      <fieldset>
+        <legend>Edad</legend>
+        <div class="opciones opciones--3">
+          <label class="opcion">
+            <input type="radio" name="edad" value="cachorro">
+            <span class="opcion__cara">
+              <span class="opcion__nombre">Cachorro</span>
+              <span class="opcion__desc" id="desc-cachorro">Aún está creciendo</span>
+            </span>
+          </label>
+          <label class="opcion">
+            <input type="radio" name="edad" value="adulto" checked>
+            <span class="opcion__cara">
+              <span class="opcion__nombre">Adulto</span>
+              <span class="opcion__desc" id="desc-adulto">Ya alcanzó su tamaño</span>
+            </span>
+          </label>
+          <label class="opcion">
+            <input type="radio" name="edad" value="senior">
+            <span class="opcion__cara">
+              <span class="opcion__nombre">Sénior</span>
+              <span class="opcion__desc" id="desc-senior">Etapa avanzada</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <label class="campo__label" for="peso-num">Peso actual
+          <span class="pista">Si no lo sabes exacto, pon una aproximación. En la clínica os pesamos gratis.</span>
+        </label>
+        <div class="peso-fila">
+          <input type="range" id="peso-rango" min="0.5" max="80" step="0.1" value="15"
+                 aria-labelledby="peso-etiqueta" aria-describedby="peso-num">
+          <input type="number" id="peso-num" min="0.5" max="120" step="0.1" value="15"
+                 inputmode="decimal" aria-label="Peso actual en kilos">
+          <span class="peso-unidad" id="peso-etiqueta">kg</span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Nivel de actividad</legend>
+        <div class="opciones opciones--3">
+          <label class="opcion">
+            <input type="radio" name="actividad" value="baja">
+            <span class="opcion__cara">
+              <span class="opcion__nombre">Baja</span>
+              <span class="opcion__desc">Poco movimiento; pasea o juega menos de media hora al día.</span>
+            </span>
+          </label>
+          <label class="opcion">
+            <input type="radio" name="actividad" value="normal" checked>
+            <span class="opcion__cara">
+              <span class="opcion__nombre">Normal</span>
+              <span class="opcion__desc">Paseos o juego de una a dos horas repartidas al día.</span>
+            </span>
+          </label>
+          <label class="opcion">
+            <input type="radio" name="actividad" value="alta">
+            <span class="opcion__cara">
+              <span class="opcion__nombre">Alta</span>
+              <span class="opcion__desc">Mucho ejercicio, deporte, trabajo o vida muy activa.</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>¿Está esterilizado o castrado?</legend>
+        <div class="opciones opciones--2">
+          <label class="opcion">
+            <input type="radio" name="esterilizado" value="si" checked>
+            <span class="opcion__cara"><span class="opcion__nombre">Sí</span></span>
+          </label>
+          <label class="opcion">
+            <input type="radio" name="esterilizado" value="no">
+            <span class="opcion__cara"><span class="opcion__nombre">No</span></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <label class="campo__label" for="kcal">Energía del pienso
+          <span class="pista">
+            Lo encuentras en el lateral del saco, en la tabla de composición.
+            Suele poner «energía metabolizable» en kcal por cada 100 g o por kg.
+          </span>
+        </label>
+        <div class="peso-fila">
+          <input type="number" id="kcal" min="150" max="600" step="1" value="360"
+                 inputmode="numeric" aria-label="Kilocalorías por cada 100 gramos de pienso">
+          <span class="peso-unidad">kcal / 100 g</span>
+        </div>
+      </fieldset>
+
+      <p class="error" id="error" hidden role="alert"></p>
+
+      <div class="acciones">
+        <button type="submit" class="btn btn--principal">
+          Calcular
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 5.4 20 12l-6.8 6.6-1.4-1.4 4.2-4.2H4v-2h12l-4.2-4.2z"/></svg>
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section class="wrap resultado" id="resultado" hidden aria-live="polite">
+
+    <!-- Peso ideal -->
+    <div class="tarjeta">
+      <h2 class="tarjeta__titulo">Su peso, en contexto</h2>
+      <p class="tarjeta__sub" id="peso-sub"></p>
+
+      <div class="barra-peso">
+        <div class="barra-peso__pista" id="barra-pista">
+          <span class="zona zona--bajo" id="z-bajo">Bajo</span>
+          <span class="zona zona--ideal" id="z-ideal">Ideal</span>
+          <span class="zona zona--sobre" id="z-sobre">Sobrepeso</span>
+          <span class="zona zona--obeso" id="z-obeso">Obesidad</span>
+          <span class="marcador" id="marcador"><span class="marcador__etiqueta" id="marcador-txt"></span></span>
+        </div>
+        <div class="barra-peso__leyenda">
+          <span id="leyenda-min"></span>
+          <span id="leyenda-max"></span>
+        </div>
+      </div>
+
+      <div class="veredicto-peso" id="veredicto"></div>
+    </div>
+
+    <!-- Condición corporal -->
+    <div class="tarjeta">
+      <h2 class="tarjeta__titulo">Condición corporal estimada</h2>
+      <p class="tarjeta__sub">
+        Escala de 1 a 9. Es una estimación a partir del peso: la valoración real
+        se hace tocando al animal, no mirándolo.
+      </p>
+
+      <div class="bcs__escala" id="bcs-escala" role="img" aria-label="Escala de condición corporal del 1 al 9"></div>
+
+      <div class="bcs__siluetas">
+        <div class="silueta">
+          <svg id="silueta-superior" viewBox="0 0 200 120" aria-hidden="true"></svg>
+          <p class="silueta__pie">Visto desde arriba</p>
+        </div>
+        <div class="silueta">
+          <svg id="silueta-lateral" viewBox="0 0 200 120" aria-hidden="true"></svg>
+          <p class="silueta__pie">Visto de lado</p>
+        </div>
+      </div>
+
+      <p class="bcs__lectura" id="bcs-lectura"></p>
+    </div>
+
+    <!-- Ración -->
+    <div class="tarjeta">
+      <h2 class="tarjeta__titulo">Ración diaria orientativa</h2>
+      <p class="tarjeta__sub" id="racion-sub"></p>
+
+      <div class="racion">
+        <div class="racion__cifra">
+          <span class="racion__num" id="racion-gramos">—</span>
+          <span class="racion__unidad">gramos al día</span>
+        </div>
+        <div class="racion__detalle">
+          <div class="dato-linea"><span>Repartidos en</span><span id="racion-tomas">—</span></div>
+          <div class="dato-linea"><span>Cada toma</span><span id="racion-por-toma">—</span></div>
+          <div class="dato-linea"><span>Energía diaria</span><span id="racion-kcal">—</span></div>
+          <div class="dato-linea"><span>Calculado sobre</span><span id="racion-base">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan de reducción (solo si hay exceso) -->
+    <div class="tarjeta plan" id="plan" hidden>
+      <h3>Hablemos de su peso</h3>
+      <p>
+        Un exceso de peso mantenido acorta la vida y agrava casi todo lo demás:
+        articulaciones, corazón, riesgo anestésico y probabilidad de diabetes.
+        La buena noticia es que es de las cosas más reversibles que existen.
+      </p>
+      <p>
+        <strong>No empieces a restringir comida por tu cuenta.</strong>
+        Bajar peso demasiado rápido es peligroso, sobre todo en gatos, y la ración
+        de arriba está calculada sobre su peso actual, no sobre un plan de pérdida.
+        Un plan real necesita pesarlo, descartar causas médicas y fijar un ritmo seguro.
+      </p>
+      <a class="btn btn--ember" href="index.html#contacto">Pedir consulta de nutrición</a>
+    </div>
+
+    <div class="aviso">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p>
+        <strong>Cálculo orientativo.</strong>
+        Se basa en fórmulas energéticas estándar para animales sanos. La ración real
+        depende del estado de salud, de si toma medicación, de las golosinas que recibe
+        y de cómo evoluciona su peso. Cualquier cambio de dieta o pérdida de peso
+        debe supervisarlo su veterinario.
+      </p>
+    </div>
+
+    <div class="acciones">
+      <a class="btn btn--principal" href="index.html#contacto">Pedir cita</a>
+      <button type="button" class="btn btn--fantasma" id="btn-otro">Calcular otro</button>
+    </div>
+  </section>
+
+  <footer class="wrap pie">
+    <div class="pie__datos">
+      <strong style="color:var(--text)">Clínica Veterinaria Vitalis</strong>
+      <span>Calle de Alcalá, 415 · 28027 Madrid</span>
+      <a href="tel:+34910305305">910 305 305</a>
+    </div>
+    <nav class="pie__legal" aria-label="Información legal">
+      <a href="index.html">Inicio</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="privacidad.html">Política de privacidad</a>
+      <a href="cookies.html">Política de cookies</a>
+    </nav>
+  </footer>
+</main>
+
+<script>
+/* ============================================================================
+   ┌──────────────────────────────────────────────────────────────────────────┐
+   │  QUÉ ESTÁ VERIFICADO Y QUÉ NO                                            │
+   │                                                                          │
+   │  · Las FÓRMULAS son estándar y públicas:                                 │
+   │       RER (necesidad energética en reposo) = 70 × peso_kg^0,75           │
+   │       MER (necesidad diaria)               = RER × factor                │
+   │    Eso es matemática publicada, no una invención.                        │
+   │                                                                          │
+   │  · Los FACTORES multiplicadores y los RANGOS DE PESO POR RAZA sí varían  │
+   │    según la fuente y el criterio clínico. Van marcados // VERIFICAR y    │
+   │    deben ser revisados por un veterinario colegiado antes de publicar.   │
+   │                                                                          │
+   │  · La estimación de condición corporal (1-9) a partir del peso es una    │
+   │    aproximación deliberadamente conservadora. La valoración real es      │
+   │    táctil (costillas, cintura, abdomen) y no se puede hacer con un       │
+   │    número. La herramienta lo dice explícitamente en pantalla.            │
+   │                                                                          │
+   │  · Aquí NO se dan pautas de restricción calórica ni planes de pérdida    │
+   │    de peso: eso exige consulta. Solo se calcula el mantenimiento.        │
+   └──────────────────────────────────────────────────────────────────────────┘
+   ========================================================================== */
+
+/* Rango de peso adulto ideal, en kilos: [mínimo, máximo].
+   // VERIFICAR — cotejar con el criterio de la clínica y el estándar de raza. */
+var RAZAS = {
+  perro: {
+    'Mestizo':                    null,   /* sin rango: se usa el peso actual como referencia */
+    'Yorkshire terrier':          [2, 3.2],
+    'Chihuahua':                  [1.5, 3],
+    'Bichón maltés':              [3, 4],
+    'Caniche toy':                [2, 4],
+    'Pomerania':                  [1.8, 3.5],
+    'Carlino (pug)':              [6.3, 8.1],
+    'Bulldog francés':            [8, 14],
+    'Shih tzu':                   [4, 7.2],
+    'Jack Russell terrier':       [6, 8],
+    'Teckel (estándar)':          [7, 9],
+    'Beagle':                     [9, 11],
+    'Cocker spaniel inglés':      [12, 14.5],
+    'Bulldog inglés':             [18, 25],
+    'Border collie':              [14, 20],
+    'Schnauzer mediano':          [14, 20],
+    'Galgo español':              [20, 30],
+    'Boxer':                      [25, 32],
+    'Labrador retriever':         [25, 36],
+    'Golden retriever':           [25, 34],
+    'Pastor alemán':              [22, 40],
+    'Pastor belga malinois':      [20, 30],
+    'Husky siberiano':            [16, 27],
+    'Dálmata':                    [20, 32],
+    'Rottweiler':                 [35, 60],
+    'Dóberman':                   [32, 45],
+    'Mastín español':             [50, 80],
+    'San Bernardo':               [55, 80],
+    'Gran danés':                 [45, 80]
+  },
+  gato: {
+    'Mestizo (común europeo)':    [3.5, 5.5],
+    'Europeo de pelo corto':      [3.5, 5.5],
+    'Siamés':                     [2.5, 4.5],
+    'Persa':                      [3.2, 5.5],
+    'Maine coon':                 [5.5, 9],
+    'Bosque de Noruega':          [4.5, 7.5],
+    'British shorthair':          [4, 7.5],
+    'Ragdoll':                    [4.5, 9],
+    'Bengalí':                    [3.5, 6.8],
+    'Sphynx':                     [3, 5],
+    'Abisinio':                   [3, 5],
+    'Azul ruso':                  [3, 5.5]
+  }
+};
+
+/* Multiplicadores sobre el RER.  // VERIFICAR con el criterio de la clínica.
+   base   → según especie, edad y estado reproductivo
+   ajuste → según nivel de actividad declarado */
+var FACTORES = {
+  perro: {
+    cachorro: { si: 2.0, no: 2.0 },      /* en crecimiento la necesidad es mayor */
+    adulto:   { si: 1.6, no: 1.8 },
+    senior:   { si: 1.4, no: 1.6 }
+  },
+  gato: {
+    cachorro: { si: 2.5, no: 2.5 },
+    adulto:   { si: 1.2, no: 1.4 },
+    senior:   { si: 1.1, no: 1.2 }
+  },
+  actividad: { baja: 0.9, normal: 1.0, alta: 1.25 }   // VERIFICAR
+};
+
+/* Número de tomas al día según etapa.  // VERIFICAR */
+var TOMAS = {
+  perro: { cachorro: 3, adulto: 2, senior: 2 },
+  gato:  { cachorro: 4, adulto: 2, senior: 2 }
+};
+
+var $ = function (s, c) { return (c || document).querySelector(s); };
+var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+/* Todo vive en memoria: la herramienta no guarda nada en el navegador. */
+var estado = { especie: 'perro' };
+
+/* --------------------------------------------------------- Lista de razas */
+function pintarRazas() {
+  var lista = RAZAS[estado.especie];
+  $('#lista-razas').innerHTML = Object.keys(lista)
+    .map(function (n) { return '<option value="' + n + '"></option>'; }).join('');
+  $('#raza').placeholder = (estado.especie === 'perro') ? 'Mestizo' : 'Mestizo (común europeo)';
+}
+
+/* El rango del deslizador y las etiquetas de edad cambian con la especie:
+   un tope de 80 kg no tiene ningún sentido para un gato. */
+function ajustarEspecie() {
+  var esGato = estado.especie === 'gato';
+  var r = $('#peso-rango');
+  r.max = esGato ? 12 : 80;
+  r.step = esGato ? 0.1 : 0.5;
+  if (+$('#peso-num').value > +r.max) sincronizarPeso(esGato ? 4.5 : 15);
+
+  $('#desc-cachorro').textContent = esGato ? 'Menos de 1 año' : 'Aún está creciendo';
+  $('#desc-adulto').textContent   = esGato ? 'Entre 1 y 10 años' : 'Ya alcanzó su tamaño';
+  $('#desc-senior').textContent   = esGato ? 'Más de 10 años' : 'Etapa avanzada';
+  $('#kcal').value = esGato ? 400 : 360;
+  pintarRazas();
+  $('#raza').value = '';
+}
+
+function sincronizarPeso(v) {
+  var r = $('#peso-rango'), n = $('#peso-num');
+  var val = Math.max(0.5, Math.min(+v || 0.5, +n.max));
+  n.value = val;
+  r.value = Math.min(val, +r.max);
+}
+
+/* ------------------------------------------------------------- Cálculos */
+
+/* RER = 70 × peso^0,75 — fórmula estándar publicada. */
+function calcularRER(pesoKg) { return 70 * Math.pow(pesoKg, 0.75); }
+
+function rangoIdeal(raza) {
+  var r = RAZAS[estado.especie][raza];
+  return (r && r.length === 2) ? r : null;
+}
+
+/* Estimación de condición corporal.
+   Se mide el desvío respecto al RANGO de la raza, no respecto a su punto medio.
+   Es importante que use la misma referencia que las zonas de la barra: si no,
+   la barra puede decir "sobrepeso" mientras la escala marca "obesidad", y el
+   usuario deja de creerse las dos cosas.
+   Un animal dentro del rango es un 5: el rango entero es peso correcto. */
+function estimarBCS(desvioPct) {
+  if (desvioPct === 0)     return 5;    /* dentro del rango */
+  if (desvioPct <= -20)    return 1;
+  if (desvioPct <= -14)    return 2;
+  if (desvioPct <= -7)     return 3;
+  if (desvioPct <   0)     return 4;
+  if (desvioPct <=  8)     return 6;
+  if (desvioPct <= 15)     return 7;
+  if (desvioPct <= 30)     return 8;
+  return 9;
+}
+
+/* Cuánto se aleja del rango ideal, en %. Dentro del rango devuelve 0. */
+function desvioSobreRango(peso, rango) {
+  if (peso < rango[0]) return ((peso - rango[0]) / rango[0]) * 100;
+  if (peso > rango[1]) return ((peso - rango[1]) / rango[1]) * 100;
+  return 0;
+}
+
+var TEXTO_BCS = {
+  1: 'Muy delgado. Se ven costillas, vértebras y huesos de la cadera sin apenas grasa.',
+  2: 'Delgado. Costillas fácilmente visibles y cintura muy marcada.',
+  3: 'Algo por debajo. Costillas visibles y poca grasa de cobertura.',
+  4: 'Ligeramente por debajo del ideal. Costillas fáciles de palpar y cintura evidente.',
+  5: 'Ideal. Costillas palpables sin apretar, cintura visible desde arriba y abdomen recogido de lado.',
+  6: 'Ligero sobrepeso. Costillas palpables con algo más de grasa encima; la cintura empieza a difuminarse.',
+  7: 'Sobrepeso. Cuesta palpar las costillas, la cintura casi no se distingue y el abdomen pierde el recogido.',
+  8: 'Obesidad. Costillas difíciles de localizar, sin cintura y con depósitos de grasa evidentes.',
+  9: 'Obesidad marcada. Grasa abundante sobre el tórax, la columna y la base de la cola.'
+};
+
+/* --------------------------------------------------- Siluetas paramétricas */
+/* Se dibujan a partir del BCS: en vez de nueve pares de dibujos, una sola
+   curva cuya cintura y recogido abdominal dependen del valor. */
+
+function siluetaSuperior(bcs) {
+  /* Cuanto mayor el BCS, menos entra la cintura */
+  var cintura = 34 - (bcs - 5) * 3.4;        /* ancho a media altura */
+  cintura = Math.max(14, Math.min(46, cintura));
+  var hombro = 32, cadera = 30;
+  return '' +
+    '<path d="M100 12' +
+      ' C' + (100 + hombro) + ' 18, ' + (100 + hombro + 4) + ' 34, ' + (100 + cintura) + ' 60' +
+      ' C' + (100 + cadera + 4) + ' 86, ' + (100 + cadera) + ' 102, 100 108' +
+      ' C' + (100 - cadera) + ' 102, ' + (100 - cadera - 4) + ' 86, ' + (100 - cintura) + ' 60' +
+      ' C' + (100 - hombro - 4) + ' 34, ' + (100 - hombro) + ' 18, 100 12 Z"' +
+      ' fill="var(--sage)" stroke="var(--pine)" stroke-width="2.5" stroke-linejoin="round"/>' +
+    /* Marcas de referencia de la cintura */
+    '<line x1="' + (100 - cintura - 9) + '" y1="60" x2="' + (100 - cintura - 3) + '" y2="60" stroke="var(--pine)" stroke-width="2" stroke-linecap="round" opacity=".55"/>' +
+    '<line x1="' + (100 + cintura + 3) + '" y1="60" x2="' + (100 + cintura + 9) + '" y2="60" stroke="var(--pine)" stroke-width="2" stroke-linecap="round" opacity=".55"/>' +
+    '<circle cx="100" cy="22" r="3" fill="var(--pine)" opacity=".5"/>';
+}
+
+function siluetaLateral(bcs) {
+  /* El abdomen pasa de muy recogido (BCS bajo) a descolgado (BCS alto) */
+  var tuck = 82 - (bcs - 5) * 5.2;           /* altura del vientre: menor = más recogido */
+  tuck = Math.max(58, Math.min(102, tuck));
+  var pecho = 88;
+  return '' +
+    '<path d="M28 46' +
+      ' C34 26, 66 22, 84 30' +                       /* cuello y cruz */
+      ' L142 32' +
+      ' C166 34, 176 48, 172 66' +                    /* grupa */
+      ' C170 82, 156 92, 140 92' +                    /* muslo */
+      ' L96 ' + tuck +                                /* línea del abdomen */
+      ' C70 ' + (tuck + 2) + ', 44 ' + pecho + ', 34 74' +
+      ' C26 64, 24 54, 28 46 Z"' +
+      ' fill="var(--sage)" stroke="var(--pine)" stroke-width="2.5" stroke-linejoin="round"/>' +
+    /* Costillas insinuadas: se ven más cuanto menor es el BCS */
+    '<g stroke="var(--pine)" stroke-width="1.8" stroke-linecap="round" opacity="' + Math.max(0, (6 - bcs) * 0.22).toFixed(2) + '">' +
+      '<path d="M58 46 L54 68"/><path d="M68 44 L64 70"/><path d="M78 44 L74 71"/>' +
+    '</g>' +
+    '<circle cx="42" cy="50" r="3" fill="var(--pine)" opacity=".5"/>';
+}
+
+/* ------------------------------------------------------------- Resultado */
+
+function calcular() {
+  var err = $('#error');
+  err.hidden = true;
+
+  var peso = parseFloat($('#peso-num').value);
+  var kcal100 = parseFloat($('#kcal').value);
+  var edad = $('input[name="edad"]:checked').value;
+  var actividad = $('input[name="actividad"]:checked').value;
+  var esteril = $('input[name="esterilizado"]:checked').value;
+  var raza = $('#raza').value.trim();
+
+  if (!peso || peso <= 0) { err.textContent = 'Indica un peso válido.'; err.hidden = false; return; }
+  if (!kcal100 || kcal100 < 150 || kcal100 > 600) {
+    err.textContent = 'La energía del pienso suele estar entre 150 y 600 kcal por 100 g. Revisa el dato del saco.';
+    err.hidden = false; return;
+  }
+
+  /* --- Energía --- */
+  var rer = calcularRER(peso);
+  var base = FACTORES[estado.especie][edad][esteril];
+  var factor = base * FACTORES.actividad[actividad];
+  var mer = rer * factor;
+  var gramos = (mer / kcal100) * 100;
+  var tomas = TOMAS[estado.especie][edad];
+
+  $('#racion-gramos').textContent = Math.round(gramos);
+  $('#racion-tomas').textContent = tomas + (tomas === 1 ? ' toma' : ' tomas');
+  $('#racion-por-toma').textContent = Math.round(gramos / tomas) + ' g';
+  $('#racion-kcal').textContent = Math.round(mer) + ' kcal';
+  $('#racion-base').textContent = 'su peso actual (' + peso + ' kg)';
+  $('#racion-sub').textContent =
+    'Calculado con la fórmula estándar (70 × peso^0,75) y un factor de ' +
+    factor.toFixed(2) + ' por su edad, estado y actividad.';
+
+  /* --- Peso ideal --- */
+  var rango = rangoIdeal(raza);
+  var pesoSub = $('#peso-sub');
+  var vered = $('#veredicto');
+
+  if (!rango) {
+    /* Sin raza reconocida no hay rango de referencia honesto que dar. */
+    pesoSub.textContent = raza
+      ? 'No tenemos rango de referencia para «' + raza + '», así que no podemos decirte si su peso encaja.'
+      : 'Elige una raza de la lista para comparar su peso con el rango de referencia.';
+    $('.barra-peso').hidden = true;
+    vered.className = 'veredicto-peso veredicto-peso--ideal';
+    vered.innerHTML = '<strong>Sin referencia de raza</strong>' +
+      'En mestizos y razas fuera de la lista, el peso ideal se define por su estructura ' +
+      'y su condición corporal, no por una tabla. Lo valoramos en consulta.';
+    pintarBCS(5, true);
+    mostrarPlan(false);
+  } else {
+    $('.barra-peso').hidden = false;
+    var desvio = desvioSobreRango(peso, rango);
+
+    /* Escala visual: de un 30% por debajo del mínimo a un 60% por encima del máximo */
+    var escMin = rango[0] * 0.7;
+    var escMax = rango[1] * 1.6;
+    var pct = function (v) { return Math.max(0, Math.min(100, ((v - escMin) / (escMax - escMin)) * 100)); };
+
+    var anchoBajo = pct(rango[0]);
+    var anchoIdeal = pct(rango[1]) - anchoBajo;
+    var anchoSobre = pct(rango[1] * 1.15) - pct(rango[1]);   /* +15%: mismo corte que el veredicto y el BCS */
+    var anchoObeso = 100 - anchoBajo - anchoIdeal - anchoSobre;
+
+    $('#z-bajo').style.flexBasis = anchoBajo + '%';
+    $('#z-ideal').style.flexBasis = anchoIdeal + '%';
+    $('#z-sobre').style.flexBasis = anchoSobre + '%';
+    $('#z-obeso').style.flexBasis = anchoObeso + '%';
+    [['#z-bajo',anchoBajo],['#z-ideal',anchoIdeal],['#z-sobre',anchoSobre],['#z-obeso',anchoObeso]]
+      .forEach(function (p) { $(p[0]).style.flexGrow = '0'; $(p[0]).style.flexShrink = '0'; });
+
+    $('#marcador').style.left = pct(peso) + '%';
+    $('#marcador-txt').textContent = peso + ' kg';
+    $('#leyenda-min').textContent = escMin.toFixed(1) + ' kg';
+    $('#leyenda-max').textContent = escMax.toFixed(1) + ' kg';
+
+    pesoSub.textContent = 'Rango de referencia para ' + raza + ': entre ' +
+      rango[0] + ' y ' + rango[1] + ' kg.';
+
+    var exceso = peso > rango[1];
+    var pctTxt = Math.abs(desvio).toFixed(0) + ' %';
+
+    if (peso < rango[0]) {
+      vered.className = 'veredicto-peso veredicto-peso--bajo';
+      vered.innerHTML = '<strong>Un ' + pctTxt + ' por debajo de su rango</strong>' +
+        'Estar por debajo también merece una revisión: puede ser constitución, o puede ' +
+        'haber algo detrás que conviene descartar.';
+    } else if (!exceso) {
+      vered.className = 'veredicto-peso veredicto-peso--ideal';
+      vered.innerHTML = '<strong>Dentro del rango ideal</strong>' +
+        'Buena noticia. Mantener el peso es lo más rentable que puedes hacer por su salud a largo plazo.';
+    } else if (desvio <= 15) {
+      vered.className = 'veredicto-peso veredicto-peso--sobre';
+      vered.innerHTML = '<strong>Un ' + pctTxt + ' por encima de su rango</strong>' +
+        'Es sobrepeso, y todavía es fácil de corregir. Cuanto antes se aborde, menos cuesta.';
+    } else {
+      vered.className = 'veredicto-peso veredicto-peso--obeso';
+      vered.innerHTML = '<strong>Un ' + pctTxt + ' por encima de su rango</strong>' +
+        'A esta distancia ya se considera obesidad y afecta a articulaciones, corazón y ' +
+        'riesgo anestésico. Conviene valorarlo pronto.';
+    }
+
+    pintarBCS(estimarBCS(desvio), false);
+    mostrarPlan(exceso);
+  }
+
+  $('#resultado').hidden = false;
+  $('#resultado').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function pintarBCS(bcs, estimado) {
+  $('#bcs-escala').innerHTML = [1,2,3,4,5,6,7,8,9].map(function (n) {
+    return '<span class="bcs__punto' + (n === bcs ? ' activo' : '') + '">' + n + '</span>';
+  }).join('');
+  $('#bcs-escala').setAttribute('aria-label',
+    'Escala de condición corporal del 1 al 9. Valor estimado: ' + bcs);
+  $('#silueta-superior').innerHTML = siluetaSuperior(bcs);
+  $('#silueta-lateral').innerHTML = siluetaLateral(bcs);
+  $('#bcs-lectura').innerHTML = estimado
+    ? '<strong>Referencia: 5 sobre 9 (ideal).</strong> Sin rango de raza no podemos estimar ' +
+      'su condición corporal; te mostramos el aspecto de un animal en su peso.'
+    : '<strong>' + bcs + ' sobre 9.</strong> ' + TEXTO_BCS[bcs];
+}
+
+function mostrarPlan(mostrar) { $('#plan').hidden = !mostrar; }
+
+/* -------------------------------------------------------------- Eventos */
+
+$$('input[name="especie"]').forEach(function (r) {
+  r.addEventListener('change', function () { estado.especie = r.value; ajustarEspecie(); });
+});
+
+$('#peso-rango').addEventListener('input', function () { $('#peso-num').value = this.value; });
+$('#peso-num').addEventListener('input', function () { sincronizarPeso(this.value); });
+
+$('#form').addEventListener('submit', function (e) { e.preventDefault(); calcular(); });
+
+$('#btn-otro').addEventListener('click', function () {
+  $('#resultado').hidden = true;
+  $('#form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('#raza').focus({ preventScroll: true });
+});
+
+ajustarEspecie();
+</script>
+</body>
+</html>

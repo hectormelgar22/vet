@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¿Puede comer esto? · Clínica Veterinaria Vitalis</title>
+<meta name="description" content="Consulta si un alimento es tóxico para tu perro o tu gato, qué síntomas vigilar y qué hacer. Información orientativa; ante la duda, llámanos.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0B211E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F3D36'/%3E%3Cpath d='M4 17h5l2-6 3 12 3-9 2 3h9' fill='none' stroke='%23E4572E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700&family=Figtree:wght@300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================================
+   Consultor de tóxicos
+   Pensado para usarse DE NOCHE, EN EL MÓVIL Y CON PRISA: tipografía grande,
+   contraste alto, y el botón de llamar siempre al alcance del pulgar.
+   ========================================================================== */
+:root {
+  --ink: #0B211E;
+  --pine: #0F3D36;
+  --pine-700: #14524B;
+  --moss: #2E7D6B;
+  --sage: #A9C6B9;
+  --mist: #D9E5DE;
+  --mist-soft: #E6EDE8;
+  --linen: #F4F6F2;
+  --paper: #FFFFFF;
+
+  --rojo: #C1272D;
+  --rojo-bg: #FDECEC;
+  --rojo-ink: #8E1B20;
+  --ambar: #B8860B;
+  --ambar-bg: #FDF6E6;
+  --ambar-ink: #7A4A0B;
+  --verde: #1E7A4D;
+  --verde-bg: #E8F5EE;
+  --verde-ink: #14603C;
+
+  --ember: #E4572E;
+  --text: #10312C;
+  --text-muted: #3F5C56;
+  --text-onDark: #F4F6F2;
+  --text-onDark-muted: #A9C6B9;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+
+  --radius-s: 10px;
+  --radius: 18px;
+  --radius-l: 26px;
+  --shadow-s: 0 1px 2px rgba(11,33,30,.05), 0 4px 14px -6px rgba(11,33,30,.10);
+  --shadow-m: 0 2px 4px rgba(11,33,30,.05), 0 18px 40px -20px rgba(11,33,30,.22);
+  --ease: cubic-bezier(.22,.68,.32,1);
+  --dur: 200ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  /* Se usa de madrugada: fondo oscuro para no deslumbrar. */
+  background: var(--ink);
+  background-image:
+    radial-gradient(120% 60% at 50% 0%, rgba(46,125,107,.20), transparent 60%);
+  background-attachment: fixed;
+  color: var(--text-onDark);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* Hueco para la barra de urgencia fija */
+  padding-bottom: 0;
+}
+body.con-urgencia { padding-bottom: 116px; }
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.1; letter-spacing: -.02em; margin: 0; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ember); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { width: 100%; max-width: 720px; margin-inline: auto; padding-inline: clamp(16px, 5vw, 28px); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ------------------------------------------------------------- Cabecera */
+.topbar { border-bottom: 1px solid rgba(169,198,185,.20); }
+.topbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+.brand__mark { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border-radius: 10px; background: var(--pine); color: var(--ember); }
+.brand__mark svg { width: 21px; height: 21px; }
+.brand__text { font-family: var(--font-display); font-weight: 600; font-size: .95rem; color: var(--text-onDark); white-space: nowrap; }
+@media (max-width: 430px) { .brand__text { display: none; } }
+.topbar__volver { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-onDark-muted); text-decoration: none; }
+.topbar__volver:hover { color: var(--text-onDark); }
+
+/* ---------------------------------------------------------------- Intro */
+.intro { padding: clamp(26px, 6vw, 44px) 0 clamp(18px, 3vw, 26px); text-align: center; }
+.intro h1 { font-size: clamp(1.8rem, 1.35rem + 2.2vw, 2.7rem); color: var(--paper); }
+.intro h1 em { font-style: italic; color: var(--sage); }
+.intro__lede { margin-top: 12px; color: var(--text-onDark-muted); font-size: 1rem; max-width: 48ch; margin-inline: auto; }
+
+/* --------------------------------------------------------- Selector especie */
+.especies { display: flex; gap: 8px; justify-content: center; margin: 22px 0 18px; }
+.especie { position: relative; }
+.especie input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.especie__cara {
+  display: inline-flex; align-items: center; gap: 9px;
+  min-height: 52px; padding: 12px 24px;
+  border: 2px solid rgba(169,198,185,.35); border-radius: 999px;
+  background: rgba(244,246,242,.06); color: var(--text-onDark);
+  font-weight: 600; font-size: 1.02rem; cursor: pointer;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.especie__cara:hover { border-color: var(--sage); }
+.especie input:checked + .especie__cara { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.especie input:focus-visible + .especie__cara { outline: 3px solid var(--ember); outline-offset: 3px; }
+.especie__cara svg { width: 24px; height: 24px; }
+
+/* ------------------------------------------------------------- Buscador */
+.buscador { position: relative; }
+.buscador__campo {
+  width: 100%; min-height: 66px;
+  padding: 18px 52px 18px 54px;
+  border: 2px solid rgba(169,198,185,.35); border-radius: var(--radius-l);
+  background: rgba(244,246,242,.07); color: var(--paper);
+  font: inherit; font-size: 1.16rem;
+}
+.buscador__campo::placeholder { color: rgba(169,198,185,.75); }
+.buscador__campo:focus-visible { border-color: var(--sage); background: rgba(244,246,242,.12); }
+.buscador__lupa { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; color: var(--sage); pointer-events: none; }
+.buscador__limpiar {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; display: none; place-items: center;
+  border: 0; border-radius: 50%; background: rgba(244,246,242,.14); color: var(--paper); cursor: pointer;
+}
+.buscador__limpiar.visible { display: grid; }
+.buscador__limpiar svg { width: 17px; height: 17px; }
+
+/* Sugerencias */
+.sugerencias {
+  position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 8px);
+  background: var(--paper); color: var(--text);
+  border-radius: var(--radius); box-shadow: var(--shadow-m);
+  overflow: hidden; max-height: 320px; overflow-y: auto;
+}
+.sugerencias[hidden] { display: none; }
+.sugerencia {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; padding: 14px 18px; min-height: 56px;
+  border: 0; border-bottom: 1px solid var(--mist);
+  background: none; color: inherit; font: inherit; font-size: 1.02rem;
+  text-align: left; cursor: pointer;
+}
+.sugerencia:last-child { border-bottom: 0; }
+.sugerencia:hover, .sugerencia.activa { background: var(--mist-soft); }
+.sugerencia__punto { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.sugerencia__sin { font-size: .82rem; color: var(--text-muted); margin-left: auto; }
+.sugerencias__nada { padding: 18px; color: var(--text-muted); font-size: .95rem; line-height: 1.5; }
+.sugerencias__nada strong { color: var(--text); display: block; margin-bottom: 4px; }
+
+/* --------------------------------------------------------------- Chips */
+.chips-zona { margin-top: 22px; }
+.chips-zona__titulo { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-onDark-muted); margin-bottom: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  min-height: 44px; padding: 10px 18px;
+  border: 1.5px solid rgba(169,198,185,.32); border-radius: 999px;
+  background: rgba(244,246,242,.05); color: var(--text-onDark);
+  font: inherit; font-size: .95rem; cursor: pointer;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.chip:hover { background: rgba(244,246,242,.14); border-color: var(--sage); }
+
+/* -------------------------------------------------------------- Resultado */
+.resultado { margin-top: clamp(24px, 5vw, 36px); }
+.ficha {
+  background: var(--paper); color: var(--text);
+  border-radius: var(--radius-l); box-shadow: var(--shadow-m);
+  overflow: hidden;
+}
+
+.semaforo { padding: clamp(22px, 5vw, 32px); display: flex; gap: 18px; align-items: flex-start; }
+.semaforo__icono { width: 58px; height: 58px; border-radius: 50%; flex: none; display: grid; place-items: center; }
+.semaforo__icono svg { width: 32px; height: 32px; }
+.semaforo__veredicto { font-family: var(--font-display); font-size: clamp(1.35rem, 1.1rem + 1.2vw, 1.85rem); font-weight: 600; line-height: 1.12; }
+.semaforo__alimento { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+.semaforo__gravedad { display: inline-block; margin-top: 10px; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; padding: 5px 11px; border-radius: 999px; }
+
+.ficha--rojo .semaforo { background: var(--rojo-bg); }
+.ficha--rojo .semaforo__icono { background: var(--rojo); color: #fff; }
+.ficha--rojo .semaforo__veredicto, .ficha--rojo .semaforo__alimento { color: var(--rojo-ink); }
+.ficha--rojo .semaforo__gravedad { background: var(--rojo); color: #fff; }
+
+.ficha--ambar .semaforo { background: var(--ambar-bg); }
+.ficha--ambar .semaforo__icono { background: var(--ambar); color: #fff; }
+.ficha--ambar .semaforo__veredicto, .ficha--ambar .semaforo__alimento { color: var(--ambar-ink); }
+.ficha--ambar .semaforo__gravedad { background: var(--ambar); color: #fff; }
+
+.ficha--verde .semaforo { background: var(--verde-bg); }
+.ficha--verde .semaforo__icono { background: var(--verde); color: #fff; }
+.ficha--verde .semaforo__veredicto, .ficha--verde .semaforo__alimento { color: var(--verde-ink); }
+.ficha--verde .semaforo__gravedad { background: var(--verde); color: #fff; }
+
+.bloque { padding: 22px clamp(22px, 5vw, 32px); border-top: 1px solid var(--mist); }
+.bloque__titulo { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.bloque__titulo svg { width: 16px; height: 16px; }
+
+.lista-sintomas li { position: relative; padding-left: 22px; margin-bottom: 8px; line-height: 1.5; }
+.lista-sintomas li::before { content: ""; position: absolute; left: 3px; top: 11px; width: 7px; height: 7px; border-radius: 50%; background: var(--moss); }
+
+.pasos { counter-reset: paso; }
+.pasos li { position: relative; padding-left: 40px; margin-bottom: 14px; counter-increment: paso; line-height: 1.5; }
+.pasos li::before {
+  content: counter(paso); position: absolute; left: 0; top: 0;
+  width: 27px; height: 27px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--pine); color: var(--paper);
+  font-family: var(--font-mono); font-size: .78rem; font-weight: 500;
+}
+.pasos strong { font-weight: 600; }
+
+.latencia { display: flex; align-items: center; gap: 10px; font-size: 1rem; }
+.latencia svg { width: 19px; height: 19px; color: var(--moss); flex: none; }
+
+.nota-ficha { font-size: .92rem; color: var(--text-muted); line-height: 1.6; }
+
+.por-revisar {
+  margin: 0 clamp(22px, 5vw, 32px) 22px;
+  padding: 12px 15px; border-radius: var(--radius-s);
+  border: 1px dashed var(--ambar); background: var(--ambar-bg);
+  color: var(--ambar-ink); font-size: .85rem; line-height: 1.5;
+}
+
+/* ------------------------------------------------------------- Sin ficha */
+.sin-ficha {
+  background: var(--paper); color: var(--text);
+  border-radius: var(--radius-l); padding: clamp(26px, 5vw, 36px);
+  box-shadow: var(--shadow-m); text-align: center;
+}
+.sin-ficha__icono { width: 54px; height: 54px; margin: 0 auto 16px; border-radius: 50%; display: grid; place-items: center; background: var(--mist-soft); color: var(--pine); }
+.sin-ficha__icono svg { width: 28px; height: 28px; }
+.sin-ficha h2 { font-size: 1.35rem; margin-bottom: 10px; }
+.sin-ficha p { color: var(--text-muted); max-width: 42ch; margin-inline: auto; }
+.sin-ficha .btn { margin-top: 20px; }
+
+/* ------------------------------------------------------------- Botones */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 54px; padding: 14px 28px;
+  border: 2px solid transparent; border-radius: 999px;
+  font: inherit; font-weight: 700; font-size: 1.05rem;
+  cursor: pointer; text-decoration: none;
+  transition: transform var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn svg { width: 19px; height: 19px; fill: currentColor; flex: none; }
+.btn--llamar { background: var(--ember); color: var(--ink); border-color: var(--ember); }
+.btn--llamar:hover { background: #FF6A40; }
+.btn--pine { background: var(--pine); color: var(--paper); border-color: var(--pine); }
+
+/* ------------------------------------------------- Barra fija de urgencia */
+/* Solo aparece cuando el resultado es ROJO. Va anclada abajo porque en el
+   móvil es donde llega el pulgar sin recolocar la mano. */
+.urgencia {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  background: var(--rojo);
+  border-top: 3px solid #8E1B20;
+  padding: 12px clamp(14px, 4vw, 22px) calc(12px + env(safe-area-inset-bottom));
+  transform: translateY(110%);
+  transition: transform 320ms var(--ease);
+  box-shadow: 0 -10px 34px rgba(0,0,0,.35);
+}
+.urgencia.visible { transform: translateY(0); }
+.urgencia__inner { max-width: 720px; margin-inline: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.urgencia__texto { flex: 1; min-width: 190px; color: #fff; font-size: .95rem; line-height: 1.4; font-weight: 600; }
+.urgencia__texto small { display: block; font-weight: 400; font-size: .84rem; color: rgba(255,255,255,.9); margin-top: 2px; }
+.urgencia__acciones { display: flex; gap: 8px; flex-wrap: wrap; }
+.urgencia .btn { min-height: 50px; padding: 12px 22px; font-size: 1rem; }
+.urgencia .btn--blanco { background: #fff; color: var(--rojo-ink); border-color: #fff; }
+@media (max-width: 520px) {
+  .urgencia__acciones { width: 100%; }
+  .urgencia .btn { flex: 1; }
+}
+
+/* ------------------------------------------------------------- Disclaimer */
+.disclaimer {
+  margin-top: clamp(26px, 5vw, 40px);
+  display: flex; gap: 13px; align-items: flex-start;
+  padding: 16px 18px; border-radius: var(--radius);
+  border: 1px solid rgba(169,198,185,.28); background: rgba(244,246,242,.05);
+}
+.disclaimer svg { width: 20px; height: 20px; flex: none; color: var(--sage); margin-top: 2px; }
+.disclaimer p { font-size: .89rem; line-height: 1.6; color: var(--text-onDark-muted); }
+.disclaimer strong { color: var(--text-onDark); }
+
+/* -------------------------------------------------------------------- Pie */
+.pie { margin-top: clamp(28px, 5vw, 46px); padding: 26px 0 34px; border-top: 1px solid rgba(169,198,185,.18); color: var(--text-onDark-muted); font-size: .86rem; }
+.pie__datos { display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: center; }
+.pie a { color: var(--sage); }
+.pie__legal { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><path d="M4 21h6.5l2.6-8 3.9 16 3.9-12.5 2.6 4.5H36" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="brand__text">Clínica Veterinaria Vitalis</span>
+    </a>
+    <a class="topbar__volver" href="index.html">← Volver</a>
+  </div>
+</header>
+
+<main>
+  <section class="wrap intro">
+    <h1>¿Puede comer <em>esto</em>?</h1>
+    <p class="intro__lede">
+      Busca un alimento y te decimos si es seguro, con precaución o tóxico
+      para tu perro o tu gato.
+    </p>
+  </section>
+
+  <section class="wrap">
+    <!-- Especie: el mismo alimento no afecta igual a un perro que a un gato -->
+    <div class="especies" role="radiogroup" aria-label="Especie">
+      <div class="especie">
+        <input type="radio" name="especie" id="esp-perro" value="perro" checked>
+        <label class="especie__cara" for="esp-perro">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 14 8 7l7 2.5"/><path d="M36 14l4-7-7 2.5"/>
+            <path d="M15 10c-2.6 3-4 6.8-4 11 0 8.4 5.8 14 13 14s13-5.6 13-14c0-4.2-1.4-8-4-11"/>
+            <circle cx="19" cy="21" r="1.8" fill="currentColor" stroke="none"/>
+            <circle cx="29" cy="21" r="1.8" fill="currentColor" stroke="none"/>
+            <path d="M24 26v3"/><path d="M20.5 30.5c1 1.2 2.2 1.8 3.5 1.8s2.5-.6 3.5-1.8"/>
+          </svg>
+          Perro
+        </label>
+      </div>
+      <div class="especie">
+        <input type="radio" name="especie" id="esp-gato" value="gato">
+        <label class="especie__cara" for="esp-gato">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M13 17 11 7l8 5.5"/><path d="M35 17l2-10-8 5.5"/>
+            <path d="M13 17c-1.6 2.6-2.5 5.6-2.5 8.8C10.5 33 16.6 38 24 38s13.5-5 13.5-12.2c0-3.2-.9-6.2-2.5-8.8"/>
+            <circle cx="19" cy="24" r="1.8" fill="currentColor" stroke="none"/>
+            <circle cx="29" cy="24" r="1.8" fill="currentColor" stroke="none"/>
+            <path d="M24 28.5v1.8"/><path d="M21.5 32c.8.8 1.6 1.2 2.5 1.2s1.7-.4 2.5-1.2"/>
+            <path d="M8 26h6M34 26h6"/>
+          </svg>
+          Gato
+        </label>
+      </div>
+    </div>
+
+    <div class="buscador">
+      <svg class="buscador__lupa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6" stroke-linecap="round"/>
+      </svg>
+      <label class="sr-only" for="busqueda">Buscar un alimento</label>
+      <input type="text" id="busqueda" class="buscador__campo"
+             placeholder="Chocolate, uvas, cebolla…"
+             autocomplete="off" autocapitalize="off" spellcheck="false"
+             role="combobox" aria-expanded="false" aria-autocomplete="list"
+             aria-controls="sugerencias" aria-describedby="busqueda-ayuda">
+      <button type="button" class="buscador__limpiar" id="limpiar" aria-label="Borrar la búsqueda">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="sugerencias" id="sugerencias" role="listbox" aria-label="Sugerencias" hidden></div>
+    </div>
+    <p class="sr-only" id="busqueda-ayuda">Escribe el nombre de un alimento. Usa las flechas para elegir entre las sugerencias.</p>
+
+    <div class="chips-zona">
+      <p class="chips-zona__titulo" id="chips-titulo">Los que más nos preguntan</p>
+      <div class="chips" id="chips" role="group" aria-labelledby="chips-titulo"></div>
+    </div>
+
+    <div class="resultado" id="resultado" role="status" aria-live="polite"></div>
+
+    <div class="disclaimer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01" stroke-linecap="round"/>
+      </svg>
+      <p>
+        <strong>Esto es orientación, no una consulta.</strong>
+        No sustituye a la atención veterinaria urgente y no recoge todos los alimentos
+        ni todas las situaciones. La cantidad, el peso del animal y su estado de salud
+        cambian mucho las cosas. Si tienes cualquier duda, llama:
+        valorar por teléfono es gratis.
+      </p>
+    </div>
+  </section>
+
+  <footer class="wrap pie">
+    <div class="pie__datos">
+      <strong style="color:var(--text-onDark)">Clínica Veterinaria Vitalis</strong>
+      <span>Calle de Alcalá, 415 · 28027 Madrid</span>
+      <a href="tel:+34910305305">910 305 305</a>
+    </div>
+    <nav class="pie__legal" aria-label="Información legal">
+      <a href="index.html">Inicio</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="privacidad.html">Política de privacidad</a>
+      <a href="cookies.html">Política de cookies</a>
+    </nav>
+  </footer>
+</main>
+
+<!-- Barra de urgencia: solo se despliega con resultado ROJO -->
+<div class="urgencia" id="urgencia" role="alert" aria-hidden="true">
+  <div class="urgencia__inner">
+    <p class="urgencia__texto">
+      No esperes a que aparezcan síntomas.
+      <small>No le provoques el vómito por tu cuenta: en algunos casos empeora el daño.</small>
+    </p>
+    <div class="urgencia__acciones">
+      <a class="btn btn--blanco" href="tel:+34910305305">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z"/></svg>
+        Llamar ahora
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================================
+   ┌──────────────────────────────────────────────────────────────────────────┐
+   │  ATENCIÓN — LEER ANTES DE PUBLICAR                                       │
+   │                                                                          │
+   │  Este diccionario es ESTÁTICO Y CURADO a propósito. No llama a ninguna   │
+   │  API ni genera texto: un dato inventado sobre toxicidad puede matar a un │
+   │  animal.                                                                 │
+   │                                                                          │
+   │  Las fichas recogen consenso veterinario ampliamente publicado, pero     │
+   │  TODAS deben ser revisadas y firmadas por un veterinario colegiado antes │
+   │  de publicar la página. Los tiempos de latencia y las gradaciones de     │
+   │  gravedad varían entre fuentes.                                          │
+   │                                                                          │
+   │  REGLAS QUE NO SE PUEDEN ROMPER AL AMPLIAR ESTE ARRAY:                   │
+   │   · Nunca indicar dosis, gramos, ni umbrales de "a partir de X".         │
+   │   · Nunca sugerir tratamientos caseros ni inducir el vómito.             │
+   │   · Ante la mínima duda sobre un alimento, no se añade la ficha.         │
+   │                                                                          │
+   │  Las fichas marcadas // VERIFICAR CON LA CLÍNICA están vacías y son      │
+   │  plantillas para que la clínica las complete.                            │
+   └──────────────────────────────────────────────────────────────────────────┘
+
+   FORMA DE CADA FICHA
+   -------------------
+   id         identificador único
+   nombre     el que se muestra
+   sinonimos  otras formas de escribirlo o llamarlo (mejora la búsqueda)
+   perro/gato { nivel:'rojo'|'ambar'|'verde',
+                gravedad:'leve'|'moderado'|'grave'|null,
+                sintomas:[], latencia:'', actuacion:[] }
+   nota       matiz común a ambas especies (opcional)
+   revisar    true si la ficha está pendiente de completar
+   ========================================================================== */
+
+var ACTUAR_URGENTE = [
+  '<strong>Llama a la clínica ahora mismo</strong>, aunque parezca estar bien.',
+  '<strong>No le provoques el vómito</strong> ni le des nada por la boca sin que te lo indiquemos.',
+  'Anota <strong>qué ha comido, cuánto y a qué hora</strong>. Es lo primero que te vamos a preguntar.',
+  'Guarda el envase o lo que quede: nos ayuda a saber a qué nos enfrentamos.',
+  'Si te decimos que vengas, sal de inmediato y no esperes a ver si mejora.'
+];
+
+var ACTUAR_VIGILAR = [
+  'Retírale lo que quede al alcance.',
+  'Vigílalo durante las próximas horas por si aparece alguno de los síntomas de arriba.',
+  'Si aparece cualquiera de ellos, o si comió una cantidad grande, llámanos.',
+  'Asegúrate de que tenga agua fresca disponible.'
+];
+
+var TOXICOS = [
+
+  { id: 'chocolate', nombre: 'Chocolate', sinonimos: ['cacao', 'bombon', 'bombones', 'onza', 'nocilla', 'cola cao'],
+    perro: { nivel: 'rojo', gravedad: 'grave',
+      sintomas: ['Vómitos y diarrea', 'Inquietud y temblores', 'Respiración y latido acelerados', 'Sed y orina muy aumentadas', 'En casos graves, convulsiones'],
+      latencia: 'Suele empezar en las primeras horas tras la ingestión.',
+      actuacion: ACTUAR_URGENTE },
+    gato: { nivel: 'rojo', gravedad: 'grave',
+      sintomas: ['Vómitos y diarrea', 'Temblores e inquietud', 'Latido acelerado', 'En casos graves, convulsiones'],
+      latencia: 'Suele empezar en las primeras horas tras la ingestión.',
+      actuacion: ACTUAR_URGENTE },
+    nota: 'Cuanto más puro y amargo es el chocolate, más peligroso resulta. El chocolate negro y el cacao en polvo son los peores.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'xilitol', nombre: 'Xilitol (edulcorante)', sinonimos: ['xylitol', 'azucar de abedul', 'edulcorante', 'chicle sin azucar', 'sin azucar'],
+    perro: { nivel: 'rojo', gravedad: 'grave',
+      sintomas: ['Debilidad repentina y tambaleo', 'Vómitos', 'Desorientación', 'Convulsiones', 'Colapso'],
+      latencia: 'Puede aparecer muy rápido, incluso en menos de una hora.',
+      actuacion: ACTUAR_URGENTE },
+    gato: { nivel: 'rojo', gravedad: 'moderado',
+      sintomas: ['Vómitos', 'Decaimiento', 'Debilidad'],
+      latencia: 'Puede aparecer en las primeras horas.',
+      actuacion: ACTUAR_URGENTE },
+    nota: 'Está en chicles, caramelos, algunas mantequillas de cacahuete, productos "sin azúcar" y hasta en pastas de dientes. Revisa siempre la etiqueta.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'uva', nombre: 'Uvas y pasas', sinonimos: ['uva', 'pasa', 'pasas', 'sultanas', 'racimo'],
+    perro: { nivel: 'rojo', gravedad: 'grave',
+      sintomas: ['Vómitos y diarrea', 'Decaimiento y falta de apetito', 'Dolor abdominal', 'Cambios en la cantidad de orina'],
+      latencia: 'Los primeros signos digestivos suelen verse en las primeras horas; el daño renal tarda más en manifestarse.',
+      actuacion: ACTUAR_URGENTE },
+    gato: { nivel: 'rojo', gravedad: 'moderado',
+      sintomas: ['Vómitos', 'Decaimiento', 'Falta de apetito'],
+      latencia: 'Los primeros signos suelen verse en las primeras horas.',
+      actuacion: ACTUAR_URGENTE },
+    nota: 'La sensibilidad varía muchísimo de un animal a otro y no se puede predecir. Por eso se trata siempre como urgencia, sin importar la cantidad.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'cebolla', nombre: 'Cebolla, ajo, puerro y cebolleta', sinonimos: ['ajo', 'puerro', 'cebolleta', 'chalota', 'sofrito', 'allium'],
+    perro: { nivel: 'rojo', gravedad: 'moderado',
+      sintomas: ['Vómitos y diarrea', 'Decaimiento y debilidad', 'Encías pálidas', 'Respiración acelerada', 'Orina de color oscuro'],
+      latencia: 'Los signos digestivos pueden ser precoces, pero la afectación de los glóbulos rojos suele tardar varios días en verse.',
+      actuacion: ACTUAR_URGENTE },
+    gato: { nivel: 'rojo', gravedad: 'grave',
+      sintomas: ['Decaimiento marcado', 'Encías pálidas', 'Respiración acelerada', 'Orina oscura', 'Falta de apetito'],
+      latencia: 'La afectación suele tardar varios días en hacerse evidente.',
+      actuacion: ACTUAR_URGENTE },
+    nota: 'Los gatos son bastante más sensibles que los perros. Cuenta también en polvo, deshidratada o dentro de caldos, sofritos y comida preparada.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'alcohol', nombre: 'Alcohol', sinonimos: ['cerveza', 'vino', 'licor', 'ron', 'whisky', 'copa'],
+    perro: { nivel: 'rojo', gravedad: 'grave',
+      sintomas: ['Tambaleo y descoordinación', 'Vómitos', 'Somnolencia profunda', 'Respiración lenta', 'Temblores'],
+      latencia: 'Muy rápida, habitualmente dentro de la primera hora.',
+      actuacion: ACTUAR_URGENTE },
+    gato: { nivel: 'rojo', gravedad: 'grave',
+      sintomas: ['Tambaleo', 'Vómitos', 'Somnolencia profunda', 'Respiración lenta'],
+      latencia: 'Muy rápida, habitualmente dentro de la primera hora.',
+      actuacion: ACTUAR_URGENTE },
+    nota: 'También cuenta la masa cruda con levadura, que fermenta dentro del estómago y produce alcohol.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'cafeina', nombre: 'Café y bebidas con cafeína', sinonimos: ['cafe', 'cafeina', 'te', 'bebida energetica', 'red bull', 'refresco de cola'],
+    perro: { nivel: 'rojo', gravedad: 'moderado',
+      sintomas: ['Inquietud y nerviosismo', 'Latido acelerado', 'Temblores', 'Vómitos', 'En casos graves, convulsiones'],
+      latencia: 'Suele empezar en las primeras horas.',
+      actuacion: ACTUAR_URGENTE },
+    gato: { nivel: 'rojo', gravedad: 'moderado',
+      sintomas: ['Inquietud', 'Latido acelerado', 'Temblores', 'Vómitos'],
+      latencia: 'Suele empezar en las primeras horas.',
+      actuacion: ACTUAR_URGENTE },
+    nota: 'Los posos del café y las cápsulas usadas son un motivo de consulta más frecuente de lo que parece.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'macadamia', nombre: 'Nueces de macadamia', sinonimos: ['macadamia', 'nuez de macadamia'],
+    perro: { nivel: 'rojo', gravedad: 'moderado',
+      sintomas: ['Debilidad en las patas traseras', 'Temblores', 'Vómitos', 'Decaimiento', 'A veces algo de fiebre'],
+      latencia: 'Habitualmente dentro del primer día.',
+      actuacion: ACTUAR_URGENTE },
+    gato: { nivel: 'ambar', gravedad: 'leve',
+      sintomas: ['Vómitos', 'Decaimiento', 'Malestar digestivo'],
+      latencia: 'Habitualmente dentro del primer día.',
+      actuacion: ACTUAR_VIGILAR },
+    nota: 'El efecto está descrito sobre todo en perros. En cualquier caso, los frutos secos en general no forman parte de su dieta.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'masa-cruda', nombre: 'Masa cruda con levadura', sinonimos: ['masa', 'levadura', 'pan crudo', 'pizza cruda', 'reposar la masa'],
+    perro: { nivel: 'rojo', gravedad: 'grave',
+      sintomas: ['Abdomen hinchado y duro', 'Arcadas sin llegar a vomitar', 'Dolor abdominal', 'Tambaleo', 'Decaimiento'],
+      latencia: 'Puede aparecer en las primeras horas y agravarse deprisa.',
+      actuacion: ACTUAR_URGENTE },
+    gato: { nivel: 'rojo', gravedad: 'grave',
+      sintomas: ['Abdomen hinchado', 'Arcadas', 'Decaimiento', 'Tambaleo'],
+      latencia: 'Puede aparecer en las primeras horas.',
+      actuacion: ACTUAR_URGENTE },
+    nota: 'Doble problema: la masa sigue creciendo dentro del estómago y además la fermentación produce alcohol.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'huesos-cocinados', nombre: 'Huesos cocinados', sinonimos: ['hueso', 'huesos', 'hueso de pollo', 'costilla', 'carcasa'],
+    perro: { nivel: 'rojo', gravedad: 'moderado',
+      sintomas: ['Arcadas o tos tras comer', 'Babeo', 'Dolor abdominal', 'Vómitos', 'Sangre en heces o dificultad para defecar'],
+      latencia: 'Puede ser inmediato si se atraganta, o tardar días si el fragmento avanza por el intestino.',
+      actuacion: ACTUAR_URGENTE },
+    gato: { nivel: 'rojo', gravedad: 'moderado',
+      sintomas: ['Arcadas', 'Babeo', 'Vómitos', 'Dolor abdominal'],
+      latencia: 'Puede ser inmediato o tardar días.',
+      actuacion: ACTUAR_URGENTE },
+    nota: 'Al cocerse, el hueso se vuelve quebradizo y se astilla. El riesgo aquí no es químico sino físico: perforación y obstrucción.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'aguacate', nombre: 'Aguacate', sinonimos: ['palta', 'guacamole'],
+    perro: { nivel: 'ambar', gravedad: 'leve',
+      sintomas: ['Vómitos', 'Diarrea', 'Malestar digestivo'],
+      latencia: 'Normalmente dentro del primer día.',
+      actuacion: ACTUAR_VIGILAR },
+    gato: { nivel: 'ambar', gravedad: 'leve',
+      sintomas: ['Vómitos', 'Diarrea', 'Malestar digestivo'],
+      latencia: 'Normalmente dentro del primer día.',
+      actuacion: ACTUAR_VIGILAR },
+    nota: 'El hueso es el problema principal: por atragantamiento y por obstrucción intestinal. Si se lo ha tragado entero, llámanos aunque esté tranquilo.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'sal', nombre: 'Comida muy salada', sinonimos: ['sal', 'salado', 'patatas fritas', 'aceitunas', 'embutido', 'jamon', 'snacks'],
+    perro: { nivel: 'ambar', gravedad: 'moderado',
+      sintomas: ['Sed muy aumentada', 'Vómitos', 'Decaimiento', 'Tambaleo si la cantidad fue grande'],
+      latencia: 'Dentro de las primeras horas.',
+      actuacion: ACTUAR_VIGILAR },
+    gato: { nivel: 'ambar', gravedad: 'moderado',
+      sintomas: ['Sed aumentada', 'Vómitos', 'Decaimiento'],
+      latencia: 'Dentro de las primeras horas.',
+      actuacion: ACTUAR_VIGILAR },
+    nota: 'Un trocito puntual no suele dar problemas, pero el embutido y los snacks salados no deberían formar parte de su dieta habitual.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'leche', nombre: 'Leche y lácteos', sinonimos: ['lacteos', 'queso', 'nata', 'yogur', 'helado'],
+    perro: { nivel: 'ambar', gravedad: 'leve',
+      sintomas: ['Diarrea', 'Gases y molestia abdominal', 'A veces vómitos'],
+      latencia: 'Normalmente en las horas siguientes.',
+      actuacion: ACTUAR_VIGILAR },
+    gato: { nivel: 'ambar', gravedad: 'leve',
+      sintomas: ['Diarrea', 'Gases y molestia abdominal'],
+      latencia: 'Normalmente en las horas siguientes.',
+      actuacion: ACTUAR_VIGILAR },
+    nota: 'Al dejar de mamar, muchos pierden la capacidad de digerir bien la lactosa. El clásico platito de leche al gato no es buena idea.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'zanahoria', nombre: 'Zanahoria', sinonimos: ['zanahorias'],
+    perro: { nivel: 'verde', gravedad: null,
+      sintomas: [], latencia: '', actuacion: [] },
+    gato: { nivel: 'verde', gravedad: null,
+      sintomas: [], latencia: '', actuacion: [] },
+    nota: 'Bien tolerada en trozos pequeños. Cruda y entera puede suponer riesgo de atragantamiento en perros que engullen sin masticar.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'manzana', nombre: 'Manzana (sin pepitas)', sinonimos: ['manzanas', 'pera'],
+    perro: { nivel: 'verde', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    gato: { nivel: 'verde', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    nota: 'Retira siempre el corazón y las pepitas. La pulpa, en trocitos, se tolera bien.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'pollo-cocido', nombre: 'Pollo cocido sin hueso', sinonimos: ['pollo', 'pechuga', 'pavo'],
+    perro: { nivel: 'verde', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    gato: { nivel: 'verde', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    nota: 'Sin sal, sin salsas, sin aliños y sin ningún hueso. Cocido o a la plancha, nunca frito.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  { id: 'calabaza', nombre: 'Calabaza cocida', sinonimos: ['calabaza', 'boniato', 'batata'],
+    perro: { nivel: 'verde', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    gato: { nivel: 'verde', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    nota: 'Cocida y sin condimentar. En cantidades pequeñas se tolera bien.' },
+    // VERIFICAR CON LA CLÍNICA
+
+  /* ------------------------------------------------------------------------
+     PLANTILLAS VACÍAS — a completar por la clínica.
+     Copia la forma de las fichas de arriba. Recuerda: sin dosis, sin umbrales
+     y sin remedios caseros.
+     --------------------------------------------------------------------- */
+  { id: 'plantilla-1', nombre: '', sinonimos: [], revisar: true,
+    perro: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    gato: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] }, nota: '' },
+    // VERIFICAR CON LA CLÍNICA
+  { id: 'plantilla-2', nombre: '', sinonimos: [], revisar: true,
+    perro: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    gato: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] }, nota: '' },
+    // VERIFICAR CON LA CLÍNICA
+  { id: 'plantilla-3', nombre: '', sinonimos: [], revisar: true,
+    perro: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    gato: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] }, nota: '' },
+    // VERIFICAR CON LA CLÍNICA
+  { id: 'plantilla-4', nombre: '', sinonimos: [], revisar: true,
+    perro: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    gato: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] }, nota: '' },
+    // VERIFICAR CON LA CLÍNICA
+  { id: 'plantilla-5', nombre: '', sinonimos: [], revisar: true,
+    perro: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] },
+    gato: { nivel: 'ambar', gravedad: null, sintomas: [], latencia: '', actuacion: [] }, nota: '' }
+    // VERIFICAR CON LA CLÍNICA
+];
+
+/* Los ocho de acceso rápido, por orden de cuánto nos preguntan por ellos. */
+var DESTACADOS = ['chocolate', 'uva', 'cebolla', 'xilitol', 'huesos-cocinados', 'aguacate', 'leche', 'pollo-cocido'];
+
+/* ==========================================================================
+   Lógica. Sin dependencias, sin almacenamiento: nada se guarda en el
+   navegador y nada sale de esta página.
+   ========================================================================== */
+
+var $ = function (s, c) { return (c || document).querySelector(s); };
+var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+var estado = { especie: 'perro', seleccionado: null, sugerencias: [], indiceActivo: -1 };
+
+/* Normaliza para buscar: sin acentos, sin mayúsculas, sin signos.
+   Así "platano", "plátano" y "PLÁTANO" encuentran lo mismo. */
+function normalizar(txt) {
+  return String(txt).toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+}
+
+var fichasActivas = TOXICOS.filter(function (t) { return t.nombre && !t.revisar; });
+
+/* Índice de búsqueda precalculado: nombre + sinónimos ya normalizados */
+var INDICE = fichasActivas.map(function (t) {
+  return {
+    ficha: t,
+    claves: [normalizar(t.nombre)].concat((t.sinonimos || []).map(normalizar))
+  };
+});
+
+function buscar(consulta) {
+  var q = normalizar(consulta);
+  if (!q) return [];
+  var exactos = [], empiezan = [], contienen = [];
+  INDICE.forEach(function (e) {
+    var mejor = null;
+    for (var i = 0; i < e.claves.length; i++) {
+      var k = e.claves[i];
+      if (k === q) { mejor = 0; break; }
+      if (k.indexOf(q) === 0) { mejor = (mejor === null || mejor > 1) ? 1 : mejor; }
+      else if (k.indexOf(q) !== -1) { mejor = (mejor === null) ? 2 : mejor; }
+    }
+    if (mejor === 0) exactos.push(e.ficha);
+    else if (mejor === 1) empiezan.push(e.ficha);
+    else if (mejor === 2) contienen.push(e.ficha);
+  });
+  return exactos.concat(empiezan, contienen).slice(0, 8);
+}
+
+var COLOR_NIVEL = { rojo: 'var(--rojo)', ambar: 'var(--ambar)', verde: 'var(--verde)' };
+var VEREDICTO = {
+  rojo: 'Tóxico, no se lo des',
+  ambar: 'Con precaución',
+  verde: 'Seguro en pequeñas cantidades'
+};
+var TEXTO_GRAVEDAD = { leve: 'Gravedad leve', moderado: 'Gravedad moderada', grave: 'Gravedad alta' };
+
+var ICONO_NIVEL = {
+  rojo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 7v6M12 17h.01"/><circle cx="12" cy="12" r="9.5" stroke-width="2"/></svg>',
+  ambar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>',
+  verde: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>'
+};
+
+function escapar(t) {
+  return String(t).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+/* -------------------------------------------------------------- Sugerencias */
+
+function pintarSugerencias(lista, consulta) {
+  var cont = $('#sugerencias');
+  estado.sugerencias = lista;
+  estado.indiceActivo = -1;
+
+  /* Quedarse en silencio cuando no hay coincidencias es lo peor que puede
+     hacer una herramienta que se usa con prisa: parece que se ha colgado.
+     Se avisa en el acto y se ofrece el teléfono. */
+  if (!lista.length) {
+    if (!consulta || !consulta.trim()) { cerrarSugerencias(); return; }
+    cont.innerHTML =
+      '<div class="sugerencias__nada">' +
+        '<strong>No tenemos ficha de «' + escapar(consulta.trim()) + '»</strong>' +
+        'Que no esté aquí no significa que sea seguro. Ante la duda, no se lo des y llámanos.' +
+      '</div>';
+    cont.hidden = false;
+    $('#busqueda').setAttribute('aria-expanded', 'true');
+    return;
+  }
+
+  cont.innerHTML = lista.map(function (f, i) {
+    var d = f[estado.especie];
+    return '<button type="button" class="sugerencia" role="option" aria-selected="false" data-i="' + i + '">' +
+             '<span class="sugerencia__punto" style="background:' + COLOR_NIVEL[d.nivel] + '"></span>' +
+             '<span>' + escapar(f.nombre) + '</span>' +
+           '</button>';
+  }).join('');
+  cont.hidden = false;
+  $('#busqueda').setAttribute('aria-expanded', 'true');
+}
+
+function cerrarSugerencias() {
+  var c = $('#sugerencias');
+  c.hidden = true;
+  c.innerHTML = '';   /* si no, quedan las opciones de la búsqueda anterior en el DOM */
+  $('#busqueda').setAttribute('aria-expanded', 'false');
+  estado.sugerencias = [];
+  estado.indiceActivo = -1;
+}
+
+function marcarActiva(i) {
+  var botones = $$('.sugerencia');
+  botones.forEach(function (b, j) {
+    var act = (j === i);
+    b.classList.toggle('activa', act);
+    b.setAttribute('aria-selected', String(act));
+    if (act) b.scrollIntoView({ block: 'nearest' });
+  });
+  estado.indiceActivo = i;
+}
+
+/* ---------------------------------------------------------------- Resultado */
+
+function mostrarFicha(ficha) {
+  estado.seleccionado = ficha;
+  var d = ficha[estado.especie];
+  var cont = $('#resultado');
+  var esRojo = d.nivel === 'rojo';
+
+  var html = '<article class="ficha ficha--' + d.nivel + '">';
+
+  html += '<div class="semaforo">' +
+            '<span class="semaforo__icono" aria-hidden="true">' + ICONO_NIVEL[d.nivel] + '</span>' +
+            '<div>' +
+              '<p class="semaforo__alimento">' + escapar(ficha.nombre) +
+                ' · ' + (estado.especie === 'perro' ? 'perro' : 'gato') + '</p>' +
+              '<h2 class="semaforo__veredicto">' + VEREDICTO[d.nivel] + '</h2>' +
+              (d.gravedad ? '<span class="semaforo__gravedad">' + TEXTO_GRAVEDAD[d.gravedad] + '</span>' : '') +
+            '</div>' +
+          '</div>';
+
+  if (d.sintomas && d.sintomas.length) {
+    html += '<div class="bloque">' +
+              '<p class="bloque__titulo">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12h4l2-6 4 12 3-9 2 3h5"/></svg>' +
+                'Qué le puede pasar</p>' +
+              '<ul class="lista-sintomas">' +
+                d.sintomas.map(function (s) { return '<li>' + escapar(s) + '</li>'; }).join('') +
+              '</ul></div>';
+  }
+
+  if (d.latencia) {
+    html += '<div class="bloque">' +
+              '<p class="bloque__titulo">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></svg>' +
+                'En cuánto tiempo</p>' +
+              '<p class="latencia">' + escapar(d.latencia) + '</p></div>';
+  }
+
+  if (d.actuacion && d.actuacion.length) {
+    html += '<div class="bloque">' +
+              '<p class="bloque__titulo">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>' +
+                'Qué hacer ahora</p>' +
+              '<ol class="pasos">' +
+                d.actuacion.map(function (p) { return '<li>' + p + '</li>'; }).join('') +
+              '</ol></div>';
+  }
+
+  if (ficha.nota) {
+    html += '<div class="bloque"><p class="nota-ficha">' + escapar(ficha.nota) + '</p></div>';
+  }
+
+  html += '<p class="por-revisar">Ficha pendiente de revisión por veterinario colegiado antes de su publicación.</p>';
+  html += '</article>';
+
+  if (!esRojo) {
+    html += '<div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">' +
+              '<a class="btn btn--llamar" href="tel:+34910305305">' +
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z"/></svg>' +
+                'Consultar con la clínica</a></div>';
+  }
+
+  cont.innerHTML = html;
+  mostrarUrgencia(esRojo);
+}
+
+function mostrarSinFicha(consulta) {
+  estado.seleccionado = null;
+  $('#resultado').innerHTML =
+    '<div class="sin-ficha">' +
+      '<span class="sin-ficha__icono" aria-hidden="true">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.6 2.6 0 1 1 3.4 2.5c-.6.2-.9.8-.9 1.4v.4M12 17h.01"/></svg>' +
+      '</span>' +
+      '<h2>No tenemos ficha de «' + escapar(consulta) + '»</h2>' +
+      '<p>Que no esté aquí no significa que sea seguro: esta lista no lo recoge todo. ' +
+         'Ante la duda, no se lo des y llámanos.</p>' +
+      '<a class="btn btn--llamar" href="tel:+34910305305">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z"/></svg>' +
+        'Llamar · 910 305 305</a>' +
+    '</div>';
+  mostrarUrgencia(false);
+}
+
+/* La barra de urgencia solo se despliega con resultado ROJO: si apareciera
+   siempre, dejaría de significar nada. */
+function mostrarUrgencia(activa) {
+  var u = $('#urgencia');
+  u.classList.toggle('visible', activa);
+  u.setAttribute('aria-hidden', String(!activa));
+  document.body.classList.toggle('con-urgencia', activa);
+}
+
+/* -------------------------------------------------------------------- Chips */
+
+(function pintarChips() {
+  $('#chips').innerHTML = DESTACADOS.map(function (id) {
+    var f = fichasActivas.filter(function (t) { return t.id === id; })[0];
+    return f ? '<button type="button" class="chip" data-id="' + f.id + '">' + escapar(f.nombre) + '</button>' : '';
+  }).join('');
+})();
+
+/* ------------------------------------------------------------------ Eventos */
+
+var temporizador = null;
+
+$('#busqueda').addEventListener('input', function () {
+  var v = this.value;
+  $('#limpiar').classList.toggle('visible', v.length > 0);
+  window.clearTimeout(temporizador);
+  /* 200 ms de espera: evita recalcular en cada tecla sin que se note lento. */
+  temporizador = window.setTimeout(function () {
+    if (!v.trim()) { cerrarSugerencias(); return; }
+    pintarSugerencias(buscar(v), v);
+  }, 200);
+});
+
+$('#busqueda').addEventListener('keydown', function (e) {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    if (!estado.sugerencias.length) return;
+    e.preventDefault();
+    var n = estado.sugerencias.length;
+    var i = estado.indiceActivo;
+    i = (e.key === 'ArrowDown') ? (i + 1) % n : (i - 1 + n) % n;
+    marcarActiva(i);
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    window.clearTimeout(temporizador);
+    if (estado.indiceActivo >= 0 && estado.sugerencias[estado.indiceActivo]) {
+      elegir(estado.sugerencias[estado.indiceActivo]);
+    } else {
+      var res = buscar(this.value);
+      if (res.length) elegir(res[0]);
+      else if (this.value.trim()) mostrarSinFicha(this.value.trim());
+    }
+  } else if (e.key === 'Escape') {
+    cerrarSugerencias();
+  }
+});
+
+function elegir(ficha) {
+  $('#busqueda').value = ficha.nombre;
+  $('#limpiar').classList.add('visible');
+  cerrarSugerencias();
+  mostrarFicha(ficha);
+  $('#resultado').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+$('#sugerencias').addEventListener('click', function (e) {
+  var b = e.target.closest('.sugerencia');
+  if (!b) return;
+  elegir(estado.sugerencias[+b.getAttribute('data-i')]);
+});
+
+$('#chips').addEventListener('click', function (e) {
+  var b = e.target.closest('.chip');
+  if (!b) return;
+  var f = fichasActivas.filter(function (t) { return t.id === b.getAttribute('data-id'); })[0];
+  if (f) elegir(f);
+});
+
+$('#limpiar').addEventListener('click', function () {
+  $('#busqueda').value = '';
+  this.classList.remove('visible');
+  cerrarSugerencias();
+  $('#resultado').innerHTML = '';
+  mostrarUrgencia(false);
+  $('#busqueda').focus();
+});
+
+/* Cambiar de especie recalcula la ficha: el mismo alimento no afecta igual */
+$$('input[name="especie"]').forEach(function (r) {
+  r.addEventListener('change', function () {
+    estado.especie = r.value;
+    if (estado.seleccionado) mostrarFicha(estado.seleccionado);
+    if (estado.sugerencias.length) pintarSugerencias(estado.sugerencias, $('#busqueda').value);
+  });
+});
+
+/* Cerrar el desplegable al pinchar fuera */
+document.addEventListener('click', function (e) {
+  if (!e.target.closest('.buscador')) cerrarSugerencias();
+});
+</script>
+</body>
+</html>

@@ -1172,6 +1172,107 @@ html:not(.js) .zoomwall__item {
   inset: auto;
 }
 
+/* --------------------------------------------------- 14b. HERRAMIENTAS */
+.tools { background: var(--mist-soft); }
+
+.tools__grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) { .tools__grid { grid-template-columns: repeat(3, 1fr); } }
+
+.tool {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(24px, 3vw, 32px);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-l);
+  background: var(--paper);
+  box-shadow: var(--shadow-s);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: transform var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
+}
+.tool:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-m);
+  border-color: var(--sage);
+}
+/* Filete superior que se despliega al pasar: señal de que la tarjeta entera
+   es pulsable, sin añadir otro botón. */
+.tool::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--moss), var(--pine));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms var(--ease);
+}
+.tool:hover::before { transform: scaleX(1); }
+
+.tool__icono {
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  border-radius: 15px;
+  background: var(--mist-soft);
+  color: var(--pine);
+  margin-bottom: 4px;
+  transition: transform 320ms var(--ease), background-color var(--dur) var(--ease);
+}
+.tool__icono svg { width: 26px; height: 26px; }
+.tool:hover .tool__icono { transform: translateY(-2px) scale(1.06); background: var(--sage); }
+
+/* El consultor de tóxicos es el que se usa con una urgencia entre manos. */
+.tool__icono--urgente { background: #FDECE6; color: var(--ember-ink); }
+.tool:hover .tool__icono--urgente { background: var(--ember); color: var(--ink); }
+
+.tool__tag {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.tool__titulo {
+  font-size: var(--step-2);
+  letter-spacing: -0.015em;
+}
+
+.tool__texto {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.tool__enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--pine);
+}
+.tool__enlace span { transition: transform var(--dur) var(--ease); }
+.tool:hover .tool__enlace span { transform: translateX(5px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tool:hover { transform: none; }
+  .tool:hover .tool__icono { transform: none; }
+  .tool:hover .tool__enlace span { transform: none; }
+  .tool::before { transition: none; }
+}
+
 /* ------------------------------------------------------- 15. BANDA URGENCIAS */
 .urgent {
   background: var(--ember);
@@ -1553,9 +1654,17 @@ a.contact__v:hover { border-color: var(--ember); color: var(--ember-ink); }
 }
 .footer__cookies:hover { color: var(--ember-soft); }
 
+/* El pie tiene cinco columnas desde que se añadieron las herramientas.
+   En anchos intermedios se reparten en dos filas para que ninguna quede
+   estrangulada; a partir de 1080 px caben las cinco en línea. */
 @media (min-width: 760px) {
-  .footer__grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
+  .footer__grid { grid-template-columns: repeat(2, 1fr); gap: 34px 40px; }
+  .footer__brand { grid-column: 1 / -1; }
   .footer { padding-bottom: clamp(40px, 4vw, 56px); }
+}
+@media (min-width: 1080px) {
+  .footer__grid { grid-template-columns: 1.6fr repeat(4, 1fr); gap: 36px; }
+  .footer__brand { grid-column: auto; }
 }
 
 /* ------------------------------------------------------- 19. DOCK MÓVIL */

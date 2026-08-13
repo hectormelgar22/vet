@@ -20,6 +20,9 @@ aviso-legal.html           Aviso legal (LSSI-CE)
 privacidad.html            Política de privacidad (RGPD / LOPDGDD)
 cookies.html               Política de cookies (guía AEPD)
 servicio-*.html            7 páginas de detalle, una por servicio
+calendario-mascota.html    Herramienta: calendario de vacunas y revisiones
+consultor-toxicos.html     Herramienta: ¿puede comer esto?
+calculadora-nutricion.html Herramienta: ración diaria y peso ideal
 .build/                    Generador de las páginas interiores (python .build/build.py)
 experiencia.html           Prototipo aparte: scroll cinematográfico (ver nota)
 historias.html             Prototipo aparte: galería con zoom en perspectiva
@@ -46,8 +49,8 @@ assets/video/              Vídeos del hero y de la experiencia
 
 Secciones de `index.html`: cabecera flotante → **hero cinematográfico** →
 cifras → triaje → servicios → tu visita paso a paso → instalaciones →
-**opiniones con collage en zoom + carrusel** → equipo → banda de urgencias →
-preguntas frecuentes → contacto → pie → barra fija móvil.
+**opiniones con collage en zoom + carrusel** → equipo → **herramientas** →
+banda de urgencias → preguntas frecuentes → contacto → pie → barra fija móvil.
 
 ### Dos fallos serios que estaban en producción
 
@@ -122,6 +125,80 @@ Pendiente y anotado: las páginas interiores cargan `styles.css` entero (49 KB
 sin comprimir), del que usan poco más de la mitad. Separar el sistema de diseño
 del CSS de la home ahorraría algunos KB, pero es un refactor con riesgo de
 regresión y comprimido son ~12 KB.
+
+### Sección de herramientas en la home
+
+Entre **equipo** y la banda de urgencias hay una sección (`#herramientas`) con
+tres tarjetas que enlazan a las utilidades. El orden es deliberado: equipo
+(cálido) → herramientas (útil) → urgencias (llamada a la acción) → preguntas.
+La tarjeta del consultor de tóxicos lleva el acento ámbar/brasa porque es la
+que se abre con una urgencia entre manos; las otras dos, el verde de la marca.
+
+### Tres herramientas para el visitante
+
+Son **archivos únicos autocontenidos**: cada uno lleva su HTML, su CSS y su JS
+dentro, sin más dependencia externa que Google Fonts. No comparten `styles.css`
+a propósito, para que se puedan mover, enlazar o incrustar sin arrastrar el
+resto del sitio. Usan los mismos tokens de color y tipografía, así que se ven
+nativas. **Ninguna guarda nada en el navegador ni envía datos a ningún sitio.**
+
+| Archivo | Qué hace |
+|---|---|
+| `calendario-mascota.html` | Formulario de 3 pasos → línea temporal de vacunas, desparasitaciones y revisiones, con estados (hecho / toca ahora / atrasado / futuro / periódico) y hoja de impresión limpia. |
+| `consultor-toxicos.html` | Buscador «¿puede comer esto?» con semáforo, síntomas, latencia y pasos a seguir. Barra de urgencia fija cuando el resultado es rojo. |
+| `calculadora-nutricion.html` | Ración diaria orientativa, rango de peso ideal por raza y escala de condición corporal 1-9 con siluetas SVG paramétricas. |
+
+#### Qué está verificado y qué no
+
+Esto es lo más importante de las tres herramientas:
+
+- **Las fórmulas de la calculadora son estándar y públicas**: RER = 70 × kg^0,75
+  y MER = RER × factor. Eso es matemática publicada. Verificado contra un
+  cálculo independiente: un labrador de 40 kg da 495 g, coincide al gramo.
+- **Los protocolos del calendario son 100 % de ejemplo.** Los calendarios
+  vacunales varían por país, comunidad, laboratorio y animal: no hay una
+  respuesta única que se pueda escribir sin la clínica. Todo el array
+  `PROTOCOLO` va marcado `// VERIFICAR CON LA CLÍNICA`.
+- **El diccionario de tóxicos recoge consenso veterinario establecido**
+  (chocolate, xilitol, uva, *Allium*…), pero **todas** las fichas van marcadas
+  para revisión colegiada, no solo las cinco plantillas vacías: las latencias y
+  las gradaciones de gravedad varían entre fuentes. Cada ficha muestra en
+  pantalla que está pendiente de revisión.
+- **En ningún sitio se dan dosis, umbrales ni remedios caseros**, y el consultor
+  dice explícitamente que no se induzca el vómito.
+- Los **rangos de peso por raza** y los **multiplicadores energéticos** van
+  marcados `// VERIFICAR`.
+
+#### Decisiones de diseño que costaron una corrección
+
+- **El calendario generaba 304 hitos** en su primera versión: un antiparasitario
+  mensual son 180 entradas en 15 años. Peor aún, un gato de ocho años salía con
+  **155 hitos «atrasados»**, es decir, le decía al dueño que llevaba 155
+  tratamientos sin poner.
+
+  La solución definitiva: **lo que se repite aparece UNA sola vez**, con su
+  cadencia («Cada mes», «Cada 3 meses») y su próxima fecha, en un estado visual
+  propio —`recurrente`— que no es ni «hecho» ni «atrasado», porque un
+  tratamiento de por vida no es ninguna de las dos cosas. Un perro adulto pasó
+  de 51 tarjetas a 6, y un gato de 12 años a 5. La casilla del paso 3 sigue
+  siendo útil para ellos: marcarla significa «se lo he puesto hace poco» y
+  recalcula la próxima fecha desde hoy en vez de desde la pauta teórica.
+
+  Al hacerlo apareció un fallo derivado: la «próxima cita recomendada» solo
+  miraba los estados antiguos, así que un animal adulto —cuyos hitos son todos
+  periódicos— mostraba «Sin hitos pendientes» teniendo cinco por delante.
+  Corregido.
+- **El consultor se quedaba mudo** al buscar algo que no está en el diccionario:
+  ni sugerencias ni aviso. En una herramienta que se usa de madrugada y con
+  prisa, eso parece que la app se ha colgado. Ahora avisa en el acto y ofrece el
+  teléfono.
+- **La calculadora se contradecía**: la barra decía «sobrepeso» mientras la
+  escala corporal marcaba 8, que es «obesidad». Medía el desvío contra el punto
+  medio del rango y las zonas contra el máximo. Ahora ambas usan la misma
+  referencia (el rango de la raza) y coinciden siempre.
+- Con **mestizo o raza fuera de lista**, la calculadora **no inventa un
+  veredicto** de peso: dice que sin rango de referencia eso se valora en
+  consulta, y calcula solo la ración.
 
 ### Servicios: lista con banda deslizante
 

@@ -88,7 +88,7 @@
 <link rel="preload" as="image" href="assets/img/hero-poster.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Figtree:wght@300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/marquee.css?v=1">
-<link rel="stylesheet" href="assets/css/styles.css?v=9">
+<link rel="stylesheet" href="assets/css/styles.css?v=11">
 <link rel="stylesheet" href="assets/css/services.css?v=1">
 <link rel="stylesheet" href="assets/css/team-flip.css?v=4">
 
@@ -327,6 +327,7 @@
       <a href="#instalaciones">Instalaciones</a>
       <a href="#opiniones">Opiniones</a>
       <a href="#equipo">Equipo</a>
+      <a href="#herramientas">Herramientas</a>
       <a href="#faq">Preguntas</a>
     </nav>
 
@@ -1118,6 +1119,75 @@
     </div>
   </section>
 
+  <!-- ══════════════════════════ HERRAMIENTAS ══════════════════════════ -->
+  <section class="section tools" id="herramientas" aria-labelledby="herramientas-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Herramientas gratuitas</p>
+        <h2 class="section__title" id="herramientas-title">
+          Resuelve dudas <em>ahora mismo</em>
+        </h2>
+        <p class="section__lede">
+          Tres utilidades que hemos hecho para ti. No hay que registrarse, no guardan
+          nada y son gratis. Orientan, no diagnostican: para eso estamos nosotros.
+        </p>
+      </header>
+
+      <div class="tools__grid">
+
+        <a class="tool js-reveal" href="consultor-toxicos.html">
+          <span class="tool__icono tool__icono--urgente" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+              <path d="M12 9v4M12 17h.01"/>
+            </svg>
+          </span>
+          <span class="tool__tag">Consulta rápida</span>
+          <h3 class="tool__titulo">¿Puede comer esto?</h3>
+          <p class="tool__texto">
+            Busca un alimento y te decimos al momento si es seguro, si hay que
+            vigilar o si es tóxico, con los síntomas y qué hacer.
+          </p>
+          <span class="tool__enlace">Abrir el consultor <span aria-hidden="true">→</span></span>
+        </a>
+
+        <a class="tool js-reveal" href="calendario-mascota.html">
+          <span class="tool__icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="16" rx="2.5"/>
+              <path d="M3 10h18M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/>
+            </svg>
+          </span>
+          <span class="tool__tag">Planifica</span>
+          <h3 class="tool__titulo">Calendario de tu mascota</h3>
+          <p class="tool__texto">
+            Responde tres preguntas y te generamos su calendario de vacunas,
+            desparasitaciones y revisiones. Puedes imprimirlo.
+          </p>
+          <span class="tool__enlace">Generar el calendario <span aria-hidden="true">→</span></span>
+        </a>
+
+        <a class="tool js-reveal" href="calculadora-nutricion.html">
+          <span class="tool__icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3a9 9 0 0 0-9 9h18a9 9 0 0 0-9-9z"/>
+              <path d="m12 12 4.5-4.5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>
+              <path d="M4 16h16M6 20h12"/>
+            </svg>
+          </span>
+          <span class="tool__tag">Comprueba</span>
+          <h3 class="tool__titulo">Ración y peso ideal</h3>
+          <p class="tool__texto">
+            Calcula cuánto debería comer al día y comprueba si su peso está
+            dentro del rango de su raza.
+          </p>
+          <span class="tool__enlace">Abrir la calculadora <span aria-hidden="true">→</span></span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ══════════════════════════ BANDA URGENCIAS ══════════════════════════ -->
   <section class="urgent" id="urgencias" aria-labelledby="urgent-title">
     <div class="wrap urgent__inner">
@@ -1431,6 +1501,13 @@
       <a href="servicio-anestesia.html">Anestesia y dolor</a>
       <a href="servicio-cirugia.html">Cirugía y traumatología</a>
       <a href="servicio-hospitalizacion.html">Hospitalización 24 h</a>
+    </nav>
+
+    <nav class="footer__col" aria-label="Herramientas">
+      <h3>Herramientas</h3>
+      <a href="calendario-mascota.html">Calendario de vacunas</a>
+      <a href="consultor-toxicos.html">¿Puede comer esto?</a>
+      <a href="calculadora-nutricion.html">Calculadora de ración</a>
     </nav>
 
     <nav class="footer__col" aria-label="Clínica">
